@@ -1,12 +1,14 @@
 import React from 'react';
 declare module '@mui/material/styles' {
   interface TypographyVariants {
-    poster: React.CSSProperties;
+    bodySmall: React.CSSProperties;
+    label: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
-    poster?: React.CSSProperties;
+    bodySmall?: React.CSSProperties;
+    label?: React.CSSProperties;
   }
 }
 
@@ -14,5 +16,6 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     bodySmall: true;
+    label: true;
   }
 }
