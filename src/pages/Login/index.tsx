@@ -1,6 +1,5 @@
 import { Button, colors, Grid, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import InputField from 'components/InputField';
 
 const Login = () => {
   return (
