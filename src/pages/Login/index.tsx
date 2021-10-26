@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import InputField from 'components/InputField';
 import PrimaryButton from 'components/PrimaryButton';
