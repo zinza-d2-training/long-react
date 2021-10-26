@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import InputField from 'components/InputField';
+import PrimaryButton from 'components/PrimaryButton';
 
 const Login = () => {
   return (
@@ -22,6 +23,7 @@ const Login = () => {
               label="Email"
               error="error"
             />
+            <PrimaryButton fullWidth>Login</PrimaryButton>
           </Box>
         </Grid>
       </Grid>

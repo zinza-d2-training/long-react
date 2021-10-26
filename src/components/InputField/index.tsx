@@ -2,7 +2,7 @@
 /** @jsxImportSource @emotion/react */
 import { Theme, Typography } from '@mui/material';
 import { css } from '@mui/styled-engine';
-import { Box, Interpolation } from '@mui/system';
+import { Interpolation } from '@mui/system';
 import { HTMLAttributes } from 'react';
 
 interface IProps extends HTMLAttributes<HTMLInputElement> {
@@ -38,7 +38,7 @@ const InputField = (props: IProps) => {
     font-size: 12px;
   `;
   return (
-    <Box>
+    <>
       {label && (
         <Typography
           component="label"
@@ -50,7 +50,7 @@ const InputField = (props: IProps) => {
       )}
       <input {...inputProps} id={name} css={inputStyle} />
       {error && <Typography css={errorStyle}>{error}</Typography>}
-    </Box>
+    </>
   );
 };
 
