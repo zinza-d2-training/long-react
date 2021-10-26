@@ -12,8 +12,8 @@ export const PATH_LOGIN = '/login';
 export const PATH_HOME = '/';
 
 const routes: IRoute[] = [
-  { id: 'route0', path: PATH_LOGIN, component: Login, exact: true },
-  { id: 'route1', path: PATH_HOME, component: Home, exact: true }
+  { id: 'route_login', path: PATH_LOGIN, component: Login, exact: true },
+  { id: 'route_home', path: PATH_HOME, component: Home, exact: true }
 ];
 
 export default routes;
