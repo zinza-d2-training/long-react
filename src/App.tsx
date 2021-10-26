@@ -1,4 +1,7 @@
-import { CssBaseline, Typography } from '@mui/material';
+import { CssBaseline } from '@mui/material';
+import { Route, Switch } from 'react-router-dom';
+
+import routes from 'routes';
 import Layout from 'theme/layout';
 
 function App() {
@@ -6,12 +9,11 @@ function App() {
     <>
       <CssBaseline />
       <Layout>
-        <Typography variant="h1">h1</Typography>
-        <Typography variant="h2">h2</Typography>
-        <Typography variant="h3">h3</Typography>
-        <Typography variant="subtitle1">subtitle1</Typography>
-        <Typography variant="subtitle2">subtitle2</Typography>
-        <Typography variant="bodySmall">bodySmall</Typography>
+        <Switch>
+          {routes.map(({ id, path, component, exact }) => (
+            <Route key={id} path={path} exact={exact} component={component} />
+          ))}
+        </Switch>
       </Layout>
     </>
   );
