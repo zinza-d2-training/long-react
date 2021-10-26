@@ -1,9 +1,10 @@
-import { Typography } from '@mui/material';
+import { CssBaseline, Typography } from '@mui/material';
 import Layout from 'theme/layout';
 
 function App() {
   return (
     <>
+      <CssBaseline />
       <Layout>
         <Typography variant="h1">h1</Typography>
         <Typography variant="h2">h2</Typography>
