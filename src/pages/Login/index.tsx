@@ -1,7 +1,6 @@
-import { Grid, Typography } from '@mui/material';
+import { Button, colors, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import InputField from 'components/InputField';
-import PrimaryButton from 'components/PrimaryButton';
 
 const Login = () => {
   return (
@@ -12,7 +11,7 @@ const Login = () => {
             sx={{
               background: 'url("images/login_background.png") no-repeat',
               backgroundSize: 'cover',
-              minHeight: '100vh'
+              height: '100%'
             }}
           />
         </Grid>
@@ -50,7 +49,18 @@ const Login = () => {
                 sx={{ cursor: 'pointer' }}>
                 Quên mật khẩu?
               </Typography>
-              <PrimaryButton fullWidth>Login now</PrimaryButton>
+              <Button
+                fullWidth
+                sx={{
+                  backgroundColor: colors.green['400'],
+                  color: '#fff',
+                  height: '50px',
+                  '&:hover': {
+                    backgroundColor: colors.green['400']
+                  }
+                }}>
+                Login now
+              </Button>
             </Box>
           </Box>
         </Grid>
