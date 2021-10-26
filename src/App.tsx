@@ -10,13 +10,8 @@ function App() {
       <CssBaseline />
       <Layout>
         <Switch>
-          {routes.map(({ path, component, exact }, index) => (
-            <Route
-              key={index}
-              path={path}
-              exact={exact}
-              component={component}
-            />
+          {routes.map(({ id, path, component, exact }) => (
+            <Route key={id} path={path} exact={exact} component={component} />
           ))}
         </Switch>
       </Layout>
