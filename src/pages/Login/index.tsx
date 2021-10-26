@@ -1,4 +1,4 @@
-import { Button, colors, Grid, Typography } from '@mui/material';
+import { Button, colors, Grid, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import InputField from 'components/InputField';
 
@@ -33,12 +33,23 @@ const Login = () => {
                 Đăng nhập vào tài khoản
               </Typography>
               <Box mb={2}>
-                <InputField placeholder="admin@gmail.com" label="Email" />
+                <Typography component="label" variant="label">
+                  Email
+                </Typography>
+                <TextField
+                  sx={{ root: { height: '50px' } }}
+                  fullWidth
+                  placeholder="admin@gmail.com"
+                />
               </Box>
               <Box mb={2}>
-                <InputField
+                <Typography component="label" variant="label">
+                  Password
+                </Typography>
+                <TextField
+                  sx={{ root: { height: '50px' } }}
+                  fullWidth
                   placeholder="password"
-                  label="Mật khẩu"
                   type="password"
                 />
               </Box>
@@ -59,7 +70,7 @@ const Login = () => {
                     backgroundColor: colors.green['400']
                   }
                 }}>
-                Login now
+                Đăng nhập
               </Button>
             </Box>
           </Box>
