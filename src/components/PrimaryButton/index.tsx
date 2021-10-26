@@ -22,6 +22,7 @@ const PrimaryButton: FC<IProps> = (props) => {
     padding: 15px;
     width: ${fullWidth ? '100%' : 'auto'};
     cursor: pointer;
+    font-weight: bold;
   `;
   return (
     <button {...buttonProps} css={buttonStyle}>

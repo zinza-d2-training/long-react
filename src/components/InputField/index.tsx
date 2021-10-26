@@ -10,6 +10,7 @@ interface IProps extends HTMLAttributes<HTMLInputElement> {
   name?: string;
   error?: string;
   fullWidth?: boolean;
+  type?: string;
 }
 
 const InputField = (props: IProps) => {
@@ -23,6 +24,7 @@ const InputField = (props: IProps) => {
     border: 1px solid #e8e8e8;
     outline: none;
     padding: 0 16px;
+    border-radius: 4px;
   `;
 
   const labelStyle: Interpolation<Theme> = css`
