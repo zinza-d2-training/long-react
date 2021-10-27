@@ -12,6 +12,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ILogin } from 'models';
 import { loginSchema } from 'validations';
+import { useAppDispatch, useAppSelector } from 'store';
+import { authSelector, login } from 'store/slices/authSlice';
 
 const errorStyle: SxProps<Theme> = {
   color: colors.red['700']
@@ -23,9 +25,11 @@ const Login = () => {
     handleSubmit,
     formState: { errors }
   } = useForm<ILogin>({ resolver: yupResolver(loginSchema) });
+  const dispatch = useAppDispatch();
+  const loginLoading = useAppSelector(authSelector).loading;
 
   const onSubmit: SubmitHandler<ILogin> = (data) => {
-    console.log(data);
+    dispatch(login(data));
   };
 
   return (
@@ -65,7 +69,7 @@ const Login = () => {
                 <Controller
                   name="citizenId"
                   control={control}
-                  defaultValue=""
+                  defaultValue="012345678"
                   render={({ field }) => (
                     <TextField
                       sx={{ root: { height: '50px' } }}
@@ -88,7 +92,7 @@ const Login = () => {
                 <Controller
                   name="password"
                   control={control}
-                  defaultValue=""
+                  defaultValue="long@zinza123"
                   render={({ field }) => (
                     <TextField
                       sx={{ root: { height: '50px' } }}
@@ -114,7 +118,9 @@ const Login = () => {
               </Typography>
               <Button
                 disabled={Boolean(
-                  !!errors.citizenId?.message || !!errors.password?.message
+                  !!errors.citizenId?.message ||
+                    !!errors.password?.message ||
+                    loginLoading
                 )}
                 fullWidth
                 type="submit"
