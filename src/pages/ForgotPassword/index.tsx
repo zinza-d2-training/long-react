@@ -9,7 +9,7 @@ import {
 import { useHistory } from 'react-router';
 import React, { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
-import CustomButton from 'components/Button';
+import StyledButton from 'components/Button';
 import { useAppSelector } from 'store';
 import { authSelector } from 'store/slices/authSlice';
 import { PATH_HOME, PATH_LOGIN } from 'routes';
@@ -117,15 +117,16 @@ const ForgotPassword = () => {
             onChange={handleChangeCitizenId}
           />
           <Box sx={{ mt: (theme) => theme.spacing(3), px: '12px' }}>
-            <CustomButton variant="outlined" onClick={backToLoginPage}>
+            <StyledButton variant="outlined" onClick={backToLoginPage}>
               Quay lại
-            </CustomButton>
-            <CustomButton
+            </StyledButton>
+            <StyledButton
+              disabled={citizenId.trim().length === 0}
               variant="contained"
               sx={{ ml: (theme) => theme.spacing(2) }}
               onClick={handleOpenModal}>
               Gửi
-            </CustomButton>
+            </StyledButton>
           </Box>
           <Modal open={isOpenModal} hideBackdrop>
             <Box
@@ -215,18 +216,18 @@ const ForgotPassword = () => {
                   </Typography>
                 )}
                 <Box>
-                  <CustomButton
+                  <StyledButton
                     variant="outlined"
                     sx={{ mr: '16px' }}
                     onClick={handleCloseModal}>
                     Hủy bỏ
-                  </CustomButton>
-                  <CustomButton
+                  </StyledButton>
+                  <StyledButton
                     variant="contained"
                     onClick={handleConfirm}
                     disabled={otp.trim().length < 6}>
                     Xác nhận
-                  </CustomButton>
+                  </StyledButton>
                 </Box>
               </Box>
             </Box>
