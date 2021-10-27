@@ -113,6 +113,9 @@ const Login = () => {
                 Quên mật khẩu?
               </Typography>
               <Button
+                disabled={Boolean(
+                  !!errors.citizenId?.message || !!errors.password?.message
+                )}
                 fullWidth
                 type="submit"
                 sx={{
