@@ -33,12 +33,12 @@ const Login = () => {
               </Typography>
               <Box mb={2}>
                 <Typography component="label" variant="label">
-                  Email
+                  Chứng minh nhân dân/Căn cước công dân
                 </Typography>
                 <TextField
                   sx={{ root: { height: '50px' } }}
                   fullWidth
-                  placeholder="admin@gmail.com"
+                  placeholder="123456789"
                 />
               </Box>
               <Box mb={2}>
