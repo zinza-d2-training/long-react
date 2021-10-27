@@ -9,11 +9,14 @@ import {
 import { Box, SxProps } from '@mui/system';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useHistory } from 'react-router';
 
 import { ILogin } from 'models';
 import { loginSchema } from 'validations';
 import { useAppDispatch, useAppSelector } from 'store';
 import { authSelector, login } from 'store/slices/authSlice';
+import { PATH_HOME } from 'routes';
+import { useEffect } from 'react';
 
 const errorStyle: SxProps<Theme> = {
   color: colors.red['700']
@@ -26,7 +29,14 @@ const Login = () => {
     formState: { errors }
   } = useForm<ILogin>({ resolver: yupResolver(loginSchema) });
   const dispatch = useAppDispatch();
-  const loginLoading = useAppSelector(authSelector).loading;
+  const auth = useAppSelector(authSelector);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (auth.token) {
+      history.push(PATH_HOME);
+    }
+  }, [history, auth]);
 
   const onSubmit: SubmitHandler<ILogin> = (data) => {
     dispatch(login(data));
@@ -120,7 +130,7 @@ const Login = () => {
                 disabled={Boolean(
                   !!errors.citizenId?.message ||
                     !!errors.password?.message ||
-                    loginLoading
+                    auth.loading
                 )}
                 fullWidth
                 type="submit"
