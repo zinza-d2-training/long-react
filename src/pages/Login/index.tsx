@@ -83,10 +83,17 @@ const Login = () => {
                   defaultValue="012345678"
                   render={({ field }) => (
                     <TextField
-                      sx={{ root: { height: '50px' } }}
+                      sx={{
+                        height: '50px',
+                        mt: (theme) => theme.spacing(1),
+                        '& > div': {
+                          height: '100%'
+                        }
+                      }}
                       fullWidth
                       placeholder="123456789"
                       {...field}
+                      disabled={auth.loading}
                     />
                   )}
                 />
@@ -97,7 +104,7 @@ const Login = () => {
                 )}
               </Box>
               <Box mb={2}>
-                <Typography component="label" variant="label">
+                <Typography component="label" variant="label" mb={1}>
                   Password
                 </Typography>
                 <Controller
@@ -106,11 +113,18 @@ const Login = () => {
                   defaultValue="long@zinza123"
                   render={({ field }) => (
                     <TextField
-                      sx={{ root: { height: '50px' } }}
+                      sx={{
+                        height: '50px',
+                        mt: (theme) => theme.spacing(1),
+                        '& > div': {
+                          height: '100%'
+                        }
+                      }}
                       fullWidth
                       placeholder="password"
                       type="password"
                       {...field}
+                      disabled={auth.loading}
                     />
                   )}
                 />
