@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   colors,
   Grid,
   TextField,
@@ -142,6 +143,13 @@ const Login = () => {
                     backgroundColor: colors.green['400']
                   }
                 }}>
+                {auth.loading && (
+                  <CircularProgress
+                    size={20}
+                    color="info"
+                    sx={{ mr: (theme) => theme.spacing(1) }}
+                  />
+                )}
                 Đăng nhập
               </Button>
             </Box>
