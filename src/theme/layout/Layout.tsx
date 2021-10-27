@@ -7,6 +7,9 @@ const Layout: FC = (props) => {
 
 const Container = styled(Box)`
   min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
 `;
 
 export default Layout;
