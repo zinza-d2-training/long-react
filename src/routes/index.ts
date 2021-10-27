@@ -1,3 +1,4 @@
+import ForgotPassword from 'pages/ForgotPassword';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 
@@ -10,6 +11,7 @@ interface IRoute {
 }
 
 export const PATH_LOGIN = '/login';
+export const PATH_FORGOT_PASSWORD = '/forgot-password';
 export const PATH_HOME = '/';
 
 const routes: IRoute[] = [
@@ -17,6 +19,13 @@ const routes: IRoute[] = [
     id: 'route_login',
     path: PATH_LOGIN,
     component: Login,
+    exact: true,
+    privateRoute: false
+  },
+  {
+    id: 'route_forgot_password',
+    path: PATH_FORGOT_PASSWORD,
+    component: ForgotPassword,
     exact: true,
     privateRoute: false
   },
