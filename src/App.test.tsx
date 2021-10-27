@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from '@emotion/react';
 import { Provider } from 'react-redux';
@@ -18,6 +17,4 @@ test('renders home text', () => {
       </PersistGate>
     </Provider>
   );
-  // const linkElement = screen.getByText(/home/i);
-  // expect(linkElement).toBeInTheDocument();
 });
