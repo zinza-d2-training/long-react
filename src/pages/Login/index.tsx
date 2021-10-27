@@ -1,7 +1,33 @@
-import { Button, colors, Grid, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import {
+  Button,
+  colors,
+  Grid,
+  TextField,
+  Theme,
+  Typography
+} from '@mui/material';
+import { Box, SxProps } from '@mui/system';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { ILogin } from 'models';
+import { loginSchema } from 'validations';
+
+const errorStyle: SxProps<Theme> = {
+  color: colors.red['700']
+};
 
 const Login = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<ILogin>({ resolver: yupResolver(loginSchema) });
+
+  const onSubmit: SubmitHandler<ILogin> = (data) => {
+    console.log(data);
+  };
+
   return (
     <Box>
       <Grid container spacing={0}>
@@ -23,6 +49,7 @@ const Login = () => {
               alignItems: 'center'
             }}>
             <Box
+              onSubmit={handleSubmit(onSubmit)}
               component="form"
               sx={{
                 width: '376px'
@@ -35,22 +62,48 @@ const Login = () => {
                 <Typography component="label" variant="label">
                   Chứng minh nhân dân/Căn cước công dân
                 </Typography>
-                <TextField
-                  sx={{ root: { height: '50px' } }}
-                  fullWidth
-                  placeholder="123456789"
+                <Controller
+                  name="citizenId"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      sx={{ root: { height: '50px' } }}
+                      fullWidth
+                      placeholder="123456789"
+                      {...field}
+                    />
+                  )}
                 />
+                {errors.citizenId?.message && (
+                  <Typography variant="bodySmall" sx={errorStyle}>
+                    {errors.citizenId?.message}
+                  </Typography>
+                )}
               </Box>
               <Box mb={2}>
                 <Typography component="label" variant="label">
                   Password
                 </Typography>
-                <TextField
-                  sx={{ root: { height: '50px' } }}
-                  fullWidth
-                  placeholder="password"
-                  type="password"
+                <Controller
+                  name="password"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      sx={{ root: { height: '50px' } }}
+                      fullWidth
+                      placeholder="password"
+                      type="password"
+                      {...field}
+                    />
+                  )}
                 />
+                {errors.password?.message && (
+                  <Typography variant="bodySmall" sx={errorStyle}>
+                    {errors.password?.message}
+                  </Typography>
+                )}
               </Box>
               <Typography
                 variant="body2"
@@ -61,6 +114,7 @@ const Login = () => {
               </Typography>
               <Button
                 fullWidth
+                type="submit"
                 sx={{
                   backgroundColor: colors.green['400'],
                   color: '#fff',
