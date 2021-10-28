@@ -1,8 +1,8 @@
 import { CssBaseline } from '@mui/material';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import routes from 'routes';
 import Layout, { PrivateRoute } from 'theme/layout';
+import AuthRoute from 'theme/layout/AuthRoute';
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
                 );
               } else {
                 return (
-                  <Route
+                  <AuthRoute
                     key={id}
                     path={path}
                     exact={exact}

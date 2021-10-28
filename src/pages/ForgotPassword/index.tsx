@@ -1,28 +1,36 @@
 import {
   Box,
   colors,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   Divider,
-  Modal,
+  IconButton,
   TextField,
   Typography
 } from '@mui/material';
-import { useHistory } from 'react-router';
+import ClearIcon from '@mui/icons-material/Clear';
 import React, { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
+import { useHistory } from 'react-router';
 import StyledButton from 'components/Button';
+import { useClock } from 'hooks';
+import { PATH_HOME, PATH_LOGIN } from 'routes';
 import { useAppSelector } from 'store';
 import { authSelector } from 'store/slices/authSlice';
-import { PATH_HOME, PATH_LOGIN } from 'routes';
-import { useClock } from 'hooks';
+import { isNumberOrNull } from 'utils/validate';
+
+const START_TIME = { hours: 0, minutes: 0, seconds: 0 };
 
 const ForgotPassword = () => {
   const [citizenId, setCitizenId] = useState<string>('');
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
   const [isShowReSendOtp, setIsShowReSendOtp] = useState<boolean>(false);
+
   const history = useHistory();
   const token = useAppSelector(authSelector).token;
-  const { time, setTime } = useClock({ hours: 0, minutes: 0, seconds: 0 });
+  const { time, setTime } = useClock(START_TIME);
 
   useEffect(() => {
     if (token) {
@@ -39,7 +47,10 @@ const ForgotPassword = () => {
   }, [time]);
 
   const handleChangeCitizenId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCitizenId(e.target.value);
+    const value = e.target.value.trim();
+    if (isNumberOrNull(value)) {
+      setCitizenId(value);
+    }
   };
 
   const handleOpenModal = () => {
@@ -59,7 +70,9 @@ const ForgotPassword = () => {
   };
 
   const handleChangeOtp = (otp: string) => {
-    setOtp(otp);
+    if (isNumberOrNull(otp)) {
+      setOtp(otp);
+    }
   };
 
   const handleReSendOtp = () => {
@@ -121,117 +134,103 @@ const ForgotPassword = () => {
               Quay lại
             </StyledButton>
             <StyledButton
-              disabled={citizenId.trim().length === 0}
+              disabled={!citizenId.trim().length}
               variant="contained"
               sx={{ ml: (theme) => theme.spacing(2) }}
               onClick={handleOpenModal}>
               Gửi
             </StyledButton>
           </Box>
-          <Modal open={isOpenModal} hideBackdrop>
-            <Box
+          <Dialog
+            open={isOpenModal}
+            hideBackdrop
+            sx={{ '.container': { width: '500px' } }}>
+            <DialogTitle
               sx={{
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                backgroundColor: '#fff',
-                width: '500px',
-                maxWidth: '100%',
-                boxShadow:
-                  '0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)'
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                width: '100%'
               }}>
-              <Box
-                sx={{
-                  height: '64px',
-                  p: '16px 0 16px 24px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}>
-                <Typography variant="h6">Xác thực OTP</Typography>
-                <Box
+              <Typography component="p" variant="h6">
+                Xác thực OTP
+              </Typography>
+              <IconButton onClick={handleCloseModal}>
+                <ClearIcon />
+              </IconButton>
+            </DialogTitle>
+            <Divider />
+            <DialogContent
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                p: '24px 42px',
+                width: '500px'
+              }}>
+              <img src="images/logo.png" alt="" />
+              <Typography
+                variant="body1"
+                sx={{ maxWidth: '310px', my: 3 }}
+                align="center">
+                Mã xác minh sẽ được gửi bằng tin nhắn đến SĐT bạn đăng ký
+              </Typography>
+              <OtpInput
+                value={otp}
+                onChange={handleChangeOtp}
+                numInputs={6}
+                separator={<Box width="16px"></Box>}
+                inputStyle={{
+                  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.075)',
+                  border: 'none',
+                  borderBottom: '2px inset #E53935',
+                  width: '40px',
+                  height: '40px',
+                  outline: 'none',
+                  fonWeight: 'bold',
+                  fontSize: '24px'
+                }}
+                focusStyle={{
+                  borderBottom: '2px inset #78909C'
+                }}
+                isInputNum
+                shouldAutoFocus
+              />
+              <Typography
+                variant="body1"
+                align="center"
+                sx={{ my: 3, color: colors.blueGrey['400'] }}>
+                Nếu bạn không nhân được tin nhắn, xin vui lòng thử lại sau:{' '}
+                {time}
+              </Typography>
+              {isShowReSendOtp && (
+                <Typography
+                  variant="body1"
                   sx={{
-                    width: '56px',
-                    fontSize: '40px',
-                    textAlign: 'center',
+                    color: colors.blue['600'],
+                    mb: 3,
                     cursor: 'pointer'
                   }}
+                  onClick={handleReSendOtp}>
+                  Gửi lại mã OTP?
+                </Typography>
+              )}
+              <Box>
+                <StyledButton
+                  variant="outlined"
+                  sx={{ mr: 2 }}
                   onClick={handleCloseModal}>
-                  &times;
-                </Box>
+                  Hủy bỏ
+                </StyledButton>
+                <StyledButton
+                  variant="contained"
+                  onClick={handleConfirm}
+                  disabled={otp.trim().length < 6}>
+                  Xác nhận
+                </StyledButton>
               </Box>
-              <Divider />
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  p: '24px 42px'
-                }}>
-                <img src="images/logo.png" alt="" />
-                <Typography
-                  variant="body1"
-                  sx={{ maxWidth: '310px', my: '24px' }}
-                  align="center">
-                  Mã xác minh sẽ được gửi bằng tin nhắn đến SĐT bạn đăng ký
-                </Typography>
-                <OtpInput
-                  value={otp}
-                  onChange={handleChangeOtp}
-                  numInputs={6}
-                  separator={<Box width="16px"></Box>}
-                  inputStyle={{
-                    boxShadow:
-                      '0px 2px 4px rgba(0, 0, 0, 0.075), inset 0px -2px 0px #E53935',
-                    width: '40px',
-                    height: '40px',
-                    border: 'none',
-                    outline: 'none',
-                    fonWeight: 'bold',
-                    fontSize: '24px'
-                  }}
-                  focusStyle={{
-                    boxShadow:
-                      '0px 2px 4px rgba(0, 0, 0, 0.075), inset 0px -2px 0px #78909C'
-                  }}
-                />
-                <Typography
-                  variant="body1"
-                  align="center"
-                  sx={{ my: '24px', color: colors.blueGrey['400'] }}>
-                  Nếu bạn không nhân được tin nhắn, xin vui lòng thử lại sau:{' '}
-                  {time}
-                </Typography>
-                {isShowReSendOtp && (
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: colors.blue['600'],
-                      mb: '24px',
-                      cursor: 'pointer'
-                    }}
-                    onClick={handleReSendOtp}>
-                    Gửi lại mã OTP?
-                  </Typography>
-                )}
-                <Box>
-                  <StyledButton
-                    variant="outlined"
-                    sx={{ mr: '16px' }}
-                    onClick={handleCloseModal}>
-                    Hủy bỏ
-                  </StyledButton>
-                  <StyledButton
-                    variant="contained"
-                    onClick={handleConfirm}
-                    disabled={otp.trim().length < 6}>
-                    Xác nhận
-                  </StyledButton>
-                </Box>
-              </Box>
-            </Box>
-          </Modal>
+            </DialogContent>
+          </Dialog>
         </Box>
       </Box>
     </Box>
