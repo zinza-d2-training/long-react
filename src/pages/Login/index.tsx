@@ -163,6 +163,7 @@ const Login = () => {
                 !!errors.password?.message ||
                 auth.loading
             )}
+            variant="contained"
             fullWidth
             type="submit"
             sx={{
