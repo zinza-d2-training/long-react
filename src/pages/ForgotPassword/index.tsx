@@ -15,9 +15,7 @@ import OtpInput from 'react-otp-input';
 import { useHistory } from 'react-router';
 import StyledButton from 'components/Button';
 import { useClock } from 'hooks';
-import { PATH_HOME, PATH_LOGIN } from 'routes';
-import { useAppSelector } from 'store';
-import { authSelector } from 'store/slices/authSlice';
+import { PATH_LOGIN } from 'routes';
 import { isNumberOrNull } from 'utils/validate';
 
 const START_TIME = { hours: 0, minutes: 0, seconds: 0 };
@@ -29,14 +27,7 @@ const ForgotPassword = () => {
   const [isShowReSendOtp, setIsShowReSendOtp] = useState<boolean>(false);
 
   const history = useHistory();
-  const token = useAppSelector(authSelector).token;
   const { time, setTime } = useClock(START_TIME);
-
-  useEffect(() => {
-    if (token) {
-      history.push(PATH_HOME);
-    }
-  }, [history, token]);
 
   useEffect(() => {
     if (time === '00:00:00') {

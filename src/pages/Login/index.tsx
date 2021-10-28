@@ -1,26 +1,21 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Button,
   CircularProgress,
   colors,
   TextField,
-  Theme,
   Typography
 } from '@mui/material';
-import { Box, SxProps } from '@mui/system';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useHistory } from 'react-router';
-import { useEffect } from 'react';
-
+import { Box } from '@mui/system';
+import ErrorMessage from 'components/ErrorMessage';
 import { ILogin } from 'models';
-import { loginSchema } from 'validations';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { PATH_FORGOT_PASSWORD, PATH_REGISTER } from 'routes';
 import { useAppDispatch, useAppSelector } from 'store';
 import { authSelector, login } from 'store/slices/authSlice';
-import { PATH_FORGOT_PASSWORD, PATH_HOME } from 'routes';
-
-const errorStyle: SxProps<Theme> = {
-  color: colors.red['700']
-};
+import { loginSchema } from 'validations';
 
 const Login = () => {
   const {
@@ -35,18 +30,12 @@ const Login = () => {
   const auth = useAppSelector(authSelector);
   const history = useHistory();
 
-  useEffect(() => {
-    if (auth.token) {
-      history.push(PATH_HOME);
-    }
-  }, [history, auth]);
-
   const onSubmit: SubmitHandler<ILogin> = (data) => {
     dispatch(login(data));
   };
 
-  const pushToForgotPassPage = () => {
-    history.push(PATH_FORGOT_PASSWORD);
+  const handlePushToRegister = () => {
+    history.push(PATH_REGISTER);
   };
 
   return (
@@ -86,7 +75,7 @@ const Login = () => {
                 <TextField
                   sx={{
                     height: '50px',
-                    mt: (theme) => theme.spacing(1),
+                    mt: 1,
                     '& > div': {
                       height: '100%'
                     }
@@ -99,9 +88,7 @@ const Login = () => {
               )}
             />
             {errors.citizenId?.message && (
-              <Typography variant="bodySmall" sx={errorStyle}>
-                {errors.citizenId?.message}
-              </Typography>
+              <ErrorMessage>{errors.citizenId?.message}</ErrorMessage>
             )}
           </Box>
           <Box mb={2}>
@@ -116,7 +103,7 @@ const Login = () => {
                 <TextField
                   sx={{
                     height: '50px',
-                    mt: (theme) => theme.spacing(1),
+                    mt: 1,
                     '& > div': {
                       height: '100%'
                     }
@@ -130,32 +117,21 @@ const Login = () => {
               )}
             />
             {errors.password?.message && (
-              <Typography variant="bodySmall" sx={errorStyle}>
-                {errors.password?.message}
-              </Typography>
+              <ErrorMessage>{errors.password?.message}</ErrorMessage>
             )}
           </Box>
           <Box
             sx={{
               display: 'flex',
-              justifyContent: 'space-between',
-              color: colors.indigo[600]
+              justifyContent: 'flex-end'
             }}>
             <Typography
-              component="a"
+              component={Link}
+              to={PATH_FORGOT_PASSWORD}
               variant="body2"
               mb={3}
               align="right"
-              sx={{ cursor: 'pointer' }}>
-              Đăng ký tài khoản
-            </Typography>
-            <Typography
-              component="a"
-              variant="body2"
-              mb={3}
-              align="right"
-              sx={{ cursor: 'pointer' }}
-              onClick={pushToForgotPassPage}>
+              sx={{ color: colors.indigo[600] }}>
               Quên mật khẩu?
             </Typography>
           </Box>
@@ -169,17 +145,35 @@ const Login = () => {
             fullWidth
             type="submit"
             sx={{
-              backgroundColor: colors.green['400'],
+              backgroundColor: colors.green[400],
               color: '#fff',
               height: '50px',
               '&:hover': {
-                backgroundColor: colors.green['400']
+                backgroundColor: colors.green[400]
               }
             }}>
             {auth.loading && (
               <CircularProgress size={20} color="info" sx={{ mr: 1 }} />
             )}
             Đăng nhập
+          </Button>
+          <Typography variant="body1" my={2} align="center">
+            Hoặc đăng ký tài khoản, nếu bạn chưa đăng ký!
+          </Typography>
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={handlePushToRegister}
+            sx={{
+              height: '50px',
+              borderColor: colors.green[400],
+              color: colors.green[400],
+              '&:hover': {
+                borderColor: colors.green[400],
+                color: colors.green[400]
+              }
+            }}>
+            Đăng ký
           </Button>
         </Box>
       </Box>
