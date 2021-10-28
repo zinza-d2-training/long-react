@@ -27,7 +27,10 @@ const Login = () => {
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<ILogin>({ resolver: yupResolver(loginSchema) });
+  } = useForm<ILogin>({
+    resolver: yupResolver(loginSchema),
+    mode: 'onTouched'
+  });
   const dispatch = useAppDispatch();
   const auth = useAppSelector(authSelector);
   const history = useHistory();
@@ -68,8 +71,7 @@ const Login = () => {
           sx={{
             width: '376px'
           }}>
-          <Typography variant="body1">Chào mừng trở lại</Typography>
-          <Typography variant="h4" mb={3}>
+          <Typography variant="h4" mb={3} fontWeight="bold">
             Đăng nhập vào tài khoản
           </Typography>
           <Box mb={2}>
@@ -104,7 +106,7 @@ const Login = () => {
           </Box>
           <Box mb={2}>
             <Typography component="label" variant="label" mb={1}>
-              Password
+              Mật khẩu
             </Typography>
             <Controller
               name="password"
@@ -120,7 +122,7 @@ const Login = () => {
                     }
                   }}
                   fullWidth
-                  placeholder="password"
+                  placeholder="**************"
                   type="password"
                   {...field}
                   disabled={auth.loading}
@@ -133,14 +135,28 @@ const Login = () => {
               </Typography>
             )}
           </Box>
-          <Typography
-            variant="body2"
-            mb={3}
-            align="right"
-            sx={{ cursor: 'pointer' }}
-            onClick={pushToForgotPassPage}>
-            Quên mật khẩu?
-          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              color: colors.indigo[600]
+            }}>
+            <Typography
+              variant="body2"
+              mb={3}
+              align="right"
+              sx={{ cursor: 'pointer' }}>
+              Đăng ký tài khoản
+            </Typography>
+            <Typography
+              variant="body2"
+              mb={3}
+              align="right"
+              sx={{ cursor: 'pointer' }}
+              onClick={pushToForgotPassPage}>
+              Quên mật khẩu?
+            </Typography>
+          </Box>
           <Button
             disabled={Boolean(
               !!errors.citizenId?.message ||

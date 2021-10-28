@@ -14,12 +14,14 @@ import { useAppSelector } from 'store';
 import { authSelector } from 'store/slices/authSlice';
 import { PATH_HOME, PATH_LOGIN } from 'routes';
 import { useClock } from 'hooks';
+import { isNumberOrNull } from 'utils/validate';
 
 const ForgotPassword = () => {
   const [citizenId, setCitizenId] = useState<string>('');
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
   const [isShowReSendOtp, setIsShowReSendOtp] = useState<boolean>(false);
+
   const history = useHistory();
   const token = useAppSelector(authSelector).token;
   const { time, setTime } = useClock({ hours: 0, minutes: 0, seconds: 0 });
@@ -39,7 +41,10 @@ const ForgotPassword = () => {
   }, [time]);
 
   const handleChangeCitizenId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCitizenId(e.target.value);
+    const value = e.target.value.trim();
+    if (isNumberOrNull(value)) {
+      setCitizenId(value);
+    }
   };
 
   const handleOpenModal = () => {
@@ -121,7 +126,7 @@ const ForgotPassword = () => {
               Quay lại
             </StyledButton>
             <StyledButton
-              disabled={citizenId.trim().length === 0}
+              disabled={!citizenId.trim().length}
               variant="contained"
               sx={{ ml: (theme) => theme.spacing(2) }}
               onClick={handleOpenModal}>
@@ -195,6 +200,8 @@ const ForgotPassword = () => {
                     boxShadow:
                       '0px 2px 4px rgba(0, 0, 0, 0.075), inset 0px -2px 0px #78909C'
                   }}
+                  isInputNum
+                  shouldAutoFocus
                 />
                 <Typography
                   variant="body1"
