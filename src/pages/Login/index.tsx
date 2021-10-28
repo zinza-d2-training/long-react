@@ -142,6 +142,7 @@ const Login = () => {
               color: colors.indigo[600]
             }}>
             <Typography
+              component="a"
               variant="body2"
               mb={3}
               align="right"
@@ -149,6 +150,7 @@ const Login = () => {
               Đăng ký tài khoản
             </Typography>
             <Typography
+              component="a"
               variant="body2"
               mb={3}
               align="right"
@@ -175,11 +177,7 @@ const Login = () => {
               }
             }}>
             {auth.loading && (
-              <CircularProgress
-                size={20}
-                color="info"
-                sx={{ mr: (theme) => theme.spacing(1) }}
-              />
+              <CircularProgress size={20} color="info" sx={{ mr: 1 }} />
             )}
             Đăng nhập
           </Button>

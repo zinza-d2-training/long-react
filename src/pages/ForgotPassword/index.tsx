@@ -20,6 +20,8 @@ import { useAppSelector } from 'store';
 import { authSelector } from 'store/slices/authSlice';
 import { isNumberOrNull } from 'utils/validate';
 
+const START_TIME = { hours: 0, minutes: 0, seconds: 0 };
+
 const ForgotPassword = () => {
   const [citizenId, setCitizenId] = useState<string>('');
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -28,7 +30,7 @@ const ForgotPassword = () => {
 
   const history = useHistory();
   const token = useAppSelector(authSelector).token;
-  const { time, setTime } = useClock({ hours: 0, minutes: 0, seconds: 0 });
+  const { time, setTime } = useClock(START_TIME);
 
   useEffect(() => {
     if (token) {
@@ -139,14 +141,16 @@ const ForgotPassword = () => {
               Gửi
             </StyledButton>
           </Box>
-          <Dialog open={isOpenModal} hideBackdrop>
+          <Dialog
+            open={isOpenModal}
+            hideBackdrop
+            sx={{ '.container': { width: '500px' } }}>
             <DialogTitle
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                width: '500px',
-                maxWidth: '100%'
+                width: '100%'
               }}>
               <Typography component="p" variant="h6">
                 Xác thực OTP
@@ -167,7 +171,7 @@ const ForgotPassword = () => {
               <img src="images/logo.png" alt="" />
               <Typography
                 variant="body1"
-                sx={{ maxWidth: '310px', my: '24px' }}
+                sx={{ maxWidth: '310px', my: 3 }}
                 align="center">
                 Mã xác minh sẽ được gửi bằng tin nhắn đến SĐT bạn đăng ký
               </Typography>
@@ -195,7 +199,7 @@ const ForgotPassword = () => {
               <Typography
                 variant="body1"
                 align="center"
-                sx={{ my: '24px', color: colors.blueGrey['400'] }}>
+                sx={{ my: 3, color: colors.blueGrey['400'] }}>
                 Nếu bạn không nhân được tin nhắn, xin vui lòng thử lại sau:{' '}
                 {time}
               </Typography>
@@ -204,7 +208,7 @@ const ForgotPassword = () => {
                   variant="body1"
                   sx={{
                     color: colors.blue['600'],
-                    mb: '24px',
+                    mb: 3,
                     cursor: 'pointer'
                   }}
                   onClick={handleReSendOtp}>
@@ -214,7 +218,7 @@ const ForgotPassword = () => {
               <Box>
                 <StyledButton
                   variant="outlined"
-                  sx={{ mr: '16px' }}
+                  sx={{ mr: 2 }}
                   onClick={handleCloseModal}>
                   Hủy bỏ
                 </StyledButton>
