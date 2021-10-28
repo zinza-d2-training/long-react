@@ -1,27 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ClearIcon from '@mui/icons-material/Clear';
 import {
   Box,
   Button,
-  colors,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
   Step,
   StepLabel,
   Stepper,
-  TextField,
   Typography
 } from '@mui/material';
-import ErrorMessage from 'components/ErrorMessage';
-import FileInput from 'components/FileInput';
 import { IRegisterForm } from 'models/register';
 import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { registerSchema } from 'validations';
+import { Step1, Step2, Step3 } from './Steps';
 
 const steps = ['Số CMND/CCCD', 'Thông tin cá nhân', 'Địa chỉ'];
 
@@ -40,11 +32,6 @@ const defaultValues: IRegisterForm = {
 
 const Register = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [selectedImage, setSelectedImage] = useState<{
-    name: string;
-    blob: string;
-  } | null>(null);
-  const [isOpenPreview, setIsOpenPreview] = useState<boolean>(false);
 
   const {
     register,
@@ -57,7 +44,7 @@ const Register = () => {
     formState: { errors }
   } = useForm<IRegisterForm>({
     resolver: yupResolver(registerSchema),
-    mode: 'onTouched',
+    mode: 'onChange',
     defaultValues
   });
 
@@ -76,35 +63,6 @@ const Register = () => {
 
   const handleBackStep = () => {
     setCurrentStep(currentStep - 1);
-  };
-
-  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const currentImages = getValues().citizenImages;
-    // @ts-ignore
-    const file = e.target.files[0];
-    setValue('citizenImages', [
-      ...currentImages,
-      { file, preview: URL.createObjectURL(file) }
-    ]);
-    if (currentImages.length < 1) {
-      setError('citizenImages', { message: 'Chọn tối thiểu 2 ảnh' });
-    } else {
-      clearErrors('citizenImages');
-    }
-    e.target.value = '';
-  };
-
-  const handleChangeSelectedImage = (name: string, blob: string) => {
-    setIsOpenPreview(true);
-    setSelectedImage({ name, blob });
-  };
-
-  const handleRemoveImage = (imageIndex: number) => {
-    const currentImages = getValues().citizenImages;
-    const newImages = [...currentImages];
-    newImages.splice(imageIndex, 1);
-    URL.revokeObjectURL(currentImages[imageIndex].preview);
-    setValue('citizenImages', newImages);
   };
 
   return (
@@ -152,61 +110,24 @@ const Register = () => {
                 flexDirection: 'column',
                 alignItems: 'center'
               }}>
-              <Box>
-                <Typography
-                  component="label"
-                  htmlFor="citizenId"
-                  variant="label">
-                  Số CMND/CCCD{' '}
-                  <Box component="span" color={colors.red[700]}>
-                    (*)
-                  </Box>
-                </Typography>
-                <Controller
-                  name="citizenId"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      sx={{
-                        height: '50px',
-                        mt: 1,
-                        '& > div': {
-                          height: '100%'
-                        }
-                      }}
-                      fullWidth
-                      placeholder="Số CMND/CCCD"
-                      {...field}
-                      id="citizenId"
-                    />
-                  )}
-                />
-                {errors.citizenId?.message && (
-                  <ErrorMessage>{errors.citizenId.message}</ErrorMessage>
-                )}
-                <Typography component="p" variant="label" mt={2}>
-                  Ảnh chụp CMND/CCCD 2 mặt
-                </Typography>
-              </Box>
-              <FileInput
+              <Step1
+                control={control}
+                errors={errors}
                 register={register}
-                value={watch('citizenImages')}
-                onChange={handleChangeImage}
-                onChangeSelectedImages={handleChangeSelectedImage}
-                onRemoveImages={handleRemoveImage}
+                watch={watch}
+                getValues={getValues}
+                setValue={setValue}
+                setError={setError}
+                clearErrors={clearErrors}
               />
-              {/* {errors.citizenImages && (
-                <ErrorMessage>{errors.citizenImages?.message}</ErrorMessage>
-              )} */}
             </Box>
 
             <Box sx={{ display: currentStep === 1 ? ' block' : 'none' }}>
-              step2
+              <Step2 />
             </Box>
 
             <Box sx={{ display: currentStep === 2 ? ' block' : 'none' }}>
-              step3
+              <Step3 />
             </Box>
           </Box>
           <Box
@@ -233,34 +154,6 @@ const Register = () => {
           </Box>
         </Box>
       </Box>
-      <Dialog
-        open={isOpenPreview}
-        hideBackdrop
-        sx={{ '& > div': { width: '490px', m: '0 auto' } }}>
-        <DialogTitle
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
-          <Typography
-            component="p"
-            variant="h6"
-            sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {selectedImage?.name}
-          </Typography>
-          <IconButton onClick={() => setIsOpenPreview(false)}>
-            <ClearIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <img
-            src={selectedImage?.blob}
-            width="100%"
-            alt={selectedImage?.name}
-          />
-        </DialogContent>
-      </Dialog>
     </Box>
   );
 };

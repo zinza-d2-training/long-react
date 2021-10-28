@@ -1,11 +1,12 @@
 import { Box, colors, IconButton, Theme } from '@mui/material';
 import { SxProps } from '@mui/system';
-import { IFile } from 'models/register';
+import { IFile, IRegisterForm } from 'models/register';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { UseFormRegister } from 'react-hook-form';
 
 interface IProps {
-  register: any;
+  register: UseFormRegister<IRegisterForm>;
   value: IFile[];
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeSelectedImages: (name: string, blob: string) => void;
@@ -60,7 +61,7 @@ const FileInput = (props: IProps) => {
           display: 'flex',
           p: 2,
           border: `1px solid ${colors.grey[100]}`,
-          width: '552px',
+          width: '100%',
           flexWrap: 'wrap'
         }}>
         {value.map(({ preview, file }, index) => (
