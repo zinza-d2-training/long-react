@@ -1,19 +1,20 @@
 import {
   Box,
   colors,
+  Dialog,
   Divider,
-  Modal,
+  IconButton,
   TextField,
   Typography
 } from '@mui/material';
-import { useHistory } from 'react-router';
 import React, { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
+import { useHistory } from 'react-router';
 import StyledButton from 'components/Button';
+import { useClock } from 'hooks';
+import { PATH_HOME, PATH_LOGIN } from 'routes';
 import { useAppSelector } from 'store';
 import { authSelector } from 'store/slices/authSlice';
-import { PATH_HOME, PATH_LOGIN } from 'routes';
-import { useClock } from 'hooks';
 import { isNumberOrNull } from 'utils/validate';
 
 const ForgotPassword = () => {
@@ -133,7 +134,7 @@ const ForgotPassword = () => {
               Gửi
             </StyledButton>
           </Box>
-          <Modal open={isOpenModal} hideBackdrop>
+          <Dialog open={isOpenModal} hideBackdrop>
             <Box
               sx={{
                 position: 'fixed',
@@ -149,22 +150,22 @@ const ForgotPassword = () => {
               <Box
                 sx={{
                   height: '64px',
-                  p: '16px 0 16px 24px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
+                  p: '16px 24px',
+                  position: 'relative'
                 }}>
                 <Typography variant="h6">Xác thực OTP</Typography>
-                <Box
+                <IconButton
                   sx={{
-                    width: '56px',
-                    fontSize: '40px',
-                    textAlign: 'center',
-                    cursor: 'pointer'
+                    position: 'absolute',
+                    top: '50%',
+                    right: '0',
+                    transform: 'translateY(-50%)',
+                    fontSize: '35px',
+                    width: '55px'
                   }}
                   onClick={handleCloseModal}>
                   &times;
-                </Box>
+                </IconButton>
               </Box>
               <Divider />
               <Box
@@ -187,18 +188,17 @@ const ForgotPassword = () => {
                   numInputs={6}
                   separator={<Box width="16px"></Box>}
                   inputStyle={{
-                    boxShadow:
-                      '0px 2px 4px rgba(0, 0, 0, 0.075), inset 0px -2px 0px #E53935',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.075)',
+                    border: 'none',
+                    borderBottom: '2px inset #E53935',
                     width: '40px',
                     height: '40px',
-                    border: 'none',
                     outline: 'none',
                     fonWeight: 'bold',
                     fontSize: '24px'
                   }}
                   focusStyle={{
-                    boxShadow:
-                      '0px 2px 4px rgba(0, 0, 0, 0.075), inset 0px -2px 0px #78909C'
+                    borderBottom: '2px inset #78909C'
                   }}
                   isInputNum
                   shouldAutoFocus
@@ -238,7 +238,7 @@ const ForgotPassword = () => {
                 </Box>
               </Box>
             </Box>
-          </Modal>
+          </Dialog>
         </Box>
       </Box>
     </Box>
