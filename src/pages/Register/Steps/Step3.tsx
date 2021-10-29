@@ -86,14 +86,14 @@ const Step3 = (props: IProps) => {
       const cityIndex = addressData.findIndex(
         (city) => city.id === selectedCity
       );
-      setValue('district', '');
-      setValue('wards', '');
       if (cityIndex > -1) {
         setDistricts(addressData[cityIndex].children);
       } else {
         setDistricts([]);
       }
     }
+    setValue('district', '');
+    setValue('wards', '');
   }, [districts, selectedCity, setValue]);
 
   useEffect(() => {
@@ -101,13 +101,13 @@ const Step3 = (props: IProps) => {
       const districtIndex = districts.findIndex(
         (district) => district.id === selectedDistrict
       );
-      setValue('wards', '');
       if (districtIndex > -1) {
         setWards(districts[districtIndex].children);
       } else {
         setWards([]);
       }
     }
+    setValue('wards', '');
   }, [districts, selectedDistrict, setValue]);
   return (
     <>
@@ -158,7 +158,7 @@ const Step3 = (props: IProps) => {
           {touchedFields.cityProvince && errors.cityProvince?.message}
         </ErrorMessage>
       </Box>
-      <Box mt={2}>
+      <Box mt={1}>
         <Label required>Quận/Huyện</Label>
         <Controller
           control={control}
@@ -209,7 +209,7 @@ const Step3 = (props: IProps) => {
           {touchedFields.district && errors.district?.message}
         </ErrorMessage>
       </Box>
-      <Box mt={2}>
+      <Box mt={1}>
         <Label required>Xã/Phường</Label>
         <Controller
           control={control}
