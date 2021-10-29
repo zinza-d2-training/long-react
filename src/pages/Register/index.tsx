@@ -1,17 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import {
-  Box,
-  Button,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography
-} from '@mui/material';
+import { Box, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { IRegisterForm } from 'models/register';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { registerSchema } from 'validations';
 import { Step1, Step2, Step3 } from './Steps';
 
@@ -38,13 +29,14 @@ const Register = () => {
     control,
     getValues,
     setValue,
+    handleSubmit,
     setError,
     watch,
     clearErrors,
     formState: { errors }
   } = useForm<IRegisterForm>({
     resolver: yupResolver(registerSchema),
-    mode: 'onChange',
+    mode: 'onTouched',
     defaultValues
   });
 
@@ -65,6 +57,9 @@ const Register = () => {
     setCurrentStep(currentStep - 1);
   };
 
+  const onSubmit: SubmitHandler<IRegisterForm> = (data) => {
+    console.log(data);
+  };
   return (
     <Box sx={{ display: 'flex', alignItems: 'stretch', flex: 1 }}>
       <Box
@@ -82,12 +77,14 @@ const Register = () => {
           flex: 1
         }}>
         <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
           sx={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            width: '420px',
+            width: '580px',
             maxWidth: '100%'
           }}>
           <Typography variant="h4" fontWeight="bold" mb={2}>
@@ -103,7 +100,7 @@ const Register = () => {
               </Step>
             ))}
           </Stepper>
-          <Box component="form" width="100%" mt={2}>
+          <Box width="420px" mt={2}>
             <Box
               sx={{
                 display: currentStep === 0 ? ' flex' : 'none',
@@ -119,38 +116,29 @@ const Register = () => {
                 setValue={setValue}
                 setError={setError}
                 clearErrors={clearErrors}
+                onNextStep={handleNextStep}
               />
             </Box>
 
             <Box sx={{ display: currentStep === 1 ? ' block' : 'none' }}>
-              <Step2 control={control} errors={errors} />
+              <Step2
+                control={control}
+                errors={errors}
+                onNextStep={handleNextStep}
+                onBackStep={handleBackStep}
+                watch={watch}
+              />
             </Box>
 
             <Box sx={{ display: currentStep === 2 ? ' block' : 'none' }}>
-              <Step3 />
+              <Step3
+                watch={watch}
+                control={control}
+                errors={errors}
+                setValue={setValue}
+                onBackStep={handleBackStep}
+              />
             </Box>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: !currentStep ? 'flex-end' : 'space-between',
-              alignItems: 'center',
-              width: '100%'
-            }}>
-            {!!currentStep && (
-              <Button
-                onClick={handleBackStep}
-                startIcon={<ArrowBackIcon />}
-                sx={{ color: (theme) => theme.palette.text.primary }}>
-                Quay lại
-              </Button>
-            )}
-            <Button
-              disabled={!!Object.keys(errors).length}
-              onClick={handleNextStep}
-              endIcon={<ArrowForwardIcon />}>
-              {currentStep === 2 ? 'Hoàn thành' : 'Tiếp tục'}
-            </Button>
           </Box>
         </Box>
       </Box>

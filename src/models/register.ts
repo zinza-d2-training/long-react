@@ -1,3 +1,5 @@
+import { ICity, IDistrict, IWard } from 'models';
+
 export interface IFile {
   file: File;
   preview: string;

@@ -1,6 +1,8 @@
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ClearIcon from '@mui/icons-material/Clear';
 import {
   Box,
+  Button,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -35,6 +37,7 @@ interface IProps {
   setValue: UseFormSetValue<IRegisterForm>;
   setError: UseFormSetError<IRegisterForm>;
   clearErrors: UseFormClearErrors<IRegisterForm>;
+  onNextStep: () => void;
 }
 
 const Step1 = (props: IProps) => {
@@ -46,13 +49,20 @@ const Step1 = (props: IProps) => {
     getValues,
     setValue,
     setError,
-    clearErrors
+    clearErrors,
+    onNextStep
   } = props;
   const [selectedImage, setSelectedImage] = useState<{
     name: string;
     blob: string;
   } | null>(null);
   const [isOpenPreview, setIsOpenPreview] = useState<boolean>(false);
+
+  const disableButton =
+    !!errors.citizenId ||
+    !!errors.citizenImages ||
+    !watch('citizenId') ||
+    !watch('citizenImages').length;
 
   const handleChangeSelectedImage = (name: string, blob: string) => {
     setIsOpenPreview(true);
@@ -127,6 +137,22 @@ const Step1 = (props: IProps) => {
             {imageError}
           </ErrorMessage>
         )}
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          width: '100%'
+        }}
+        mt={2}>
+        <Button
+          type={'button'}
+          disabled={disableButton}
+          onClick={onNextStep}
+          endIcon={<ArrowForwardIcon />}>
+          Tiếp tục
+        </Button>
       </Box>
       <Dialog
         open={isOpenPreview}

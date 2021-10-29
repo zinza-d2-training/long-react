@@ -1,18 +1,36 @@
-import { Box, MenuItem, TextField } from '@mui/material';
+import { Box, Button, MenuItem, TextField } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ErrorMessage from 'components/ErrorMessage';
 import Label from 'components/Label';
 import { IRegisterForm } from 'models/register';
-import { Control, Controller, FieldErrors } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormWatch
+} from 'react-hook-form';
 import { styleInputLarge } from 'theme';
 
 interface IProps {
   control: Control<IRegisterForm, object>;
   errors: FieldErrors<IRegisterForm>;
+  watch: UseFormWatch<IRegisterForm>;
+  onBackStep: () => void;
+  onNextStep: () => void;
 }
 
 const Step2 = (props: IProps) => {
-  const { control, errors } = props;
-  console.log(errors);
+  const { control, errors, onBackStep, onNextStep, watch } = props;
+  const disableButton =
+    !!errors.fullName ||
+    !!errors.dob ||
+    !!errors.gender ||
+    !!errors.phoneNumber ||
+    !watch('fullName') ||
+    !watch('dob') ||
+    !watch('gender') ||
+    !watch('phoneNumber');
   return (
     <>
       <Box>
@@ -99,6 +117,28 @@ const Step2 = (props: IProps) => {
         {errors.phoneNumber?.message && (
           <ErrorMessage>{errors.phoneNumber.message}</ErrorMessage>
         )}
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%'
+        }}
+        mt={2}>
+        <Button
+          onClick={onBackStep}
+          startIcon={<ArrowBackIcon />}
+          sx={{ color: (theme) => theme.palette.text.primary }}>
+          Quay lại
+        </Button>
+        <Button
+          type={'button'}
+          disabled={disableButton}
+          onClick={onNextStep}
+          endIcon={<ArrowForwardIcon />}>
+          Tiếp tục
+        </Button>
       </Box>
     </>
   );
