@@ -133,7 +133,7 @@ const Register = () => {
             width: '580px',
             maxWidth: '100%'
           }}>
-          <Typography variant="h4" fontWeight="bold" mb={2}>
+          <Typography variant="h4" fontWeight="bold" mb={3}>
             Đăng ký tài khoản
           </Typography>
           <Stepper
@@ -146,7 +146,7 @@ const Register = () => {
               </Step>
             ))}
           </Stepper>
-          <Box width="420px" mt={2}>
+          <Box width="420px" mt={3}>
             <Box
               sx={{
                 display: currentStep === 0 ? ' flex' : 'none',
