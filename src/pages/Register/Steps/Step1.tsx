@@ -117,9 +117,7 @@ const Step1 = (props: IProps) => {
             />
           )}
         />
-        {errors.citizenId?.message && (
-          <ErrorMessage>{errors.citizenId.message}</ErrorMessage>
-        )}
+        <ErrorMessage>{errors.citizenId?.message}</ErrorMessage>
       </Box>
       <Box sx={{ width: '100%' }}>
         <Label mt={2} mb={1} sx={{ display: 'block' }} htmlFor="citizenImages">
@@ -132,11 +130,7 @@ const Step1 = (props: IProps) => {
           onChangeSelectedImages={handleChangeSelectedImage}
           onRemoveImages={handleRemoveImage}
         />
-        {imageError && (
-          <ErrorMessage sx={{ display: 'block', width: '100%' }}>
-            {imageError}
-          </ErrorMessage>
-        )}
+        <ErrorMessage>{imageError}</ErrorMessage>
       </Box>
       <Box
         sx={{

@@ -14,26 +14,43 @@ import {
   FieldErrors,
   UseFormWatch,
   Controller,
-  UseFormSetValue
+  UseFormSetValue,
+  UseFormSetError,
+  UseFormClearErrors,
+  FieldNamesMarkedBoolean
 } from 'react-hook-form';
 
 import { ICity, IDistrict, IWard } from 'models';
 import { addressData } from 'utils/addressData';
 import Label from 'components/Label';
 import ErrorMessage from 'components/ErrorMessage';
+import { styleInputLarge } from 'theme';
 
 interface IProps {
   watch: UseFormWatch<IRegisterForm>;
   control: Control<IRegisterForm, object>;
   errors: FieldErrors<IRegisterForm>;
   setValue: UseFormSetValue<IRegisterForm>;
+  setError: UseFormSetError<IRegisterForm>;
+  clearErrors: UseFormClearErrors<IRegisterForm>;
+  touchedFields: FieldNamesMarkedBoolean<IRegisterForm>;
   onBackStep: () => void;
 }
 
 const Step3 = (props: IProps) => {
-  const { watch, control, errors, setValue, onBackStep } = props;
+  const {
+    watch,
+    control,
+    errors,
+    setValue,
+    onBackStep,
+    setError,
+    clearErrors,
+    touchedFields
+  } = props;
   const selectedCity = watch('cityProvince');
   const selectedDistrict = watch('district');
+  const selectedWard = watch('wards');
   const [cities] = useState<ICity[]>(addressData);
   const [districts, setDistricts] = useState<IDistrict[]>([]);
   const [wards, setWards] = useState<IWard[]>([]);
@@ -47,13 +64,35 @@ const Step3 = (props: IProps) => {
     !watch('wards');
 
   useEffect(() => {
+    if (!selectedDistrict.trim()) {
+      setError('district', { message: 'Trường này là bắt buộc' });
+    } else {
+      clearErrors('district');
+    }
+    if (!selectedCity.trim()) {
+      setError('cityProvince', { message: 'Trường này là bắt buộc' });
+    } else {
+      clearErrors('cityProvince');
+    }
+    if (!selectedWard.trim()) {
+      setError('wards', { message: 'Trường này là bắt buộc' });
+    } else {
+      clearErrors('wards');
+    }
+  }, [clearErrors, selectedCity, selectedDistrict, selectedWard, setError]);
+
+  useEffect(() => {
     if (selectedCity) {
       const cityIndex = addressData.findIndex(
         (city) => city.id === selectedCity
       );
-      setDistricts(addressData[cityIndex].children);
       setValue('district', '');
       setValue('wards', '');
+      if (cityIndex > -1) {
+        setDistricts(addressData[cityIndex].children);
+      } else {
+        setDistricts([]);
+      }
     }
   }, [districts, selectedCity, setValue]);
 
@@ -62,8 +101,12 @@ const Step3 = (props: IProps) => {
       const districtIndex = districts.findIndex(
         (district) => district.id === selectedDistrict
       );
-      setWards(districts[districtIndex].children);
       setValue('wards', '');
+      if (districtIndex > -1) {
+        setWards(districts[districtIndex].children);
+      } else {
+        setWards([]);
+      }
     }
   }, [districts, selectedDistrict, setValue]);
   return (
@@ -73,7 +116,7 @@ const Step3 = (props: IProps) => {
         <Controller
           control={control}
           name="cityProvince"
-          defaultValue=""
+          defaultValue={watch('cityProvince')}
           render={({ field: { value, ...formField } }) => {
             const inputValue = cities.find(({ id }) => id === value);
             return (
@@ -100,21 +143,27 @@ const Step3 = (props: IProps) => {
                   }
                 }}
                 renderInput={(params) => (
-                  <TextField {...params} placeholder="Tỉnh/Thành phố" />
+                  <TextField
+                    {...params}
+                    value={watch('cityProvince')}
+                    sx={styleInputLarge}
+                    placeholder="Tỉnh/Thành phố"
+                  />
                 )}
               />
             );
           }}
         />
-        {errors.cityProvince && (
-          <ErrorMessage>{errors.cityProvince.message}</ErrorMessage>
-        )}
+        <ErrorMessage>
+          {touchedFields.cityProvince && errors.cityProvince?.message}
+        </ErrorMessage>
       </Box>
       <Box mt={2}>
         <Label required>Quận/Huyện</Label>
         <Controller
           control={control}
           name="district"
+          defaultValue={watch('district')}
           render={({ field: { value, ...formField } }) => {
             const inputValue = districts.find(({ id }) => id === value);
             return (
@@ -122,6 +171,7 @@ const Step3 = (props: IProps) => {
                 options={districts}
                 {...formField}
                 value={inputValue}
+                disabled={!watch('cityProvince')}
                 onChange={(
                   event: SyntheticEvent<Element, Event>,
                   newValue: IDistrict | null,
@@ -136,32 +186,42 @@ const Step3 = (props: IProps) => {
                   value: string,
                   reason: string
                 ) => {
-                  if (!value.trim()) {
-                    setValue('district', '');
-                  }
+                  setValue('district', value);
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} placeholder="Quận/huyện" />
-                )}
+                renderInput={(params) => {
+                  if (!watch('district')) {
+                    // @ts-ignore
+                    params.inputProps.value = '';
+                  }
+                  return (
+                    <TextField
+                      {...params}
+                      sx={styleInputLarge}
+                      placeholder="Quận/huyện"
+                    />
+                  );
+                }}
               />
             );
           }}
         />
-        {errors.district && (
-          <ErrorMessage>{errors.district.message}</ErrorMessage>
-        )}
+        <ErrorMessage>
+          {touchedFields.district && errors.district?.message}
+        </ErrorMessage>
       </Box>
       <Box mt={2}>
         <Label required>Xã/Phường</Label>
         <Controller
           control={control}
           name="wards"
+          defaultValue={watch('wards')}
           render={({ field: { value, ...formField } }) => {
             const inputValue = wards.find(({ id }) => id === value);
             return (
               <Autocomplete
                 options={wards}
                 value={inputValue}
+                disabled={!watch('district')}
                 {...formField}
                 onChange={(
                   event: SyntheticEvent<Element, Event>,
@@ -177,18 +237,28 @@ const Step3 = (props: IProps) => {
                   value: string,
                   reason: string
                 ) => {
-                  if (!value.trim()) {
-                    setValue('wards', '');
-                  }
+                  setValue('wards', value);
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} placeholder="Xã/Phường" />
-                )}
+                renderInput={(params) => {
+                  if (!watch('wards')) {
+                    // @ts-ignore
+                    params.inputProps.value = '';
+                  }
+                  return (
+                    <TextField
+                      {...params}
+                      sx={styleInputLarge}
+                      placeholder="Xã/Phường"
+                    />
+                  );
+                }}
               />
             );
           }}
         />
-        {errors.wards && <ErrorMessage>{errors.wards.message}</ErrorMessage>}
+        <ErrorMessage>
+          {touchedFields.wards && errors.wards?.message}
+        </ErrorMessage>
       </Box>
       <Box
         sx={{

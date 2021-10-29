@@ -51,11 +51,9 @@ const Step2 = (props: IProps) => {
             />
           )}
         />
-        {errors.fullName?.message && (
-          <ErrorMessage>{errors.fullName.message}</ErrorMessage>
-        )}
+        <ErrorMessage>{errors.fullName?.message}</ErrorMessage>
       </Box>
-      <Box mt={2}>
+      <Box mt={1}>
         <Label required>Ngày sinh</Label>
         <Controller
           name="dob"
@@ -72,11 +70,9 @@ const Step2 = (props: IProps) => {
             />
           )}
         />
-        {errors.dob?.message && (
-          <ErrorMessage>{errors.dob.message}</ErrorMessage>
-        )}
+        <ErrorMessage>{errors.dob?.message}</ErrorMessage>
       </Box>
-      <Box mt={2}>
+      <Box mt={1}>
         <Label required>Giới tinh</Label>
         <Controller
           name="gender"
@@ -91,15 +87,12 @@ const Step2 = (props: IProps) => {
               select>
               <MenuItem value="Nam">Nam</MenuItem>
               <MenuItem value="Nữ">Nữ</MenuItem>
-              <MenuItem value="Khác">Khác</MenuItem>
             </TextField>
           )}
         />
-        {errors.gender?.message && (
-          <ErrorMessage>{errors.gender.message}</ErrorMessage>
-        )}
+        <ErrorMessage>{errors.gender?.message}</ErrorMessage>
       </Box>
-      <Box my={2}>
+      <Box mb={2} mt={1}>
         <Label required>Số điện thoại</Label>
         <Controller
           name="phoneNumber"
@@ -114,9 +107,7 @@ const Step2 = (props: IProps) => {
             />
           )}
         />
-        {errors.phoneNumber?.message && (
-          <ErrorMessage>{errors.phoneNumber.message}</ErrorMessage>
-        )}
+        <ErrorMessage>{errors.phoneNumber?.message}</ErrorMessage>
       </Box>
       <Box
         sx={{
@@ -124,8 +115,7 @@ const Step2 = (props: IProps) => {
           justifyContent: 'space-between',
           alignItems: 'center',
           width: '100%'
-        }}
-        mt={2}>
+        }}>
         <Button
           onClick={onBackStep}
           startIcon={<ArrowBackIcon />}

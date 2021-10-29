@@ -38,10 +38,10 @@ const Register = () => {
     setError,
     watch,
     clearErrors,
-    formState: { errors }
+    formState: { errors, touchedFields }
   } = useForm<IRegisterForm>({
     resolver: yupResolver(registerSchema),
-    mode: 'onTouched',
+    mode: 'onChange',
     defaultValues
   });
 
@@ -183,6 +183,9 @@ const Register = () => {
                 errors={errors}
                 setValue={setValue}
                 onBackStep={handleBackStep}
+                setError={setError}
+                clearErrors={clearErrors}
+                touchedFields={touchedFields}
               />
             </Box>
           </Box>

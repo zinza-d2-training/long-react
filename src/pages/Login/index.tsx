@@ -83,9 +83,7 @@ const Login = () => {
                 />
               )}
             />
-            {errors.citizenId?.message && (
-              <ErrorMessage>{errors.citizenId?.message}</ErrorMessage>
-            )}
+            <ErrorMessage>{errors.citizenId?.message}</ErrorMessage>
           </Box>
           <Box mb={2}>
             <Label mb={1}>Mật khẩu</Label>

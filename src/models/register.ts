@@ -1,5 +1,3 @@
-import { ICity, IDistrict, IWard } from 'models';
-
 export interface IFile {
   file: File;
   preview: string;
@@ -11,7 +9,7 @@ export interface IRegisterForm {
   citizenImages: IFile[];
   fullName: string;
   dob: Date | undefined;
-  gender: 'Nam' | 'Nữ' | 'Khác';
+  gender: 'Nam' | 'Nữ';
   phoneNumber: string;
   cityProvince: string;
   district: string;
