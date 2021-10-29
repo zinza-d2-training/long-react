@@ -1,23 +1,12 @@
-import {
-  Box,
-  colors,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  IconButton,
-  TextField,
-  Typography
-} from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
-import React, { useEffect, useState } from 'react';
-import OtpInput from 'react-otp-input';
-import { useHistory } from 'react-router';
+import { Box, colors, TextField, Typography } from '@mui/material';
 import StyledButton from 'components/Button';
+import OtpDialog from 'components/OtpDialog';
 import { useClock } from 'hooks';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import { PATH_LOGIN } from 'routes';
-import { isNumberOrNull } from 'utils/validate';
 import { styleInputLarge } from 'theme';
+import { isNumberOrNull } from 'utils/validate';
 
 const START_TIME = { hours: 0, minutes: 0, seconds: 0 };
 
@@ -127,96 +116,16 @@ const ForgotPassword = () => {
               Gửi
             </StyledButton>
           </Box>
-          <Dialog
+          <OtpDialog
             open={isOpenModal}
-            hideBackdrop
-            sx={{ '.container': { width: '500px' } }}>
-            <DialogTitle
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: '100%'
-              }}>
-              <Typography component="p" variant="h6">
-                Xác thực OTP
-              </Typography>
-              <IconButton onClick={handleCloseModal}>
-                <ClearIcon />
-              </IconButton>
-            </DialogTitle>
-            <Divider />
-            <DialogContent
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                p: '24px 42px',
-                width: '500px'
-              }}>
-              <img src="images/logo.png" alt="" />
-              <Typography
-                variant="body1"
-                sx={{ maxWidth: '310px', my: 3 }}
-                align="center">
-                Mã xác minh sẽ được gửi bằng tin nhắn đến SĐT bạn đăng ký
-              </Typography>
-              <OtpInput
-                value={otp}
-                onChange={handleChangeOtp}
-                numInputs={6}
-                separator={<Box width="16px"></Box>}
-                inputStyle={{
-                  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.075)',
-                  border: 'none',
-                  borderBottom: '2px inset #E53935',
-                  width: '40px',
-                  height: '40px',
-                  outline: 'none',
-                  fonWeight: 'bold',
-                  fontSize: '24px'
-                }}
-                focusStyle={{
-                  borderBottom: '2px inset #78909C'
-                }}
-                isInputNum
-                shouldAutoFocus
-              />
-              <Typography
-                variant="body1"
-                align="center"
-                sx={{ my: 3, color: colors.blueGrey['400'] }}>
-                Nếu bạn không nhân được tin nhắn, xin vui lòng thử lại sau:{' '}
-                {time}
-              </Typography>
-              {isShowReSendOtp && (
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: colors.blue['600'],
-                    mb: 3,
-                    cursor: 'pointer'
-                  }}
-                  onClick={handleReSendOtp}>
-                  Gửi lại mã OTP?
-                </Typography>
-              )}
-              <Box>
-                <StyledButton
-                  variant="outlined"
-                  sx={{ mr: 2 }}
-                  onClick={handleCloseModal}>
-                  Hủy bỏ
-                </StyledButton>
-                <StyledButton
-                  variant="contained"
-                  onClick={handleConfirm}
-                  disabled={otp.trim().length < 6}>
-                  Xác nhận
-                </StyledButton>
-              </Box>
-            </DialogContent>
-          </Dialog>
+            otp={otp}
+            isShowReSendOtp={isShowReSendOtp}
+            time={time}
+            onReSendOtp={handleReSendOtp}
+            onChangeOtp={handleChangeOtp}
+            onClose={handleCloseModal}
+            onConfirm={handleConfirm}
+          />
         </Box>
       </Box>
     </Box>
