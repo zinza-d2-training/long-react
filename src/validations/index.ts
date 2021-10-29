@@ -19,7 +19,6 @@ export const registerSchema = yup.object().shape({
       /^\d{9}$|^\d{12}$/g,
       'Số căn cước hoặc chứng minh thư không hợp lệ!'
     ),
-  citizenImages: yup.array().min(2, 'Chọn tối thiểu 2 ảnh'),
   fullName: yup.string().required('Trường này là bắt buộc'),
   dob: yup.string().required('Trường này là bắt buộc'),
   gender: yup.string().required('Trường này là bắt buộc'),

@@ -72,12 +72,15 @@ const Step1 = (props: IProps) => {
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const currentImages = getValues().citizenImages;
     // @ts-ignore
-    const file = e.target.files[0];
-    setValue('citizenImages', [
+    const files = Object.values(e.target.files);
+    const newImages = [
       ...currentImages,
-      { file, preview: URL.createObjectURL(file) }
-    ]);
-    if (currentImages.length < 1) {
+      ...files.map((file) => ({ file, preview: URL.createObjectURL(file) }))
+    ];
+    const newValue = newImages.splice(0, 2);
+    setValue('citizenImages', newValue);
+    if (newValue.length < 2) {
+      console.log(newImages);
       setError('citizenImages', { message: 'Chọn tối thiểu 2 ảnh' });
     } else {
       clearErrors('citizenImages');
@@ -129,6 +132,7 @@ const Step1 = (props: IProps) => {
           onChange={handleChangeImage}
           onChangeSelectedImages={handleChangeSelectedImage}
           onRemoveImages={handleRemoveImage}
+          maxlength={2}
         />
         <ErrorMessage>{imageError}</ErrorMessage>
       </Box>

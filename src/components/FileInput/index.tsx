@@ -8,6 +8,7 @@ import { UseFormRegister } from 'react-hook-form';
 interface IProps {
   register: UseFormRegister<IRegisterForm>;
   value: IFile[];
+  maxlength?: number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeSelectedImages: (name: string, blob: string) => void;
   onRemoveImages: (imageIndex: number) => void;
@@ -43,8 +44,14 @@ const styleOverlay: SxProps<Theme> = {
 };
 
 const FileInput = (props: IProps) => {
-  const { register, onChange, value, onChangeSelectedImages, onRemoveImages } =
-    props;
+  const {
+    register,
+    onChange,
+    value,
+    onChangeSelectedImages,
+    onRemoveImages,
+    maxlength
+  } = props;
   return (
     <Box>
       <input
@@ -111,12 +118,23 @@ const FileInput = (props: IProps) => {
             <img src={preview} style={{ borderRadius: '4px' }} alt="" />
           </Box>
         ))}
-        <Box
-          component="label"
-          htmlFor="citizenImages"
-          sx={{ ...stylePreview, backgroundColor: colors.grey[100] }}>
-          + Upload
-        </Box>
+        {maxlength !== undefined ? (
+          value.length < maxlength ? (
+            <Box
+              component="label"
+              htmlFor="citizenImages"
+              sx={{ ...stylePreview, backgroundColor: colors.grey[100] }}>
+              + Upload
+            </Box>
+          ) : null
+        ) : (
+          <Box
+            component="label"
+            htmlFor="citizenImages"
+            sx={{ ...stylePreview, backgroundColor: colors.grey[100] }}>
+            + Upload
+          </Box>
+        )}
       </Box>
     </Box>
   );
