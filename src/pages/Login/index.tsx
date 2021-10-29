@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import ErrorMessage from 'components/ErrorMessage';
+import Label from 'components/Label';
 import { ILogin } from 'models';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
@@ -15,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { PATH_FORGOT_PASSWORD, PATH_REGISTER } from 'routes';
 import { useAppDispatch, useAppSelector } from 'store';
 import { authSelector, login } from 'store/slices/authSlice';
+import { styleInputLarge } from 'theme';
 import { loginSchema } from 'validations';
 
 const Login = () => {
@@ -64,22 +66,16 @@ const Login = () => {
             Đăng nhập vào tài khoản
           </Typography>
           <Box mb={2}>
-            <Typography component="label" variant="label">
+            <Label component="label" variant="label">
               Chứng minh nhân dân/Căn cước công dân
-            </Typography>
+            </Label>
             <Controller
               name="citizenId"
               control={control}
               defaultValue="012345678"
               render={({ field }) => (
                 <TextField
-                  sx={{
-                    height: '50px',
-                    mt: 1,
-                    '& > div': {
-                      height: '100%'
-                    }
-                  }}
+                  sx={styleInputLarge}
                   fullWidth
                   placeholder="123456789"
                   {...field}
@@ -92,22 +88,14 @@ const Login = () => {
             )}
           </Box>
           <Box mb={2}>
-            <Typography component="label" variant="label" mb={1}>
-              Mật khẩu
-            </Typography>
+            <Label mb={1}>Mật khẩu</Label>
             <Controller
               name="password"
               control={control}
               defaultValue="long@zinza123"
               render={({ field }) => (
                 <TextField
-                  sx={{
-                    height: '50px',
-                    mt: 1,
-                    '& > div': {
-                      height: '100%'
-                    }
-                  }}
+                  sx={styleInputLarge}
                   fullWidth
                   placeholder="**************"
                   type="password"

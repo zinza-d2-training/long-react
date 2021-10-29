@@ -23,9 +23,9 @@ const defaultValues: IRegisterForm = {
   citizenImages: [],
   cityProvince: '',
   district: '',
-  dob: null,
+  dob: undefined,
   fullName: '',
-  gender: '',
+  gender: 'Nam',
   phoneNumber: '',
   wards: ''
 };
@@ -123,7 +123,7 @@ const Register = () => {
             </Box>
 
             <Box sx={{ display: currentStep === 1 ? ' block' : 'none' }}>
-              <Step2 />
+              <Step2 control={control} errors={errors} />
             </Box>
 
             <Box sx={{ display: currentStep === 2 ? ' block' : 'none' }}>

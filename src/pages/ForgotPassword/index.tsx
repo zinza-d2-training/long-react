@@ -17,6 +17,7 @@ import StyledButton from 'components/Button';
 import { useClock } from 'hooks';
 import { PATH_LOGIN } from 'routes';
 import { isNumberOrNull } from 'utils/validate';
+import { styleInputLarge } from 'theme';
 
 const START_TIME = { hours: 0, minutes: 0, seconds: 0 };
 
@@ -110,13 +111,7 @@ const ForgotPassword = () => {
             placeholder="123456789"
             variant="outlined"
             fullWidth
-            sx={{
-              height: '50px',
-              mt: (theme) => theme.spacing(3),
-              '& > div': {
-                height: '100%'
-              }
-            }}
+            sx={{ ...styleInputLarge, mt: 3 }}
             value={citizenId}
             onChange={handleChangeCitizenId}
           />

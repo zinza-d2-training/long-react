@@ -1,6 +1,6 @@
+import ClearIcon from '@mui/icons-material/Clear';
 import {
   Box,
-  colors,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -8,6 +8,11 @@ import {
   TextField,
   Typography
 } from '@mui/material';
+import ErrorMessage from 'components/ErrorMessage';
+import FileInput from 'components/FileInput';
+import Label from 'components/Label';
+import { IRegisterForm } from 'models/register';
+import { useState } from 'react';
 import {
   Control,
   Controller,
@@ -19,11 +24,7 @@ import {
   UseFormSetValue,
   UseFormWatch
 } from 'react-hook-form';
-import ErrorMessage from 'components/ErrorMessage';
-import FileInput from 'components/FileInput';
-import { IRegisterForm } from 'models/register';
-import ClearIcon from '@mui/icons-material/Clear';
-import { useState } from 'react';
+import { styleInputLarge } from 'theme';
 
 interface IProps {
   control: Control<IRegisterForm, object>;
@@ -89,25 +90,16 @@ const Step1 = (props: IProps) => {
   return (
     <>
       <Box sx={{ width: '100%' }}>
-        <Typography component="label" htmlFor="citizenId" variant="label">
-          Số CMND/CCCD{' '}
-          <Box component="span" color={colors.red[700]}>
-            (*)
-          </Box>
-        </Typography>
+        <Label required htmlFor="citizenId">
+          Số CMND/CCCD
+        </Label>
         <Controller
           name="citizenId"
           control={control}
           defaultValue=""
           render={({ field }) => (
             <TextField
-              sx={{
-                height: '50px',
-                mt: 1,
-                '& > div': {
-                  height: '100%'
-                }
-              }}
+              sx={styleInputLarge}
               fullWidth
               placeholder="Số CMND/CCCD"
               {...field}
@@ -120,9 +112,9 @@ const Step1 = (props: IProps) => {
         )}
       </Box>
       <Box sx={{ width: '100%' }}>
-        <Typography component="p" variant="label" mt={2}>
+        <Label mt={2} mb={1} sx={{ display: 'block' }} htmlFor="citizenImages">
           Ảnh chụp CMND/CCCD 2 mặt
-        </Typography>
+        </Label>
         <FileInput
           register={register}
           value={watch('citizenImages')}

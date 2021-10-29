@@ -8,8 +8,8 @@ export interface IRegisterForm {
   imageName: string;
   citizenImages: IFile[];
   fullName: string;
-  dob: Date | null;
-  gender: string;
+  dob: Date | undefined;
+  gender: 'Nam' | 'Nữ' | 'Khác';
   phoneNumber: string;
   cityProvince: string;
   district: string;
