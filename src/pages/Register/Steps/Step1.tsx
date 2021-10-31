@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ClearIcon from '@mui/icons-material/Clear';
 import {
@@ -7,6 +8,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Stack,
   TextField,
   Typography
 } from '@mui/material';
@@ -14,7 +16,6 @@ import ErrorMessage from 'components/ErrorMessage';
 import FileInput from 'components/FileInput';
 import Label from 'components/Label';
 import { IRegisterForm } from 'models/register';
-import { useState } from 'react';
 import {
   Control,
   Controller,
@@ -101,8 +102,8 @@ const Step1 = (props: IProps) => {
   // @ts-ignore
   const imageError = errors.citizenImages?.message;
   return (
-    <>
-      <Box sx={{ width: '100%' }}>
+    <Stack width="100%" spacing={2}>
+      <Box>
         <Label required htmlFor="citizenId">
           Số CMND/CCCD
         </Label>
@@ -110,20 +111,20 @@ const Step1 = (props: IProps) => {
           name="citizenId"
           control={control}
           defaultValue=""
-          render={({ field }) => (
+          render={({ field, fieldState: { invalid, error } }) => (
             <TextField
               sx={styleInputLarge}
               fullWidth
               placeholder="Số CMND/CCCD"
               {...field}
-              id="citizenId"
+              error={invalid}
+              helperText={error?.message}
             />
           )}
         />
-        <ErrorMessage>{errors.citizenId?.message}</ErrorMessage>
       </Box>
-      <Box sx={{ width: '100%' }}>
-        <Label mt={2} mb={1} sx={{ display: 'block' }} htmlFor="citizenImages">
+      <Box>
+        <Label mb={1} sx={{ display: 'block' }} htmlFor="citizenImages">
           Ảnh chụp CMND/CCCD 2 mặt
         </Label>
         <FileInput
@@ -134,7 +135,7 @@ const Step1 = (props: IProps) => {
           onRemoveImages={handleRemoveImage}
           maxlength={2}
         />
-        <ErrorMessage>{imageError}</ErrorMessage>
+        {!!imageError && <ErrorMessage>{imageError}</ErrorMessage>}
       </Box>
       <Box
         sx={{
@@ -143,7 +144,7 @@ const Step1 = (props: IProps) => {
           alignItems: 'center',
           width: '100%'
         }}
-        mt={2}>
+        pt={1}>
         <Button
           type={'button'}
           disabled={disableButton}
@@ -160,9 +161,11 @@ const Step1 = (props: IProps) => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            padding: '12px 11px 12px 24px'
           }}>
           <Typography
+            mr={1}
             component="p"
             variant="h6"
             sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -180,7 +183,7 @@ const Step1 = (props: IProps) => {
           />
         </DialogContent>
       </Dialog>
-    </>
+    </Stack>
   );
 };
 

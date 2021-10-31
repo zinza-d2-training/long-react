@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, colors, IconButton, Theme } from '@mui/material';
 import { SxProps } from '@mui/system';
 import { IFile, IRegisterForm } from 'models/register';
@@ -105,11 +106,13 @@ const FileInput = (props: IProps) => {
                 transition: '200ms'
               }}>
               <IconButton
+                size="small"
                 sx={{ color: '#fff' }}
                 onClick={() => onChangeSelectedImages(file.name, preview)}>
                 <VisibilityIcon />
               </IconButton>
               <IconButton
+                size="small"
                 sx={{ color: '#fff' }}
                 onClick={() => onRemoveImages(index)}>
                 <DeleteOutlinedIcon />
@@ -123,7 +126,11 @@ const FileInput = (props: IProps) => {
             <Box
               component="label"
               htmlFor="citizenImages"
-              sx={{ ...stylePreview, backgroundColor: colors.grey[100] }}>
+              sx={{
+                ...stylePreview,
+                backgroundColor: colors.grey[100],
+                '&:hover': { border: `1px dashed ${colors.blue[700]}` }
+              }}>
               + Upload
             </Box>
           ) : null
@@ -131,7 +138,11 @@ const FileInput = (props: IProps) => {
           <Box
             component="label"
             htmlFor="citizenImages"
-            sx={{ ...stylePreview, backgroundColor: colors.grey[100] }}>
+            sx={{
+              ...stylePreview,
+              backgroundColor: colors.grey[100],
+              '&:hover': { border: `1px dashed ${colors.blue[700]}` }
+            }}>
             + Upload
           </Box>
         )}

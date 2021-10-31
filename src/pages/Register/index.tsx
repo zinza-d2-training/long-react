@@ -1,10 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Step, StepLabel, Stepper, Typography } from '@mui/material';
+import {
+  Box,
+  Stack,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography
+} from '@mui/material';
 import OtpDialog from 'components/OtpDialog';
 import { useClock } from 'hooks';
 import { IRegisterForm } from 'models/register';
 import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
 import { PATH_LOGIN } from 'routes';
 import { isNumberOrNull } from 'utils/validate';
@@ -29,6 +36,11 @@ const defaultValues: IRegisterForm = {
 const START_TIME = { hours: 0, minutes: 0, seconds: 0 };
 
 const Register = () => {
+  const form = useForm<IRegisterForm>({
+    resolver: yupResolver(registerSchema),
+    mode: 'onChange',
+    defaultValues
+  });
   const {
     register,
     control,
@@ -39,11 +51,7 @@ const Register = () => {
     watch,
     clearErrors,
     formState: { errors, touchedFields }
-  } = useForm<IRegisterForm>({
-    resolver: yupResolver(registerSchema),
-    mode: 'onChange',
-    defaultValues
-  });
+  } = form;
 
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -119,77 +127,81 @@ const Register = () => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
           flex: 1
         }}>
-        <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '580px',
-            maxWidth: '100%'
-          }}>
-          <Typography variant="h4" fontWeight="bold" mb={3}>
-            Đăng ký tài khoản
-          </Typography>
-          <Stepper
-            activeStep={currentStep}
-            alternativeLabel
-            sx={{ width: '100%' }}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <Box width="420px" mt={3}>
-            <Box
-              sx={{
-                display: currentStep === 0 ? ' flex' : 'none',
-                flexDirection: 'column',
-                alignItems: 'center'
-              }}>
-              <Step1
-                control={control}
-                errors={errors}
-                register={register}
-                watch={watch}
-                getValues={getValues}
-                setValue={setValue}
-                setError={setError}
-                clearErrors={clearErrors}
-                onNextStep={handleNextStep}
-              />
-            </Box>
-
-            <Box sx={{ display: currentStep === 1 ? ' block' : 'none' }}>
-              <Step2
-                control={control}
-                errors={errors}
-                onNextStep={handleNextStep}
-                onBackStep={handleBackStep}
-                watch={watch}
-              />
-            </Box>
-
-            <Box sx={{ display: currentStep === 2 ? ' block' : 'none' }}>
-              <Step3
-                watch={watch}
-                control={control}
-                errors={errors}
-                setValue={setValue}
-                onBackStep={handleBackStep}
-                setError={setError}
-                clearErrors={clearErrors}
-                touchedFields={touchedFields}
-              />
-            </Box>
+        <FormProvider {...form}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              width: '580px',
+              maxWidth: '100%',
+              mt: '100px',
+              '@media(min-height: 920px)': {
+                mt: '25vh'
+              }
+            }}>
+            <Stack spacing={3} width="100%" alignItems="center">
+              <Typography variant="h4" fontWeight="bold" align="center">
+                Đăng ký tài khoản
+              </Typography>
+              <Stepper
+                activeStep={currentStep}
+                alternativeLabel
+                sx={{ width: '100%' }}>
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              <Box width="380px">
+                <Box
+                  sx={{
+                    display: currentStep === 0 ? ' flex' : 'none',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                  }}>
+                  <Step1
+                    control={control}
+                    errors={errors}
+                    register={register}
+                    watch={watch}
+                    getValues={getValues}
+                    setValue={setValue}
+                    setError={setError}
+                    clearErrors={clearErrors}
+                    onNextStep={handleNextStep}
+                  />
+                </Box>
+                <Box sx={{ display: currentStep === 1 ? ' block' : 'none' }}>
+                  <Step2
+                    control={control}
+                    errors={errors}
+                    onNextStep={handleNextStep}
+                    onBackStep={handleBackStep}
+                    watch={watch}
+                  />
+                </Box>
+                <Box sx={{ display: currentStep === 2 ? ' block' : 'none' }}>
+                  <Step3
+                    watch={watch}
+                    control={control}
+                    errors={errors}
+                    setValue={setValue}
+                    onBackStep={handleBackStep}
+                    setError={setError}
+                    clearErrors={clearErrors}
+                    touchedFields={touchedFields}
+                  />
+                </Box>
+              </Box>
+            </Stack>
           </Box>
-        </Box>
+        </FormProvider>
         <OtpDialog
           open={isOpenModal}
           otp={otp}

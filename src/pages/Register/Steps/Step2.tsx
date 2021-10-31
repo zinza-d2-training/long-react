@@ -1,4 +1,4 @@
-import { Box, Button, MenuItem, TextField } from '@mui/material';
+import { Box, Button, MenuItem, Stack, TextField } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ErrorMessage from 'components/ErrorMessage';
@@ -32,34 +32,32 @@ const Step2 = (props: IProps) => {
     !watch('gender') ||
     !watch('phoneNumber');
   return (
-    <>
+    <Stack spacing={2}>
       <Box>
-        <Label required htmlFor="fullName">
-          Họ và tên
-        </Label>
+        <Label required>Họ và tên</Label>
         <Controller
           name="fullName"
           defaultValue=""
           control={control}
-          render={({ field }) => (
+          render={({ field, fieldState: { invalid, error } }) => (
             <TextField
               placeholder="Họ và tên"
               sx={styleInputLarge}
               fullWidth
               {...field}
-              id="fullName"
+              error={invalid}
+              helperText={error?.message}
             />
           )}
         />
-        <ErrorMessage>{errors.fullName?.message}</ErrorMessage>
       </Box>
-      <Box mt={1}>
+      <Box>
         <Label required>Ngày sinh</Label>
         <Controller
           name="dob"
           control={control}
           defaultValue={new Date()}
-          render={({ field }) => (
+          render={({ field, fieldState: { invalid, error } }) => (
             <TextField
               placeholder="Ngày/Tháng/Năm"
               sx={styleInputLarge}
@@ -67,54 +65,58 @@ const Step2 = (props: IProps) => {
               type="date"
               {...field}
               autoComplete=""
+              error={invalid}
+              helperText={error?.message}
             />
           )}
         />
-        <ErrorMessage>{errors.dob?.message}</ErrorMessage>
       </Box>
-      <Box mt={1}>
+      <Box>
         <Label required>Giới tinh</Label>
         <Controller
           name="gender"
           control={control}
           defaultValue="Nam"
-          render={({ field }) => (
+          render={({ field, fieldState: { invalid, error } }) => (
             <TextField
               placeholder="Giới tinh"
               sx={styleInputLarge}
               fullWidth
               {...field}
+              error={invalid}
+              helperText={error?.message}
               select>
               <MenuItem value="Nam">Nam</MenuItem>
               <MenuItem value="Nữ">Nữ</MenuItem>
             </TextField>
           )}
         />
-        <ErrorMessage>{errors.gender?.message}</ErrorMessage>
       </Box>
-      <Box mb={2} mt={1}>
+      <Box>
         <Label required>Số điện thoại</Label>
         <Controller
           name="phoneNumber"
           control={control}
           defaultValue=""
-          render={({ field }) => (
+          render={({ field, fieldState: { invalid, error } }) => (
             <TextField
               placeholder="Số điện thoại"
               sx={styleInputLarge}
               fullWidth
               {...field}
+              error={invalid}
+              helperText={error?.message}
             />
           )}
         />
-        <ErrorMessage>{errors.phoneNumber?.message}</ErrorMessage>
       </Box>
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          width: '100%'
+          width: '100%',
+          pt: 1
         }}>
         <Button
           onClick={onBackStep}
@@ -130,7 +132,7 @@ const Step2 = (props: IProps) => {
           Tiếp tục
         </Button>
       </Box>
-    </>
+    </Stack>
   );
 };
 

@@ -1,9 +1,10 @@
 import {
   Autocomplete,
-  Box,
-  TextField,
   AutocompleteChangeReason,
-  Button
+  Box,
+  Button,
+  Stack,
+  TextField
 } from '@mui/material';
 import { IRegisterForm } from 'models/register';
 import { SyntheticEvent, useEffect, useState } from 'react';
@@ -11,19 +12,18 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
   Control,
-  FieldErrors,
-  UseFormWatch,
   Controller,
-  UseFormSetValue,
-  UseFormSetError,
+  FieldErrors,
+  FieldNamesMarkedBoolean,
   UseFormClearErrors,
-  FieldNamesMarkedBoolean
+  UseFormSetError,
+  UseFormSetValue,
+  UseFormWatch
 } from 'react-hook-form';
 
 import { ICity, IDistrict, IWard } from 'models';
 import { addressData } from 'utils/addressData';
 import Label from 'components/Label';
-import ErrorMessage from 'components/ErrorMessage';
 import { styleInputLarge } from 'theme';
 
 interface IProps {
@@ -110,14 +110,17 @@ const Step3 = (props: IProps) => {
     setValue('wards', '');
   }, [districts, selectedDistrict, setValue]);
   return (
-    <>
+    <Stack spacing={2}>
       <Box>
         <Label required>Tỉnh/Thành phố</Label>
         <Controller
           control={control}
           name="cityProvince"
           defaultValue={watch('cityProvince')}
-          render={({ field: { value, ...formField } }) => {
+          render={({
+            field: { value, ...formField },
+            fieldState: { invalid, error }
+          }) => {
             const inputValue = cities.find(({ id }) => id === value);
             return (
               <Autocomplete
@@ -148,23 +151,25 @@ const Step3 = (props: IProps) => {
                     value={watch('cityProvince')}
                     sx={styleInputLarge}
                     placeholder="Tỉnh/Thành phố"
+                    error={invalid}
+                    helperText={error?.message}
                   />
                 )}
               />
             );
           }}
         />
-        <ErrorMessage>
-          {touchedFields.cityProvince && errors.cityProvince?.message}
-        </ErrorMessage>
       </Box>
-      <Box mt={1}>
+      <Box>
         <Label required>Quận/Huyện</Label>
         <Controller
           control={control}
           name="district"
           defaultValue={watch('district')}
-          render={({ field: { value, ...formField } }) => {
+          render={({
+            field: { value, ...formField },
+            fieldState: { invalid, error }
+          }) => {
             const inputValue = districts.find(({ id }) => id === value);
             return (
               <Autocomplete
@@ -198,6 +203,8 @@ const Step3 = (props: IProps) => {
                       {...params}
                       sx={styleInputLarge}
                       placeholder="Quận/huyện"
+                      error={invalid}
+                      helperText={error?.message}
                     />
                   );
                 }}
@@ -205,17 +212,17 @@ const Step3 = (props: IProps) => {
             );
           }}
         />
-        <ErrorMessage>
-          {touchedFields.district && errors.district?.message}
-        </ErrorMessage>
       </Box>
-      <Box mt={1}>
+      <Box>
         <Label required>Xã/Phường</Label>
         <Controller
           control={control}
           name="wards"
           defaultValue={watch('wards')}
-          render={({ field: { value, ...formField } }) => {
+          render={({
+            field: { value, ...formField },
+            fieldState: { invalid, error }
+          }) => {
             const inputValue = wards.find(({ id }) => id === value);
             return (
               <Autocomplete
@@ -249,6 +256,8 @@ const Step3 = (props: IProps) => {
                       {...params}
                       sx={styleInputLarge}
                       placeholder="Xã/Phường"
+                      error={invalid}
+                      helperText={error?.message}
                     />
                   );
                 }}
@@ -256,16 +265,14 @@ const Step3 = (props: IProps) => {
             );
           }}
         />
-        <ErrorMessage>
-          {touchedFields.wards && errors.wards?.message}
-        </ErrorMessage>
       </Box>
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          width: '100%'
+          width: '100%',
+          pt: 1
         }}
         mt={2}>
         <Button
@@ -281,7 +288,7 @@ const Step3 = (props: IProps) => {
           Tiếp tục
         </Button>
       </Box>
-    </>
+    </Stack>
   );
 };
 

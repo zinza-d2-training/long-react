@@ -2,7 +2,17 @@ import { Theme } from '@mui/material';
 import { SxProps } from '@mui/system';
 
 export const styleInputLarge: SxProps<Theme> = {
-  height: '50px',
+  '.MuiInputBase-root': {
+    height: '50px'
+  },
+  '.MuiFormHelperText-root': {
+    marginLeft: 0,
+    marginRight: 0
+  },
+  '.MuiInputBase-root .MuiAutocomplete-input': {
+    paddingTop: '4.5px !important',
+    paddingBottom: '4.5px !important'
+  },
   mt: 1,
   '& > div': {
     height: '100%'
