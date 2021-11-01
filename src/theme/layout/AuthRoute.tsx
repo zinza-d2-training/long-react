@@ -4,9 +4,11 @@ import { useAppSelector } from 'store';
 import { authSelector } from 'store/slices/authSlice';
 
 const AuthRoute = (props: RouteProps) => {
-  const token = useAppSelector(authSelector).token;
+  const auth = useAppSelector(authSelector);
+  const token = auth.token;
+  const useInfo = auth.userInfo;
 
-  if (token) {
+  if (token && useInfo) {
     return <Redirect to={RoutePaths.home} />;
   } else {
     return <Route {...props} />;

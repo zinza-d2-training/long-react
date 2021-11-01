@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { authApi } from 'api';
 import { ILogin } from 'models';
 import { IUserInfo } from 'models/userInfo';
@@ -22,6 +22,16 @@ export const login = createAsyncThunk(
   }
 );
 
+export const getUserInfo = createAsyncThunk(
+  'auth/getUserInfo',
+  async (empty, { rejectWithValue }) => {
+    try {
+      const res = await authApi.getUserInfo();
+      return res;
+    } catch {}
+  }
+);
+
 const initialState: IInitialState = {
   userInfo: null,
   token: null,
@@ -30,7 +40,12 @@ const initialState: IInitialState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logout(state) {
+      state.token = null;
+      state.userInfo = null;
+    }
+  },
   extraReducers(builder) {
     builder.addCase(login.pending, (state) => {
       state.loading = true;
@@ -42,9 +57,23 @@ const authSlice = createSlice({
     builder.addCase(login.rejected, (state) => {
       state.loading = false;
     });
+
+    builder.addCase(getUserInfo.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getUserInfo.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userInfo = action.payload as IUserInfo;
+    });
+    builder.addCase(getUserInfo.rejected, (state) => {
+      state.userInfo = null;
+      state.loading = false;
+      state.token = null;
+    });
   }
 });
 
+export const { logout } = authSlice.actions;
 export const authSelector = (state: RootState) => state.auth;
 
 export default authSlice.reducer;

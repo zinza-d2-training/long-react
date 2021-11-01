@@ -14,7 +14,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Link, Link as RouterLink } from 'react-router-dom';
 import { RoutePaths } from 'routes';
 import { useAppDispatch, useAppSelector } from 'store';
-import { authSelector, login } from 'store/slices/authSlice';
+import { authSelector, getUserInfo, login } from 'store/slices/authSlice';
 import { styleInputLarge } from 'theme';
 import { loginSchema } from 'validations';
 
@@ -30,8 +30,11 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector(authSelector);
 
-  const onSubmit: SubmitHandler<ILogin> = (data) => {
-    dispatch(login(data));
+  const onSubmit: SubmitHandler<ILogin> = async (data) => {
+    try {
+      await dispatch(login(data));
+      await dispatch(getUserInfo());
+    } catch {}
   };
 
   return (

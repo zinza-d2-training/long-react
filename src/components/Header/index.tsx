@@ -4,6 +4,7 @@ import {
   Button,
   colors,
   Container,
+  IconButton,
   Menu,
   MenuItem,
   Stack,
@@ -15,6 +16,10 @@ import StyledButton from 'components/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RoutePaths } from 'routes';
+import { useAppDispatch, useAppSelector } from 'store';
+import { authSelector, logout } from 'store/slices/authSlice';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import { useHistory } from 'react-router-dom';
 
 const menuItemStyle: SxProps<Theme> = {
   color: (theme) => theme.palette.text.primary,
@@ -26,6 +31,11 @@ const menuItemStyle: SxProps<Theme> = {
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const useInfo = useAppSelector(authSelector).userInfo;
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -34,11 +44,20 @@ const Header = () => {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push(RoutePaths.login);
+  };
+
   return (
     <Box
       sx={{
         background:
-          'linear-gradient(90deg, #ED1B23 0%, #2E3091 52.08%, #253494 100%)'
+          'linear-gradient(90deg, #ED1B23 0%, #2E3091 52.08%, #253494 100%)',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw'
       }}>
       <Container maxWidth="lg">
         <Box
@@ -50,7 +69,7 @@ const Header = () => {
           }}>
           <Stack direction="row" alignItems="center">
             <img src="images/logo_white.png" alt="" />
-            <Typography ml={2} color="#fff" variant="h5">
+            <Typography ml={2} color="#fff">
               CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
             </Typography>
           </Stack>
@@ -89,20 +108,31 @@ const Header = () => {
               Tài liệu
             </Typography>
 
-            <StyledButton
-              variant="contained"
-              sx={{
-                backgroundColor: '#fff',
-                '&:hover': { backgroundColor: '#fff' }
-              }}>
-              <Typography
-                sx={{ textDecoration: 'none', color: colors.indigo[700] }}
-                variant="button"
-                component={Link}
-                to={RoutePaths.login}>
-                Đăng nhập
-              </Typography>
-            </StyledButton>
+            {useInfo ? (
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Typography variant="body1" sx={{ color: '#fff' }}>
+                  Hi {useInfo.username}
+                </Typography>
+                <IconButton onClick={handleLogout} sx={{ color: '#f00' }}>
+                  <PowerSettingsNewIcon />
+                </IconButton>
+              </Stack>
+            ) : (
+              <StyledButton
+                variant="contained"
+                sx={{
+                  backgroundColor: '#fff',
+                  '&:hover': { backgroundColor: '#fff' }
+                }}>
+                <Typography
+                  sx={{ textDecoration: 'none', color: colors.indigo[700] }}
+                  variant="button"
+                  component={Link}
+                  to={RoutePaths.login}>
+                  Đăng nhập
+                </Typography>
+              </StyledButton>
+            )}
             <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
               <MenuItem>
                 <Typography

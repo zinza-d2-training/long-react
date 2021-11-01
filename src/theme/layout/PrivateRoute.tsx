@@ -4,8 +4,10 @@ import { useAppSelector } from 'store';
 import { authSelector } from 'store/slices/authSlice';
 
 const PrivateRoute = (props: RouteProps) => {
-  const token = useAppSelector(authSelector).token;
-  if (token) {
+  const auth = useAppSelector(authSelector);
+  const token = auth.token;
+  const useInfo = auth.userInfo;
+  if (token && useInfo) {
     return (
       <Route
         path={props.path}

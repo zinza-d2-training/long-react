@@ -1,5 +1,6 @@
 import { Box, Theme } from '@mui/material';
 import { SxProps } from '@mui/system';
+import Footer from 'components/Footer';
 import Header from 'components/Header';
 import { FC } from 'react';
 
@@ -20,13 +21,21 @@ const Layout: FC = (props) => {
   );
 };
 
-export const HeaderLayout: FC = (props) => {
+export const AppLayout: FC = (props) => {
   return (
     <Box sx={appStyle}>
       <Header />
-      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <Box
+        sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          pt: '50px',
+          pb: 3
+        }}>
         {props.children}
       </Box>
+      <Footer />
     </Box>
   );
 };

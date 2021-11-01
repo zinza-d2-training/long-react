@@ -163,5 +163,65 @@ export const injectedByTotalSupplied: IInjectedByTotalSupplied[] = [
     province: 'Tuyên Quang',
     amount: 317372,
     totalSupplied: 307650
+  },
+  {
+    province: 'Nghệ An',
+    amount: 1152668,
+    totalSupplied: 1119940
+  },
+  {
+    province: 'Hải Dương',
+    amount: 1190456,
+    totalSupplied: 1158660
+  },
+  {
+    province: 'Kiên Giang',
+    amount: 1343041,
+    totalSupplied: 2242630
+  },
+  {
+    province: 'Trà Vinh',
+    amount: 532043,
+    totalSupplied: 838900
+  },
+  {
+    province: 'An Giang',
+    amount: 1430390,
+    totalSupplied: 2178620
+  },
+  {
+    province: 'Quảng Bình',
+    amount: 444268,
+    totalSupplied: 641510
+  },
+  {
+    province: 'Hải Phòng',
+    amount: 1289547,
+    totalSupplied: 1834200
+  },
+  {
+    province: 'Bạc Liêu',
+    amount: 529817,
+    totalSupplied: 737280
+  },
+  {
+    province: 'Vĩnh Long',
+    amount: 871886,
+    totalSupplied: 1210720
+  },
+  {
+    province: 'Bà Rịa - Vũng Tàu',
+    amount: 1117514,
+    totalSupplied: 1551505
+  },
+  {
+    province: 'Hậu Giang',
+    amount: 519600,
+    totalSupplied: 719340
+  },
+  {
+    province: 'Bình Phước',
+    amount: 690770,
+    totalSupplied: 946200
   }
 ];

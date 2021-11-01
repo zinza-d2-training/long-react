@@ -7,9 +7,16 @@ import {
   Typography
 } from '@mui/material';
 import { SxProps } from '@mui/system';
-import { HeaderLayout } from 'theme/layout';
-import { Line } from 'react-chartjs-2';
-import { injectedByDay } from 'utils/fakeDataDashboard';
+import { Bar, Line } from 'react-chartjs-2';
+import { AppLayout } from 'theme/layout';
+import {
+  injectedByDay,
+  injectedByTotalSupplied
+} from 'utils/fakeDataDashboard';
+import {
+  getHighestInjectionRate,
+  getLowestInjectionRate
+} from 'utils/filterData';
 
 const boxInfoStyle: SxProps<Theme> = {
   flex: 1,
@@ -57,16 +64,44 @@ const Home = () => {
     ]
   };
 
-  const options = {
-    scales: {
-      y: {
-        beginAtZero: true
+  const highestInjectionRate = getHighestInjectionRate(
+    injectedByTotalSupplied,
+    10
+  );
+
+  const dataHighestInjectionRate = {
+    labels: highestInjectionRate.map((item) => item.province),
+    datasets: [
+      {
+        label: 'Tổng tiêm / tổng phân bố (%)',
+        data: highestInjectionRate.map((item) => item.percent),
+        backgroundColor: [colors.indigo[700]],
+        borderWidth: 0,
+        maxBarThickness: 20
       }
-    }
+    ]
+  };
+
+  const lowestInjectionRate = getLowestInjectionRate(
+    injectedByTotalSupplied,
+    10
+  );
+
+  const dataLowestInjectionRate = {
+    labels: lowestInjectionRate.map((item) => item.province),
+    datasets: [
+      {
+        label: 'Tổng tiêm / tổng phân bố (%)',
+        data: lowestInjectionRate.map((item) => item.percent),
+        backgroundColor: [colors.blue[500]],
+        borderWidth: 0,
+        maxBarThickness: 20
+      }
+    ]
   };
 
   return (
-    <HeaderLayout>
+    <AppLayout>
       <Box sx={{ backgroundColor: '#fff', flex: 1 }}>
         <Container maxWidth="lg">
           <Box
@@ -107,12 +142,106 @@ const Home = () => {
           <Box p={4} sx={boxStyle}>
             <Box>
               <Typography variant="h6">Dữ liệu tiêm theo ngày</Typography>
-              <Line data={dataInjectedByDay} options={options} />
+              <Line
+                data={dataInjectedByDay}
+                options={{
+                  scales: {
+                    y: {
+                      beginAtZero: false
+                    }
+                  }
+                }}
+              />
+            </Box>
+          </Box>
+          <Box sx={{ display: 'flex', mt: 5 }}>
+            <Box
+              sx={{
+                ...boxStyle,
+                flex: 1,
+                px: 2,
+                py: 3,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}>
+              <Typography variant="h6" width="100%" align="left">
+                10 Địa phương có tỷ lệ tiêm cao nhất
+              </Typography>
+              <Typography variant="body2" width="100%" align="left">
+                (Tính theo số mũi tiêm/ số vắc xin phân bổ theo quyết định)
+              </Typography>
+              <Box sx={{ px: 3, width: '100%' }}>
+                <Bar
+                  options={{
+                    indexAxis: 'y',
+                    elements: {
+                      bar: {
+                        borderWidth: 0
+                      }
+                    },
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        display: false
+                      },
+                      title: {
+                        display: false
+                      }
+                    }
+                  }}
+                  data={dataHighestInjectionRate}
+                  height={410}
+                />
+              </Box>
+            </Box>
+            <Box sx={{ width: '24px' }} />
+            <Box
+              sx={{
+                ...boxStyle,
+                flex: 1,
+                px: 2,
+                py: 3,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}>
+              <Typography variant="h6" width="100%" align="left">
+                10 Địa phương có tỷ lệ tiêm thấp nhất
+              </Typography>
+              <Typography variant="body2" width="100%" align="left">
+                (Tính theo số mũi tiêm/ số vắc xin phân bổ theo quyết định)
+              </Typography>
+              <Box sx={{ px: 3, width: '100%' }}>
+                <Bar
+                  options={{
+                    indexAxis: 'y',
+                    // Elements options apply to all of the options unless overridden in a dataset
+                    // In this case, we are setting the border of each horizontal bar to be 2px wide
+                    elements: {
+                      bar: {
+                        borderWidth: 0
+                      }
+                    },
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        display: false
+                      },
+                      title: {
+                        display: false
+                      }
+                    }
+                  }}
+                  data={dataLowestInjectionRate}
+                  height={410}
+                />
+              </Box>
             </Box>
           </Box>
         </Container>
       </Box>
-    </HeaderLayout>
+    </AppLayout>
   );
 };
 
