@@ -1,20 +1,20 @@
-import React from 'react';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, colors, IconButton, Theme } from '@mui/material';
 import { SxProps } from '@mui/system';
-import { IFile, IRegisterForm } from 'models/register';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { UseFormRegister } from 'react-hook-form';
+import { IFile } from 'models/register';
+import React from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface IProps {
-  register: UseFormRegister<IRegisterForm>;
+  register: UseFormRegisterReturn;
   value: IFile[];
   maxlength?: number;
   id?: string;
   accept?: 'image/*' | 'video/*';
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeSelectedImages: (name: string, blob: string) => void;
-  onRemoveImages: (imageIndex: number) => void;
+  onClickPreviewIcon: (name: string, blob: string) => void;
+  onClickRemoveIcon: (imageIndex: number) => void;
 }
 
 const stylePreview: SxProps<Theme> = {
@@ -51,8 +51,8 @@ const FileInput = (props: IProps) => {
     register,
     onChange,
     value,
-    onChangeSelectedImages,
-    onRemoveImages,
+    onClickPreviewIcon,
+    onClickRemoveIcon,
     maxlength = 10000,
     id,
     accept
@@ -60,7 +60,7 @@ const FileInput = (props: IProps) => {
   return (
     <Box>
       <input
-        {...register('imageName')}
+        {...register}
         onChange={onChange}
         type="file"
         accept={accept}
@@ -112,13 +112,13 @@ const FileInput = (props: IProps) => {
               <IconButton
                 size="small"
                 sx={{ color: '#fff' }}
-                onClick={() => onChangeSelectedImages(file.name, preview)}>
+                onClick={() => onClickPreviewIcon(file.name, preview)}>
                 <VisibilityIcon />
               </IconButton>
               <IconButton
                 size="small"
                 sx={{ color: '#fff' }}
-                onClick={() => onRemoveImages(index)}>
+                onClick={() => onClickRemoveIcon(index)}>
                 <DeleteOutlinedIcon />
               </IconButton>
             </Box>

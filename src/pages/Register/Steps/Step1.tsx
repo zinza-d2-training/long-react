@@ -109,11 +109,11 @@ const Step1 = (props: IProps) => {
           Ảnh chụp CMND/CCCD 2 mặt
         </Label>
         <FileInput
-          register={register}
+          register={register('imageName')}
           value={watch('citizenImages')}
           onChange={handleChangeImage}
-          onChangeSelectedImages={handleChangeSelectedImage}
-          onRemoveImages={handleRemoveImage}
+          onClickPreviewIcon={handleChangeSelectedImage}
+          onClickRemoveIcon={handleRemoveImage}
           maxlength={2}
           id="citizenImageInput"
           accept="image/*"
