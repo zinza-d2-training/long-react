@@ -117,7 +117,7 @@ const Login = () => {
               variant="body2"
               mb={3}
               align="right"
-              sx={{ color: colors.indigo[600] }}>
+              sx={{ color: colors.indigo[600], textDecoration: 'none' }}>
               Quên mật khẩu?
             </Typography>
           </Box>
