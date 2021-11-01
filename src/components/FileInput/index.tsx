@@ -41,6 +41,7 @@ const FileInput = () => {
       max={2}
       inputProps={{ ...register('imageName'), onChange: handleChangeImage }}
       onRemoveImage={handleRemoveImage}
+      multiple
     />
   );
 };

@@ -48,12 +48,13 @@ interface IProps {
   files: IFile[];
   max?: number;
   min?: number;
+  multiple?: boolean;
   inputProps?: HTMLAttributes<HTMLInputElement>;
   onRemoveImage: (imageIndex: number) => void;
 }
 
 const FilePicker = (props: IProps) => {
-  const { files, max = 10000, inputProps, onRemoveImage } = props;
+  const { files, max = 10000, inputProps, onRemoveImage, multiple } = props;
 
   const [selectedImage, setSelectedImage] = useState<{
     name: string;
@@ -73,6 +74,7 @@ const FilePicker = (props: IProps) => {
         {...inputProps}
         style={{ display: 'none' }}
         type="file"
+        multiple={multiple}
         id={id ? id : 'file_picker_id'}
       />
       <Box
