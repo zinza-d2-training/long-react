@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import ErrorMessage from 'components/ErrorMessage';
 import Label from 'components/Label';
-import { ICity, IDistrict, IWard } from 'models';
+import { IProvince, IDistrict, IWard } from 'models';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
@@ -33,7 +33,7 @@ const Step3 = (props: IProps) => {
   const selectedCity = watch('cityProvince');
   const selectedDistrict = watch('district');
   const selectedWard = watch('wards');
-  const [cities] = useState<ICity[]>(addressData);
+  const [cities] = useState<IProvince[]>(addressData);
   const [districts, setDistricts] = useState<IDistrict[]>([]);
   const [wards, setWards] = useState<IWard[]>([]);
 
@@ -108,7 +108,7 @@ const Step3 = (props: IProps) => {
                 value={inputValue}
                 onChange={(
                   event: SyntheticEvent<Element, Event>,
-                  newValue: ICity | null,
+                  newValue: IProvince | null,
                   reason: AutocompleteChangeReason
                 ) => {
                   if (newValue) {

@@ -21,7 +21,7 @@ export const registerSchema = yup.object().shape({
     ),
   fullName: yup.string().required('Trường này là bắt buộc'),
   dob: yup.string().required('Trường này là bắt buộc'),
-  gender: yup.string().required('Trường này là bắt buộc'),
+  gender: yup.number().required('Trường này là bắt buộc'),
   phoneNumber: yup
     .string()
     .required('Trường này là bắt buộc')

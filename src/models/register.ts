@@ -9,7 +9,7 @@ export interface IRegisterForm {
   citizenImages: IFile[];
   fullName: string;
   dob: Date | undefined;
-  gender: 'Nam' | 'Nữ';
+  gender: number;
   phoneNumber: string;
   cityProvince: string;
   district: string;

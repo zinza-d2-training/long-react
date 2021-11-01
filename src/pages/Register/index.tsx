@@ -21,7 +21,7 @@ const defaultValues: IRegisterForm = {
   district: '',
   dob: undefined,
   fullName: '',
-  gender: 'Nam',
+  gender: 1,
   phoneNumber: '',
   wards: ''
 };

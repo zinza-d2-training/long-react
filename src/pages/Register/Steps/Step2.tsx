@@ -73,7 +73,7 @@ const Step2 = (props: IProps) => {
         <Controller
           name="gender"
           control={control}
-          defaultValue="Nam"
+          defaultValue={1}
           render={({ field }) => (
             <TextField
               placeholder="Giới tinh"
@@ -81,8 +81,8 @@ const Step2 = (props: IProps) => {
               fullWidth
               {...field}
               select>
-              <MenuItem value="Nam">Nam</MenuItem>
-              <MenuItem value="Nữ">Nữ</MenuItem>
+              <MenuItem value={1}>Nam</MenuItem>
+              <MenuItem value={0}>Nữ</MenuItem>
             </TextField>
           )}
         />
