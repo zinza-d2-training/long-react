@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ClearIcon from '@mui/icons-material/Clear';
 import {
@@ -6,6 +7,7 @@ import {
   Dialog,
   DialogContent,
   IconButton,
+  Stack,
   TextField,
   Typography
 } from '@mui/material';
@@ -14,7 +16,6 @@ import ErrorMessage from 'components/ErrorMessage';
 import FileInput from 'components/FileInput';
 import Label from 'components/Label';
 import { IRegisterForm } from 'models/register';
-import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
 
@@ -82,8 +83,8 @@ const Step1 = (props: IProps) => {
     }
   };
   return (
-    <>
-      <Box sx={{ width: '100%' }}>
+    <Stack width="100%" spacing={2}>
+      <Box>
         <Label required htmlFor="citizenId">
           Số CMND/CCCD
         </Label>
@@ -91,20 +92,20 @@ const Step1 = (props: IProps) => {
           name="citizenId"
           control={control}
           defaultValue=""
-          render={({ field }) => (
+          render={({ field, fieldState: { invalid, error } }) => (
             <TextField
               sx={styleInputLarge}
               fullWidth
               placeholder="Số CMND/CCCD"
               {...field}
-              id="citizenId"
+              error={invalid}
+              helperText={error?.message}
             />
           )}
         />
-        <ErrorMessage>{errors.citizenId?.message}</ErrorMessage>
       </Box>
-      <Box sx={{ width: '100%' }}>
-        <Label mt={2} mb={1} sx={{ display: 'block' }} htmlFor="citizenImages">
+      <Box>
+        <Label mb={1} sx={{ display: 'block' }} htmlFor="citizenImages">
           Ảnh chụp CMND/CCCD 2 mặt
         </Label>
         <FileInput
@@ -126,7 +127,7 @@ const Step1 = (props: IProps) => {
           alignItems: 'center',
           width: '100%'
         }}
-        mt={2}>
+        pt={1}>
         <Button
           type={'button'}
           disabled={disableButton}
@@ -141,6 +142,7 @@ const Step1 = (props: IProps) => {
         sx={{ '& > div': { width: '490px', m: '0 auto' } }}>
         <StyledDialogTitle>
           <Typography
+            mr={1}
             component="p"
             variant="h6"
             sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -158,7 +160,7 @@ const Step1 = (props: IProps) => {
           />
         </DialogContent>
       </Dialog>
-    </>
+    </Stack>
   );
 };
 

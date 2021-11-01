@@ -5,11 +5,11 @@ import {
   AutocompleteChangeReason,
   Box,
   Button,
+  Stack,
   TextField
 } from '@mui/material';
-import ErrorMessage from 'components/ErrorMessage';
 import Label from 'components/Label';
-import { IProvince, IDistrict, IWard } from 'models';
+import { IDistrict, IProvince, IWard } from 'models';
 import { IRegisterForm } from 'models/register';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -29,7 +29,7 @@ const Step3 = (props: IProps) => {
     setError,
     clearErrors,
     setFocus,
-    formState: { touchedFields, errors }
+    formState: { errors }
   } = useFormContext<IRegisterForm>();
 
   const selectedProvince: number = watch('provinceId');
@@ -129,13 +129,13 @@ const Step3 = (props: IProps) => {
     }
   }, [districtOptions, selectedDistrict, setValue]);
   return (
-    <>
+    <Stack spacing={2}>
       <Box>
         <Label required>Tỉnh/Thành phố</Label>
         <Controller
           control={control}
           name="provinceId"
-          render={({ field }) => {
+          render={({ field, fieldState: { error, invalid } }) => {
             const valueAutocomplete = provinceOptions.find(
               ({ id }) => id === field.value
             );
@@ -157,22 +157,21 @@ const Step3 = (props: IProps) => {
                     {...params}
                     sx={styleInputLarge}
                     placeholder="Tỉnh/Thành phố"
+                    error={invalid}
+                    helperText={error?.message}
                   />
                 )}
               />
             );
           }}
         />
-        <ErrorMessage>
-          {touchedFields.provinceId && errors.provinceId?.message}
-        </ErrorMessage>
       </Box>
-      <Box mt={1}>
+      <Box>
         <Label required>Quận/Huyện</Label>
         <Controller
           control={control}
           name="districtId"
-          render={({ field }) => {
+          render={({ field, fieldState: { invalid, error } }) => {
             const valueAutocomplete = districtOptions.find(
               ({ id }) => id === field.value
             );
@@ -202,22 +201,21 @@ const Step3 = (props: IProps) => {
                       ...params.inputProps,
                       value: districtInputValue
                     }}
+                    error={invalid}
+                    helperText={invalid && error?.message}
                   />
                 )}
               />
             );
           }}
         />
-        <ErrorMessage>
-          {touchedFields.districtId && errors.districtId?.message}
-        </ErrorMessage>
       </Box>
-      <Box mt={1}>
+      <Box>
         <Label required>Xã/Phường</Label>
         <Controller
           control={control}
           name="wardsId"
-          render={({ field }) => {
+          render={({ field, fieldState: { error, invalid } }) => {
             const valueAutocomplete = wardOptions.find(
               ({ id }) => id === field.value
             );
@@ -242,22 +240,22 @@ const Step3 = (props: IProps) => {
                     sx={styleInputLarge}
                     onChange={(e) => setWardInputValue(e.target.value)}
                     inputProps={{ ...params.inputProps, value: wardInputValue }}
+                    error={invalid}
+                    helperText={invalid && error?.message}
                   />
                 )}
               />
             );
           }}
         />
-        <ErrorMessage>
-          {touchedFields.wardsId && errors.wardsId?.message}
-        </ErrorMessage>
       </Box>
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          width: '100%'
+          width: '100%',
+          pt: 1
         }}
         mt={2}>
         <Button
@@ -273,7 +271,7 @@ const Step3 = (props: IProps) => {
           Tiếp tục
         </Button>
       </Box>
-    </>
+    </Stack>
   );
 };
 

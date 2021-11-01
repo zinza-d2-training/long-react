@@ -1,5 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Step, StepLabel, Stepper, Typography } from '@mui/material';
+import {
+  Box,
+  Stack,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography
+} from '@mui/material';
 import OtpDialog from 'components/OtpDialog';
 import { useClock } from 'hooks';
 import { IRegisterForm } from 'models/register';
@@ -117,7 +124,6 @@ const Register = () => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
           flex: 1
         }}>
         <FormProvider {...formMethod}>

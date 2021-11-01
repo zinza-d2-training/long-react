@@ -1,4 +1,4 @@
-import { Box, colors, TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 import StyledButton from 'components/Button';
 import OtpDialog from 'components/OtpDialog';
 import { useClock } from 'hooks';
@@ -82,19 +82,15 @@ const ForgotPassword = () => {
         }}>
         <Box
           sx={{
-            width: '479px',
+            width: '380px',
             maxWidth: '100%',
-            p: '0 40px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center'
           }}>
           <Typography variant="body1" align="center">
             Để khôi phục mật khẩu, vui lòng nhập đúng số CMND/CCCD bạn đã dùng
-            để đăng ký{' '}
-            <Box component="span" sx={{ color: colors.red[700] }}>
-              (*)
-            </Box>
+            để đăng ký
           </Typography>
           <TextField
             placeholder="123456789"
