@@ -114,6 +114,8 @@ const Step1 = (props: IProps) => {
           onChangeSelectedImages={handleChangeSelectedImage}
           onRemoveImages={handleRemoveImage}
           maxlength={2}
+          id="citizenImageInput"
+          accept="image/*"
         />
         <ErrorMessage>{imageError}</ErrorMessage>
       </Box>

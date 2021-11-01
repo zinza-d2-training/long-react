@@ -9,6 +9,8 @@ interface IProps {
   register: UseFormRegister<IRegisterForm>;
   value: IFile[];
   maxlength?: number;
+  id?: string;
+  accept?: 'image/*' | 'video/*';
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeSelectedImages: (name: string, blob: string) => void;
   onRemoveImages: (imageIndex: number) => void;
@@ -50,7 +52,9 @@ const FileInput = (props: IProps) => {
     value,
     onChangeSelectedImages,
     onRemoveImages,
-    maxlength
+    maxlength = 10000,
+    id,
+    accept
   } = props;
   return (
     <Box>
@@ -58,10 +62,10 @@ const FileInput = (props: IProps) => {
         {...register('imageName')}
         onChange={onChange}
         type="file"
-        accept="image/**"
+        accept={accept}
         multiple
         style={{ display: 'none' }}
-        id="citizenImages"
+        id={id}
       />
       <Box
         sx={{
@@ -118,19 +122,10 @@ const FileInput = (props: IProps) => {
             <img src={preview} style={{ borderRadius: '4px' }} alt="" />
           </Box>
         ))}
-        {maxlength !== undefined ? (
-          value.length < maxlength ? (
-            <Box
-              component="label"
-              htmlFor="citizenImages"
-              sx={{ ...stylePreview, backgroundColor: colors.grey[100] }}>
-              + Upload
-            </Box>
-          ) : null
-        ) : (
+        {value.length < maxlength && (
           <Box
             component="label"
-            htmlFor="citizenImages"
+            htmlFor={id}
             sx={{ ...stylePreview, backgroundColor: colors.grey[100] }}>
             + Upload
           </Box>
