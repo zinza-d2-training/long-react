@@ -1,3 +1,5 @@
+import { NestedValue } from 'react-hook-form';
+
 export interface IFile {
   file: File;
   preview: string;
@@ -6,7 +8,7 @@ export interface IFile {
 export interface IRegisterForm {
   citizenId: string;
   imageName: string;
-  citizenImages: IFile[];
+  citizenImages: NestedValue<IFile[]>;
   fullName: string;
   dob: Date | undefined;
   gender: number;

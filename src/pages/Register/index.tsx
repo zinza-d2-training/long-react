@@ -4,7 +4,13 @@ import OtpDialog from 'components/OtpDialog';
 import { useClock } from 'hooks';
 import { IRegisterForm } from 'models/register';
 import { useEffect, useState } from 'react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  DefaultValues,
+  FormProvider,
+  Resolver,
+  SubmitHandler,
+  useForm
+} from 'react-hook-form';
 import { useHistory } from 'react-router';
 import { PATH_LOGIN } from 'routes';
 import { isNumberOrNull } from 'utils/validate';
@@ -13,7 +19,7 @@ import { Step1, Step2, Step3 } from './Steps';
 
 const steps = ['Số CMND/CCCD', 'Thông tin cá nhân', 'Địa chỉ'];
 
-const defaultValues: IRegisterForm = {
+const defaultValues: DefaultValues<IRegisterForm> = {
   citizenId: '',
   imageName: '',
   citizenImages: [],
@@ -30,7 +36,7 @@ const START_TIME = { hours: 0, minutes: 0, seconds: 0 };
 
 const Register = () => {
   const formMethod = useForm<IRegisterForm>({
-    resolver: yupResolver(registerSchema),
+    resolver: yupResolver(registerSchema) as Resolver<IRegisterForm>,
     mode: 'onChange',
     defaultValues
   });
@@ -139,7 +145,7 @@ const Register = () => {
                 </Step>
               ))}
             </Stepper>
-            <Box width="420px" mt={3}>
+            <Box width="380px" mt={3}>
               <Box
                 sx={{
                   display: currentStep === 0 ? ' flex' : 'none',
