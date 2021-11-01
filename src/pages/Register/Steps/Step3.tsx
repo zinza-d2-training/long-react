@@ -1,53 +1,35 @@
-import {
-  Autocomplete,
-  Box,
-  TextField,
-  AutocompleteChangeReason,
-  Button
-} from '@mui/material';
-import { IRegisterForm } from 'models/register';
-import { SyntheticEvent, useEffect, useState } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
-  Control,
-  FieldErrors,
-  UseFormWatch,
-  Controller,
-  UseFormSetValue,
-  UseFormSetError,
-  UseFormClearErrors,
-  FieldNamesMarkedBoolean
-} from 'react-hook-form';
-
-import { ICity, IDistrict, IWard } from 'models';
-import { addressData } from 'utils/addressData';
-import Label from 'components/Label';
+  Autocomplete,
+  AutocompleteChangeReason,
+  Box,
+  Button,
+  TextField
+} from '@mui/material';
 import ErrorMessage from 'components/ErrorMessage';
+import Label from 'components/Label';
+import { ICity, IDistrict, IWard } from 'models';
+import { SyntheticEvent, useEffect, useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
+import { addressData } from 'utils/addressData';
 
 interface IProps {
-  watch: UseFormWatch<IRegisterForm>;
-  control: Control<IRegisterForm, object>;
-  errors: FieldErrors<IRegisterForm>;
-  setValue: UseFormSetValue<IRegisterForm>;
-  setError: UseFormSetError<IRegisterForm>;
-  clearErrors: UseFormClearErrors<IRegisterForm>;
-  touchedFields: FieldNamesMarkedBoolean<IRegisterForm>;
   onBackStep: () => void;
 }
 
 const Step3 = (props: IProps) => {
+  const { onBackStep } = props;
   const {
     watch,
     control,
-    errors,
     setValue,
-    onBackStep,
     setError,
     clearErrors,
-    touchedFields
-  } = props;
+    formState: { touchedFields, errors }
+  } = useFormContext();
+
   const selectedCity = watch('cityProvince');
   const selectedDistrict = watch('district');
   const selectedWard = watch('wards');

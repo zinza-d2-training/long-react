@@ -1,27 +1,23 @@
-import { Box, Button, MenuItem, TextField } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, Button, MenuItem, TextField } from '@mui/material';
 import ErrorMessage from 'components/ErrorMessage';
 import Label from 'components/Label';
-import { IRegisterForm } from 'models/register';
-import {
-  Control,
-  Controller,
-  FieldErrors,
-  UseFormWatch
-} from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
 
 interface IProps {
-  control: Control<IRegisterForm, object>;
-  errors: FieldErrors<IRegisterForm>;
-  watch: UseFormWatch<IRegisterForm>;
   onBackStep: () => void;
   onNextStep: () => void;
 }
 
 const Step2 = (props: IProps) => {
-  const { control, errors, onBackStep, onNextStep, watch } = props;
+  const { onBackStep, onNextStep } = props;
+  const {
+    control,
+    watch,
+    formState: { errors }
+  } = useFormContext();
   const disableButton =
     !!errors.fullName ||
     !!errors.dob ||

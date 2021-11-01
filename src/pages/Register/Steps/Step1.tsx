@@ -13,45 +13,26 @@ import {
 import ErrorMessage from 'components/ErrorMessage';
 import FileInput from 'components/FileInput';
 import Label from 'components/Label';
-import { IRegisterForm } from 'models/register';
 import { useState } from 'react';
-import {
-  Control,
-  Controller,
-  FieldErrors,
-  UseFormClearErrors,
-  UseFormGetValues,
-  UseFormRegister,
-  UseFormSetError,
-  UseFormSetValue,
-  UseFormWatch
-} from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
 
 interface IProps {
-  control: Control<IRegisterForm, object>;
-  errors: FieldErrors<IRegisterForm>;
-  register: UseFormRegister<IRegisterForm>;
-  watch: UseFormWatch<IRegisterForm>;
-  getValues: UseFormGetValues<IRegisterForm>;
-  setValue: UseFormSetValue<IRegisterForm>;
-  setError: UseFormSetError<IRegisterForm>;
-  clearErrors: UseFormClearErrors<IRegisterForm>;
   onNextStep: () => void;
 }
 
 const Step1 = (props: IProps) => {
+  const { onNextStep } = props;
   const {
     control,
-    errors,
     register,
     watch,
     getValues,
     setValue,
     setError,
     clearErrors,
-    onNextStep
-  } = props;
+    formState: { errors }
+  } = useFormContext();
   const [selectedImage, setSelectedImage] = useState<{
     name: string;
     blob: string;
