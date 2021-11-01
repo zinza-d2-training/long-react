@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   colors,
+  Container,
   Menu,
   MenuItem,
   Stack,
@@ -13,7 +14,7 @@ import { SxProps } from '@mui/system';
 import StyledButton from 'components/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PATH_HOME, PATH_LOGIN } from 'routes';
+import { RoutePaths } from 'routes';
 
 const menuItemStyle: SxProps<Theme> = {
   color: (theme) => theme.palette.text.primary,
@@ -36,92 +37,97 @@ const Header = () => {
   return (
     <Box
       sx={{
-        height: '80px',
         background:
-          'linear-gradient(90deg, #ED1B23 0%, #2E3091 52.08%, #253494 100%)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        px: 4
+          'linear-gradient(90deg, #ED1B23 0%, #2E3091 52.08%, #253494 100%)'
       }}>
-      <Stack direction="row" alignItems="center">
-        <img src="images/logo_white.png" alt="" />
-        <Typography ml={2} color="#fff" variant="h5">
-          CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
-        </Typography>
-      </Stack>
-      <Stack direction="row" alignItems="center" spacing="30px">
-        <Typography
-          color="#fff"
-          sx={{ textDecoration: 'none' }}
-          component={Link}
-          variant="h6"
-          to={PATH_HOME}>
-          Trang chủ
-        </Typography>
-        <Typography
-          color="#fff"
-          sx={{ textDecoration: 'none' }}
-          component={Link}
-          variant="h6"
-          to={PATH_HOME}>
-          Đăng ký tiêm
-        </Typography>
-        <Typography
-          color="#fff"
-          sx={{ textTransform: 'unset' }}
-          component={Button}
-          onClick={handleClick}
-          endIcon={<KeyboardArrowDownIcon />}
-          variant="h6">
-          Tra cứu
-        </Typography>
-        <Typography
-          color="#fff"
-          sx={{ textDecoration: 'none' }}
-          component={Link}
-          variant="h6"
-          to={PATH_HOME}>
-          Tài liệu
-        </Typography>
-
-        <StyledButton
-          variant="contained"
+      <Container maxWidth="lg">
+        <Box
           sx={{
-            backgroundColor: '#fff',
-            '&:hover': { backgroundColor: '#fff' }
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            height: '80px'
           }}>
-          <Typography
-            sx={{ textDecoration: 'none', color: colors.indigo[700] }}
-            variant="button"
-            component={Link}
-            to={PATH_LOGIN}>
-            Đăng nhập
-          </Typography>
-        </StyledButton>
-        <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
-          <MenuItem>
-            <Typography
-              component={Link}
-              onClick={handleClose}
-              variant="body1"
-              sx={menuItemStyle}
-              to={PATH_HOME}>
-              Tra cứu chứng nhận tiêm
+          <Stack direction="row" alignItems="center">
+            <img src="images/logo_white.png" alt="" />
+            <Typography ml={2} color="#fff" variant="h5">
+              CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
             </Typography>
-          </MenuItem>
-          <MenuItem>
+          </Stack>
+          <Stack direction="row" alignItems="center" spacing="30px">
             <Typography
+              color="#fff"
+              sx={{ textDecoration: 'none' }}
               component={Link}
-              onClick={handleClose}
-              variant="body1"
-              sx={menuItemStyle}
-              to={PATH_HOME}>
-              Tra cứu kết quả đăng ký
+              variant="h6"
+              to={RoutePaths.home}>
+              Trang chủ
             </Typography>
-          </MenuItem>
-        </Menu>
-      </Stack>
+            <Typography
+              color="#fff"
+              sx={{ textDecoration: 'none' }}
+              component={Link}
+              variant="h6"
+              to={RoutePaths.home}>
+              Đăng ký tiêm
+            </Typography>
+            <Typography
+              color="#fff"
+              sx={{ textTransform: 'unset' }}
+              component={Button}
+              onClick={handleClick}
+              endIcon={<KeyboardArrowDownIcon />}
+              variant="h6">
+              Tra cứu
+            </Typography>
+            <Typography
+              color="#fff"
+              sx={{ textDecoration: 'none' }}
+              component={Link}
+              variant="h6"
+              to={RoutePaths.home}>
+              Tài liệu
+            </Typography>
+
+            <StyledButton
+              variant="contained"
+              sx={{
+                backgroundColor: '#fff',
+                '&:hover': { backgroundColor: '#fff' }
+              }}>
+              <Typography
+                sx={{ textDecoration: 'none', color: colors.indigo[700] }}
+                variant="button"
+                component={Link}
+                to={RoutePaths.login}>
+                Đăng nhập
+              </Typography>
+            </StyledButton>
+            <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
+              <MenuItem>
+                <Typography
+                  component={Link}
+                  onClick={handleClose}
+                  variant="body1"
+                  sx={menuItemStyle}
+                  to={RoutePaths.home}>
+                  Tra cứu chứng nhận tiêm
+                </Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography
+                  component={Link}
+                  onClick={handleClose}
+                  variant="body1"
+                  sx={menuItemStyle}
+                  to={RoutePaths.home}>
+                  Tra cứu kết quả đăng ký
+                </Typography>
+              </MenuItem>
+            </Menu>
+          </Stack>
+        </Box>
+      </Container>
     </Box>
   );
 };

@@ -15,5 +15,5 @@ export interface IRegisterForm {
   phoneNumber: string;
   provinceId: number;
   districtId: number;
-  wardsId: number;
+  wardId: number;
 }

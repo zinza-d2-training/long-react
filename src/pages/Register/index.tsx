@@ -12,7 +12,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { useHistory } from 'react-router';
-import { PATH_LOGIN } from 'routes';
+import { RoutePaths } from 'routes';
 import { isNumberOrNull } from 'utils/validate';
 import { registerSchema } from 'validations';
 import { Step1, Step2, Step3 } from './Steps';
@@ -29,7 +29,7 @@ const defaultValues: DefaultValues<IRegisterForm> = {
   phoneNumber: '',
   provinceId: -1,
   districtId: -1,
-  wardsId: -1
+  wardId: -1
 };
 
 const START_TIME = { hours: 0, minutes: 0, seconds: 0 };
@@ -100,7 +100,7 @@ const Register = () => {
 
   const handleConfirm = () => {
     handleCloseModal();
-    history.push(PATH_LOGIN);
+    history.push(RoutePaths.login);
   };
   return (
     <Box sx={{ display: 'flex', alignItems: 'stretch', flex: 1 }}>

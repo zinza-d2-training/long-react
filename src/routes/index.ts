@@ -4,36 +4,38 @@ import Home from 'pages/Home';
 import Login from 'pages/Login';
 import Register from 'pages/Register';
 
-export const PATH_LOGIN = '/login';
-export const PATH_FORGOT_PASSWORD = '/forgot-password';
-export const PATH_REGISTER = '/register';
-export const PATH_HOME = '/';
+export const RoutePaths = {
+  login: '/login',
+  forgotPassword: '/forgot-password',
+  register: '/register',
+  home: '/'
+};
 
 const routes: IRoute[] = [
   {
     key: 'route_login',
-    path: PATH_LOGIN,
+    path: RoutePaths.login,
     component: Login,
     exact: true,
     routeType: RouteType.AUTH_ROUTE
   },
   {
     key: 'route_forgot_password',
-    path: PATH_FORGOT_PASSWORD,
+    path: RoutePaths.forgotPassword,
     component: ForgotPassword,
     exact: true,
     routeType: RouteType.AUTH_ROUTE
   },
   {
     key: 'route_register',
-    path: PATH_REGISTER,
+    path: RoutePaths.register,
     component: Register,
     exact: true,
     routeType: RouteType.AUTH_ROUTE
   },
   {
     key: 'route_home',
-    path: PATH_HOME,
+    path: RoutePaths.home,
     component: Home,
     exact: true,
     routeType: RouteType.PUBLIC_ROUTE
