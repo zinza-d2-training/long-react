@@ -1,15 +1,34 @@
-import { Box, styled } from '@mui/system';
+import { Box, Theme } from '@mui/material';
+import { SxProps } from '@mui/system';
+import Header from 'components/Header';
 import { FC } from 'react';
 
-const Layout: FC = (props) => {
-  return <Container className="App">{props.children}</Container>;
+const appStyle: SxProps<Theme> = {
+  minHeight: '100vh',
+  width: '100vw',
+  display: 'flex',
+  flexDirection: 'column'
 };
 
-const Container = styled(Box)`
-  min-height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-`;
+const Layout: FC = (props) => {
+  return (
+    <Box sx={appStyle} className="App">
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        {props.children}
+      </Box>
+    </Box>
+  );
+};
+
+export const HeaderLayout: FC = (props) => {
+  return (
+    <Box sx={appStyle}>
+      <Header />
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        {props.children}
+      </Box>
+    </Box>
+  );
+};
 
 export default Layout;

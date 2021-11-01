@@ -1,3 +1,5 @@
 import PrivateRoute from './PrivateRoute';
-export { PrivateRoute };
+import AuthRoute from './AuthRoute';
+export { PrivateRoute, AuthRoute };
 export { default } from './Layout';
+export * from './Layout';
