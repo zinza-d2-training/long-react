@@ -45,17 +45,24 @@ const styleOverlay: SxProps<Theme> = {
 };
 
 interface IProps {
-  files: IFile[];
   max?: number;
   min?: number;
   multiple?: boolean;
   inputProps?: HTMLAttributes<HTMLInputElement>;
+  onAddImage: (file: IFile[]) => void;
   onRemoveImage: (imageIndex: number) => void;
 }
 
 const FilePicker = (props: IProps) => {
-  const { files, max = 10000, inputProps, onRemoveImage, multiple } = props;
+  const {
+    max = 10000,
+    inputProps,
+    onRemoveImage,
+    multiple,
+    onAddImage
+  } = props;
 
+  const [files, setFiles] = useState<IFile[]>([]);
   const [selectedImage, setSelectedImage] = useState<{
     name: string;
     blob: string;
@@ -72,6 +79,22 @@ const FilePicker = (props: IProps) => {
     <Box>
       <input
         {...inputProps}
+        onChange={(e) => {
+          if (e.target.files) {
+            const listFiles = Object.values(e.target.files);
+            const newImages = [
+              ...files,
+              ...listFiles.map((file) => ({
+                file,
+                preview: URL.createObjectURL(file)
+              }))
+            ];
+            const newValue = newImages.splice(0, max);
+            setFiles(newValue);
+            e.target.value = '';
+            onAddImage(newValue);
+          }
+        }}
         style={{ display: 'none' }}
         type="file"
         multiple={multiple}
@@ -127,7 +150,14 @@ const FilePicker = (props: IProps) => {
               <IconButton
                 size="small"
                 sx={{ color: '#fff' }}
-                onClick={() => onRemoveImage(index)}>
+                onClick={() => {
+                  setFiles((prevState) => {
+                    return prevState.filter(
+                      (file, fileIndex) => fileIndex !== index
+                    );
+                  });
+                  onRemoveImage(index);
+                }}>
                 <DeleteOutlinedIcon />
               </IconButton>
             </Box>

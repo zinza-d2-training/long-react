@@ -28,5 +28,8 @@ export const registerSchema = yup.object().shape({
     .matches(
       /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im,
       'Số điện thoại không hợp lệ'
-    )
+    ),
+  provinceId: yup.array().min(1, 'Trường này là bắt buộc'),
+  districtId: yup.array().min(1, 'Trường này là bắt buộc'),
+  wardsId: yup.array().min(1, 'Trường này là bắt buộc')
 });
