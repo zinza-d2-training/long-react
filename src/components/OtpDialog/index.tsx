@@ -1,16 +1,16 @@
+import ClearIcon from '@mui/icons-material/Clear';
 import {
+  Box,
+  colors,
   Dialog,
   DialogContent,
-  DialogTitle,
   Divider,
   IconButton,
-  Typography,
-  Box,
-  colors
+  Typography
 } from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
-import OtpInput from 'react-otp-input';
 import StyledButton from 'components/Button';
+import StyledDialogTitle from 'components/DialogTitle';
+import OtpInput from 'react-otp-input';
 
 interface IProps {
   open: boolean;
@@ -35,20 +35,14 @@ const OtpDialog = (props: IProps) => {
   } = props;
   return (
     <Dialog open={open} hideBackdrop sx={{ '.container': { width: '500px' } }}>
-      <DialogTitle
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%'
-        }}>
+      <StyledDialogTitle>
         <Typography component="p" variant="h6">
           Xác thực OTP
         </Typography>
         <IconButton onClick={onClose}>
           <ClearIcon />
         </IconButton>
-      </DialogTitle>
+      </StyledDialogTitle>
       <Divider />
       <DialogContent
         sx={{

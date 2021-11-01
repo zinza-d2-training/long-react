@@ -5,11 +5,11 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogTitle,
   IconButton,
   TextField,
   Typography
 } from '@mui/material';
+import StyledDialogTitle from 'components/DialogTitle';
 import ErrorMessage from 'components/ErrorMessage';
 import FileInput from 'components/FileInput';
 import Label from 'components/Label';
@@ -139,12 +139,7 @@ const Step1 = (props: IProps) => {
         open={isOpenPreview}
         hideBackdrop
         sx={{ '& > div': { width: '490px', m: '0 auto' } }}>
-        <DialogTitle
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
+        <StyledDialogTitle>
           <Typography
             component="p"
             variant="h6"
@@ -154,7 +149,7 @@ const Step1 = (props: IProps) => {
           <IconButton onClick={() => setIsOpenPreview(false)}>
             <ClearIcon />
           </IconButton>
-        </DialogTitle>
+        </StyledDialogTitle>
         <DialogContent>
           <img
             src={selectedImage?.blob}
