@@ -10,8 +10,8 @@ export interface IDistrict extends IBaseAddress {
   children: IWard[];
 }
 
-export interface ICity extends IBaseAddress {
+export interface IProvince extends IBaseAddress {
   children: IDistrict[];
 }
 
-export interface IAddress extends ICity {}
+export interface IAddress extends IProvince {}
