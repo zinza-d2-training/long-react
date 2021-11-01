@@ -43,7 +43,7 @@ const Register = () => {
 
   const { getValues, handleSubmit } = formMethod;
 
-  const [currentStep, setCurrentStep] = useState<number>(2);
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
   const [isShowReSendOtp, setIsShowReSendOtp] = useState<boolean>(false);

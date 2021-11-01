@@ -13,7 +13,7 @@ import {
 import { SxProps } from '@mui/system';
 import StyledDialogTitle from 'components/DialogTitle';
 import { IFile } from 'models/register';
-import React, { HTMLAttributes, useState } from 'react';
+import React, { InputHTMLAttributes, useState } from 'react';
 
 const stylePreview: SxProps<Theme> = {
   width: '104px',
@@ -47,20 +47,13 @@ const styleOverlay: SxProps<Theme> = {
 interface IProps {
   max?: number;
   min?: number;
-  multiple?: boolean;
-  inputProps?: HTMLAttributes<HTMLInputElement>;
+  inputProps?: InputHTMLAttributes<HTMLInputElement>;
   onAddImage: (file: IFile[]) => void;
   onRemoveImage: (imageIndex: number) => void;
 }
 
 const FilePicker = (props: IProps) => {
-  const {
-    max = 10000,
-    inputProps,
-    onRemoveImage,
-    multiple,
-    onAddImage
-  } = props;
+  const { max = 10000, inputProps, onRemoveImage, onAddImage } = props;
 
   const [files, setFiles] = useState<IFile[]>([]);
   const [selectedImage, setSelectedImage] = useState<{
@@ -97,7 +90,6 @@ const FilePicker = (props: IProps) => {
         }}
         style={{ display: 'none' }}
         type="file"
-        multiple={multiple}
         id={id ? id : 'file_picker_id'}
       />
       <Box

@@ -31,10 +31,9 @@ const FileInput = () => {
   return (
     <FilePicker
       max={2}
-      inputProps={{ ...register('imageName') }}
+      inputProps={{ ...register('imageName'), multiple: true }}
       onRemoveImage={handleRemoveImage}
       onAddImage={handleAddImage}
-      multiple
     />
   );
 };
