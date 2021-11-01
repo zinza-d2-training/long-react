@@ -31,7 +31,6 @@ const Login = () => {
   const auth = useAppSelector(authSelector);
 
   const onSubmit: SubmitHandler<ILogin> = (data) => {
-    console.log(data);
     dispatch(login(data));
   };
 

@@ -80,7 +80,6 @@ const Register = () => {
   };
 
   const onSubmit: SubmitHandler<IRegisterForm> = (data) => {
-    console.log(data);
     handleOpenModal();
   };
 
