@@ -11,7 +11,7 @@ export interface IRegisterForm {
   dob: Date | undefined;
   gender: number;
   phoneNumber: string;
-  cityProvince: string;
-  district: string;
-  wards: string;
+  provinceId: number;
+  districtId: number;
+  wardsId: number;
 }

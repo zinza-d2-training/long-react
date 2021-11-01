@@ -13,6 +13,7 @@ import StyledDialogTitle from 'components/DialogTitle';
 import ErrorMessage from 'components/ErrorMessage';
 import FileInput from 'components/FileInput';
 import Label from 'components/Label';
+import { IRegisterForm } from 'models/register';
 import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
@@ -32,7 +33,7 @@ const Step1 = (props: IProps) => {
     setError,
     clearErrors,
     formState: { errors }
-  } = useFormContext();
+  } = useFormContext<IRegisterForm>();
   const [selectedImage, setSelectedImage] = useState<{
     name: string;
     blob: string;

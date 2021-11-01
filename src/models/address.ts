@@ -1,5 +1,5 @@
 interface IBaseAddress {
-  id: string;
+  id: number;
   label: string;
   value: string;
 }

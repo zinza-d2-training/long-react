@@ -10,6 +10,7 @@ import {
 import ErrorMessage from 'components/ErrorMessage';
 import Label from 'components/Label';
 import { IProvince, IDistrict, IWard } from 'models';
+import { IRegisterForm } from 'models/register';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
@@ -27,107 +28,133 @@ const Step3 = (props: IProps) => {
     setValue,
     setError,
     clearErrors,
+    setFocus,
     formState: { touchedFields, errors }
-  } = useFormContext();
+  } = useFormContext<IRegisterForm>();
 
-  const selectedCity = watch('cityProvince');
-  const selectedDistrict = watch('district');
-  const selectedWard = watch('wards');
-  const [cities] = useState<IProvince[]>(addressData);
-  const [districts, setDistricts] = useState<IDistrict[]>([]);
-  const [wards, setWards] = useState<IWard[]>([]);
+  const selectedProvince: number = watch('provinceId');
+  const selectedDistrict: number = watch('districtId');
+  const selectedWard: number = watch('wardsId');
+  const [provinceOptions] = useState<IProvince[]>(addressData);
+  const [districtOptions, setDistrictOptions] = useState<IDistrict[]>([]);
+  const [wardOptions, setWardOptions] = useState<IWard[]>([]);
+  const [districtInputValue, setDistrictInputValue] = useState<string>('');
+  const [wardInputValue, setWardInputValue] = useState<string>('');
 
   const disableButton =
-    !!errors.cityProvince ||
-    !!errors.district ||
-    !!errors.wards ||
-    !watch('cityProvince') ||
-    !watch('district') ||
-    !watch('wards');
+    !!errors.provinceId ||
+    !!errors.districtId ||
+    !!errors.wardsId ||
+    watch('provinceId') === -1 ||
+    watch('districtId') === -1 ||
+    watch('wardsId') === -1;
 
   useEffect(() => {
-    if (!selectedDistrict.trim()) {
-      setError('district', { message: 'Trường này là bắt buộc' });
+    if (selectedProvince === -1) {
+      setError('provinceId', { message: 'Trường này là bắt buộc' });
+      setValue('districtId', -1);
+      setValue('wardsId', -1);
     } else {
-      clearErrors('district');
+      clearErrors('provinceId');
     }
-    if (!selectedCity.trim()) {
-      setError('cityProvince', { message: 'Trường này là bắt buộc' });
+
+    if (selectedDistrict === -1) {
+      setError('districtId', { message: 'Trường này là bắt buộc' });
+      setValue('wardsId', -1);
+      setDistrictInputValue('');
     } else {
-      clearErrors('cityProvince');
+      setDistrictInputValue((prevState) => {
+        const district = districtOptions.find(
+          ({ id }) => id === selectedDistrict
+        );
+        return district ? district.label : '';
+      });
+      clearErrors('districtId');
     }
-    if (!selectedWard.trim()) {
-      setError('wards', { message: 'Trường này là bắt buộc' });
+
+    if (selectedWard === -1) {
+      setError('wardsId', { message: 'Trường này là bắt buộc' });
+      setWardInputValue('');
     } else {
-      clearErrors('wards');
+      setWardInputValue((prevState) => {
+        const ward = wardOptions.find(({ id }) => id === selectedWard);
+        return ward ? ward.label : '';
+      });
+      clearErrors('wardsId');
     }
-  }, [clearErrors, selectedCity, selectedDistrict, selectedWard, setError]);
+  }, [
+    clearErrors,
+    districtOptions,
+    selectedDistrict,
+    selectedProvince,
+    selectedWard,
+    setError,
+    setValue,
+    wardOptions
+  ]);
 
   useEffect(() => {
-    if (selectedCity) {
-      const cityIndex = addressData.findIndex(
-        (city) => city.id === selectedCity
-      );
-      if (cityIndex > -1) {
-        setDistricts(addressData[cityIndex].children);
-      } else {
-        setDistricts([]);
-      }
+    if (selectedProvince > -1) {
+      setDistrictOptions((prevState) => {
+        const provinceIndex = provinceOptions.findIndex(
+          ({ id }) => selectedProvince === id
+        );
+        setValue('districtId', -1);
+        if (provinceIndex > -1) {
+          return provinceOptions[provinceIndex].children;
+        } else {
+          return [];
+        }
+      });
+    } else {
+      setDistrictOptions([]);
     }
-    setValue('district', '');
-    setValue('wards', '');
-  }, [districts, selectedCity, setValue]);
+  }, [provinceOptions, selectedProvince, setValue]);
 
   useEffect(() => {
-    if (selectedDistrict) {
-      const districtIndex = districts.findIndex(
-        (district) => district.id === selectedDistrict
-      );
-      if (districtIndex > -1) {
-        setWards(districts[districtIndex].children);
-      } else {
-        setWards([]);
-      }
+    if (selectedDistrict > -1) {
+      setWardOptions((prevState) => {
+        const districtIndex = districtOptions.findIndex(
+          ({ id }) => id === selectedDistrict
+        );
+        setValue('wardsId', -1);
+        if (districtIndex > -1) {
+          return districtOptions[districtIndex].children;
+        } else {
+          return [];
+        }
+      });
+    } else {
+      setWardOptions([]);
     }
-    setValue('wards', '');
-  }, [districts, selectedDistrict, setValue]);
+  }, [districtOptions, selectedDistrict, setValue]);
   return (
     <>
       <Box>
         <Label required>Tỉnh/Thành phố</Label>
         <Controller
           control={control}
-          name="cityProvince"
-          defaultValue={watch('cityProvince')}
-          render={({ field: { value, ...formField } }) => {
-            const inputValue = cities.find(({ id }) => id === value);
+          name="provinceId"
+          render={({ field }) => {
+            const valueAutocomplete = provinceOptions.find(
+              ({ id }) => id === field.value
+            );
             return (
               <Autocomplete
-                options={cities}
-                {...formField}
-                value={inputValue}
+                options={provinceOptions}
+                {...field}
+                value={valueAutocomplete}
                 onChange={(
                   event: SyntheticEvent<Element, Event>,
-                  newValue: IProvince | null,
+                  value: IProvince | null,
                   reason: AutocompleteChangeReason
                 ) => {
-                  if (newValue) {
-                    setValue('cityProvince', newValue.id);
-                  }
-                }}
-                onInputChange={(
-                  event: React.SyntheticEvent,
-                  value: string,
-                  reason: string
-                ) => {
-                  if (!value.trim()) {
-                    setValue('cityProvince', '');
-                  }
+                  setValue('provinceId', value ? value.id : -1);
+                  setFocus('provinceId');
                 }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    value={watch('cityProvince')}
                     sx={styleInputLarge}
                     placeholder="Tỉnh/Thành phố"
                   />
@@ -137,109 +164,92 @@ const Step3 = (props: IProps) => {
           }}
         />
         <ErrorMessage>
-          {touchedFields.cityProvince && errors.cityProvince?.message}
+          {touchedFields.provinceId && errors.provinceId?.message}
         </ErrorMessage>
       </Box>
       <Box mt={1}>
         <Label required>Quận/Huyện</Label>
         <Controller
           control={control}
-          name="district"
-          defaultValue={watch('district')}
-          render={({ field: { value, ...formField } }) => {
-            const inputValue = districts.find(({ id }) => id === value);
+          name="districtId"
+          render={({ field }) => {
+            const valueAutocomplete = districtOptions.find(
+              ({ id }) => id === field.value
+            );
             return (
               <Autocomplete
-                options={districts}
-                {...formField}
-                value={inputValue}
-                disabled={!watch('cityProvince')}
+                options={districtOptions}
+                {...field}
+                value={valueAutocomplete}
                 onChange={(
                   event: SyntheticEvent<Element, Event>,
-                  newValue: IDistrict | null,
+                  value: IDistrict | null,
                   reason: AutocompleteChangeReason
                 ) => {
-                  if (newValue) {
-                    setValue('district', newValue.id);
-                  }
+                  setValue('districtId', value ? value.id : -1);
+                  setFocus('districtId');
                 }}
-                onInputChange={(
-                  event: React.SyntheticEvent,
-                  value: string,
-                  reason: string
-                ) => {
-                  setValue('district', value);
-                }}
-                renderInput={(params) => {
-                  if (!watch('district')) {
-                    // @ts-ignore
-                    params.inputProps.value = '';
-                  }
-                  return (
-                    <TextField
-                      {...params}
-                      sx={styleInputLarge}
-                      placeholder="Quận/huyện"
-                    />
-                  );
-                }}
+                disabled={selectedProvince === -1}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Quận/Huyện"
+                    sx={styleInputLarge}
+                    onChange={(e) => {
+                      setDistrictInputValue(e.target.value);
+                    }}
+                    inputProps={{
+                      ...params.inputProps,
+                      value: districtInputValue
+                    }}
+                  />
+                )}
               />
             );
           }}
         />
         <ErrorMessage>
-          {touchedFields.district && errors.district?.message}
+          {touchedFields.districtId && errors.districtId?.message}
         </ErrorMessage>
       </Box>
       <Box mt={1}>
         <Label required>Xã/Phường</Label>
         <Controller
           control={control}
-          name="wards"
-          defaultValue={watch('wards')}
-          render={({ field: { value, ...formField } }) => {
-            const inputValue = wards.find(({ id }) => id === value);
+          name="wardsId"
+          render={({ field }) => {
+            const valueAutocomplete = wardOptions.find(
+              ({ id }) => id === field.value
+            );
             return (
               <Autocomplete
-                options={wards}
-                value={inputValue}
-                disabled={!watch('district')}
-                {...formField}
+                options={wardOptions}
+                {...field}
+                value={valueAutocomplete}
+                disabled={selectedDistrict === -1}
                 onChange={(
                   event: SyntheticEvent<Element, Event>,
-                  newValue: IWard | null,
+                  value: IWard | null,
                   reason: AutocompleteChangeReason
                 ) => {
-                  if (newValue) {
-                    setValue('wards', newValue.id);
-                  }
+                  setValue('wardsId', value ? value.id : -1);
+                  setFocus('wardsId');
                 }}
-                onInputChange={(
-                  event: React.SyntheticEvent,
-                  value: string,
-                  reason: string
-                ) => {
-                  setValue('wards', value);
-                }}
-                renderInput={(params) => {
-                  if (!watch('wards')) {
-                    // @ts-ignore
-                    params.inputProps.value = '';
-                  }
-                  return (
-                    <TextField
-                      {...params}
-                      sx={styleInputLarge}
-                      placeholder="Xã/Phường"
-                    />
-                  );
-                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Quận/Huyện"
+                    sx={styleInputLarge}
+                    onChange={(e) => setWardInputValue(e.target.value)}
+                    inputProps={{ ...params.inputProps, value: wardInputValue }}
+                  />
+                )}
               />
             );
           }}
         />
         <ErrorMessage>
-          {touchedFields.wards && errors.wards?.message}
+          {touchedFields.wardsId && errors.wardsId?.message}
         </ErrorMessage>
       </Box>
       <Box

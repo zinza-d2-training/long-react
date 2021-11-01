@@ -17,13 +17,13 @@ const defaultValues: IRegisterForm = {
   citizenId: '',
   imageName: '',
   citizenImages: [],
-  cityProvince: '',
-  district: '',
   dob: undefined,
   fullName: '',
   gender: 1,
   phoneNumber: '',
-  wards: ''
+  provinceId: -1,
+  districtId: -1,
+  wardsId: -1
 };
 
 const START_TIME = { hours: 0, minutes: 0, seconds: 0 };

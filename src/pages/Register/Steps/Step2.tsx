@@ -3,6 +3,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Box, Button, MenuItem, TextField } from '@mui/material';
 import ErrorMessage from 'components/ErrorMessage';
 import Label from 'components/Label';
+import { IRegisterForm } from 'models/register';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
 
@@ -17,7 +18,7 @@ const Step2 = (props: IProps) => {
     control,
     watch,
     formState: { errors }
-  } = useFormContext();
+  } = useFormContext<IRegisterForm>();
   const disableButton =
     !!errors.fullName ||
     !!errors.dob ||
