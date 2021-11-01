@@ -18,7 +18,6 @@ const Step2 = (props: IProps) => {
     watch,
     formState: { errors }
   } = useFormContext<IRegisterForm>();
-  console.log('~ watch', watch());
   const disableButton =
     !!errors.fullName ||
     !!errors.dob ||
