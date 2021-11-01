@@ -1,12 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  Box,
-  Stack,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography
-} from '@mui/material';
+import { Box, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import OtpDialog from 'components/OtpDialog';
 import { useClock } from 'hooks';
 import { IRegisterForm } from 'models/register';
@@ -71,8 +64,7 @@ const Register = () => {
         URL.revokeObjectURL(preview)
       );
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getValues]);
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);

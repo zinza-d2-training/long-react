@@ -128,7 +128,7 @@ const FileInput = (props: IProps) => {
         {value.length < maxlength && (
           <Box
             component="label"
-            htmlFor="citizenImages"
+            htmlFor={id}
             sx={{
               ...stylePreview,
               backgroundColor: colors.grey[100],

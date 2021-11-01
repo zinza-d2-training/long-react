@@ -31,6 +31,7 @@ const Login = () => {
   const auth = useAppSelector(authSelector);
 
   const onSubmit: SubmitHandler<ILogin> = (data) => {
+    console.log(data);
     dispatch(login(data));
   };
 
@@ -125,6 +126,7 @@ const Login = () => {
             </Box>
             <Button
               variant="contained"
+              type="submit"
               sx={{
                 height: '50px',
                 backgroundColor: colors.green[400],
@@ -136,7 +138,8 @@ const Login = () => {
                 !!errors.citizenId?.message ||
                   !!errors.password?.message ||
                   auth.loading
-              )}>
+              )}
+              startIcon={auth.loading && <CircularProgress size={20} />}>
               Đăng nhập
             </Button>
           </Stack>

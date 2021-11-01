@@ -29,7 +29,7 @@ const Step3 = (props: IProps) => {
     setError,
     clearErrors,
     setFocus,
-    formState: { errors }
+    formState: { errors, touchedFields }
   } = useFormContext<IRegisterForm>();
 
   const selectedProvince: number = watch('provinceId');
@@ -157,8 +157,10 @@ const Step3 = (props: IProps) => {
                     {...params}
                     sx={styleInputLarge}
                     placeholder="Tỉnh/Thành phố"
-                    error={invalid}
-                    helperText={error?.message}
+                    error={invalid && touchedFields.provinceId}
+                    helperText={
+                      touchedFields.provinceId && invalid && error?.message
+                    }
                   />
                 )}
               />
@@ -201,8 +203,10 @@ const Step3 = (props: IProps) => {
                       ...params.inputProps,
                       value: districtInputValue
                     }}
-                    error={invalid}
-                    helperText={invalid && error?.message}
+                    error={invalid && touchedFields.districtId}
+                    helperText={
+                      invalid && touchedFields.districtId && error?.message
+                    }
                   />
                 )}
               />
@@ -240,8 +244,10 @@ const Step3 = (props: IProps) => {
                     sx={styleInputLarge}
                     onChange={(e) => setWardInputValue(e.target.value)}
                     inputProps={{ ...params.inputProps, value: wardInputValue }}
-                    error={invalid}
-                    helperText={invalid && error?.message}
+                    error={invalid && touchedFields.wardsId}
+                    helperText={
+                      invalid && touchedFields.wardsId && error?.message
+                    }
                   />
                 )}
               />
