@@ -1,26 +1,22 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Button,
   CircularProgress,
   colors,
+  Stack,
   TextField,
-  Theme,
   Typography
 } from '@mui/material';
-import { Box, SxProps } from '@mui/system';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useHistory } from 'react-router';
-import { useEffect } from 'react';
-
+import { Box } from '@mui/system';
+import Label from 'components/Label';
 import { ILogin } from 'models';
-import { loginSchema } from 'validations';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Link, Link as RouterLink } from 'react-router-dom';
+import { PATH_FORGOT_PASSWORD, PATH_REGISTER } from 'routes';
 import { useAppDispatch, useAppSelector } from 'store';
 import { authSelector, login } from 'store/slices/authSlice';
-import { PATH_FORGOT_PASSWORD, PATH_HOME } from 'routes';
-
-const errorStyle: SxProps<Theme> = {
-  color: colors.red['700']
-};
+import { styleInputLarge } from 'theme';
+import { loginSchema } from 'validations';
 
 const Login = () => {
   const {
@@ -33,20 +29,9 @@ const Login = () => {
   });
   const dispatch = useAppDispatch();
   const auth = useAppSelector(authSelector);
-  const history = useHistory();
-
-  useEffect(() => {
-    if (auth.token) {
-      history.push(PATH_HOME);
-    }
-  }, [history, auth]);
 
   const onSubmit: SubmitHandler<ILogin> = (data) => {
     dispatch(login(data));
-  };
-
-  const pushToForgotPassPage = () => {
-    history.push(PATH_FORGOT_PASSWORD);
   };
 
   return (
@@ -62,125 +47,126 @@ const Login = () => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
           flex: 1
         }}>
         <Box
           onSubmit={handleSubmit(onSubmit)}
           component="form"
           sx={{
-            width: '376px'
+            width: 380,
+            mt: '100px',
+            '@media(min-height: 768px)': {
+              mt: '150px'
+            },
+            '@media(min-height: 920px)': {
+              mt: '25vh'
+            }
           }}>
-          <Typography variant="h4" mb={3} fontWeight="bold">
+          <Typography variant="h4" fontWeight="bold" mb={3} align="center">
             Đăng nhập vào tài khoản
           </Typography>
-          <Box mb={2}>
-            <Typography component="label" variant="label">
-              Chứng minh nhân dân/Căn cước công dân
-            </Typography>
-            <Controller
-              name="citizenId"
-              control={control}
-              defaultValue="012345678"
-              render={({ field }) => (
-                <TextField
-                  sx={{
-                    height: '50px',
-                    mt: (theme) => theme.spacing(1),
-                    '& > div': {
-                      height: '100%'
-                    }
-                  }}
-                  fullWidth
-                  placeholder="123456789"
-                  {...field}
-                  disabled={auth.loading}
+          <Stack spacing={2}>
+            <Stack spacing={2}>
+              <Box>
+                <Label component="label" variant="label">
+                  Chứng minh nhân dân/Căn cước công dân
+                </Label>
+                <Controller
+                  name="citizenId"
+                  control={control}
+                  defaultValue="012345678"
+                  render={({ field, fieldState: { invalid, error } }) => (
+                    <TextField
+                      sx={styleInputLarge}
+                      fullWidth
+                      placeholder="123456789"
+                      {...field}
+                      disabled={auth.loading}
+                      error={invalid}
+                      helperText={error?.message}
+                    />
+                  )}
                 />
-              )}
-            />
-            {errors.citizenId?.message && (
-              <Typography variant="bodySmall" sx={errorStyle}>
-                {errors.citizenId?.message}
-              </Typography>
-            )}
-          </Box>
-          <Box mb={2}>
-            <Typography component="label" variant="label" mb={1}>
-              Mật khẩu
-            </Typography>
-            <Controller
-              name="password"
-              control={control}
-              defaultValue="long@zinza123"
-              render={({ field }) => (
-                <TextField
-                  sx={{
-                    height: '50px',
-                    mt: (theme) => theme.spacing(1),
-                    '& > div': {
-                      height: '100%'
-                    }
-                  }}
-                  fullWidth
-                  placeholder="**************"
-                  type="password"
-                  {...field}
-                  disabled={auth.loading}
+              </Box>
+              <Box>
+                <Label mb={1}>Mật khẩu</Label>
+                <Controller
+                  name="password"
+                  control={control}
+                  defaultValue="long@zinza123"
+                  render={({ field, fieldState: { invalid, error } }) => (
+                    <TextField
+                      sx={styleInputLarge}
+                      fullWidth
+                      placeholder="**************"
+                      type="password"
+                      {...field}
+                      disabled={auth.loading}
+                      error={invalid}
+                      helperText={error?.message}
+                    />
+                  )}
                 />
-              )}
-            />
-            {errors.password?.message && (
-              <Typography variant="bodySmall" sx={errorStyle}>
-                {errors.password?.message}
+              </Box>
+            </Stack>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end'
+              }}>
+              <Typography
+                component={Link}
+                to={PATH_FORGOT_PASSWORD}
+                variant="body2"
+                align="right"
+                sx={{ color: colors.indigo[600], textDecoration: 'none' }}>
+                Quên mật khẩu?
               </Typography>
-            )}
-          </Box>
-          <Box
+            </Box>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{
+                height: '50px',
+                backgroundColor: colors.green[400],
+                '&:hover': {
+                  backgroundColor: colors.green[400]
+                }
+              }}
+              disabled={Boolean(
+                !!errors.citizenId?.message ||
+                  !!errors.password?.message ||
+                  auth.loading
+              )}
+              startIcon={auth.loading && <CircularProgress size={20} />}>
+              Đăng nhập
+            </Button>
+          </Stack>
+          <Stack
             sx={{
               display: 'flex',
-              justifyContent: 'space-between',
-              color: colors.indigo[600]
+              justifyContent: 'flex-end'
             }}>
-            <Typography
-              component="a"
-              variant="body2"
-              mb={3}
-              align="right"
-              sx={{ cursor: 'pointer' }}>
-              Đăng ký tài khoản
+            <Typography variant="body1" align="center" my={3}>
+              Hoặc đăng ký tài khoản, nếu bạn chưa đăng ký !
             </Typography>
-            <Typography
-              component="a"
-              variant="body2"
-              mb={3}
-              align="right"
-              sx={{ cursor: 'pointer' }}
-              onClick={pushToForgotPassPage}>
-              Quên mật khẩu?
-            </Typography>
-          </Box>
-          <Button
-            disabled={Boolean(
-              !!errors.citizenId?.message ||
-                !!errors.password?.message ||
-                auth.loading
-            )}
-            variant="contained"
-            fullWidth
-            type="submit"
-            sx={{
-              backgroundColor: colors.green['400'],
-              color: '#fff',
-              height: '50px',
-              '&:hover': {
-                backgroundColor: colors.green['400']
-              }
-            }}>
-            {auth.loading && (
-              <CircularProgress size={20} color="info" sx={{ mr: 1 }} />
-            )}
-            Đăng nhập
-          </Button>
+            <Button
+              component={RouterLink}
+              to={PATH_REGISTER}
+              variant="outlined"
+              fullWidth
+              sx={{
+                height: '50px',
+                borderColor: colors.green[400],
+                color: colors.green[400],
+                '&:hover': {
+                  borderColor: colors.green[400],
+                  color: colors.green[400]
+                }
+              }}>
+              Đăng ký
+            </Button>
+          </Stack>
         </Box>
       </Box>
     </Box>
