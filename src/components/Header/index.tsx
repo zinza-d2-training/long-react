@@ -4,7 +4,6 @@ import {
   Button,
   colors,
   Container,
-  IconButton,
   Menu,
   MenuItem,
   Stack,
@@ -16,10 +15,8 @@ import StyledButton from 'components/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RoutePaths } from 'routes';
-import { useAppDispatch, useAppSelector } from 'store';
-import { authSelector, logout } from 'store/slices/authSlice';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import { useHistory } from 'react-router-dom';
+import { useAppSelector } from 'store';
+import { authSelector } from 'store/slices/authSlice';
 
 const menuItemStyle: SxProps<Theme> = {
   color: (theme) => theme.palette.text.primary,
@@ -33,8 +30,6 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const useInfo = useAppSelector(authSelector).userInfo;
-  const dispatch = useAppDispatch();
-  const history = useHistory();
 
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -42,11 +37,6 @@ const Header = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
-    history.push(RoutePaths.login);
   };
 
   return (
@@ -57,9 +47,10 @@ const Header = () => {
         position: 'fixed',
         top: 0,
         left: 0,
-        width: '100vw'
+        width: '100vw',
+        zIndex: (theme) => theme.zIndex.appBar
       }}>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Box
           sx={{
             display: 'flex',
@@ -69,7 +60,7 @@ const Header = () => {
           }}>
           <Stack direction="row" alignItems="center">
             <img src="images/logo_white.png" alt="" />
-            <Typography ml={2} color="#fff">
+            <Typography variant="h6" ml={2} color="#fff">
               CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
             </Typography>
           </Stack>
@@ -78,7 +69,7 @@ const Header = () => {
               color="#fff"
               sx={{ textDecoration: 'none' }}
               component={Link}
-              variant="h6"
+              variant="body1"
               to={RoutePaths.home}>
               Trang chủ
             </Typography>
@@ -86,7 +77,7 @@ const Header = () => {
               color="#fff"
               sx={{ textDecoration: 'none' }}
               component={Link}
-              variant="h6"
+              variant="body1"
               to={RoutePaths.home}>
               Đăng ký tiêm
             </Typography>
@@ -96,27 +87,22 @@ const Header = () => {
               component={Button}
               onClick={handleClick}
               endIcon={<KeyboardArrowDownIcon />}
-              variant="h6">
+              variant="body1">
               Tra cứu
             </Typography>
             <Typography
               color="#fff"
               sx={{ textDecoration: 'none' }}
               component={Link}
-              variant="h6"
+              variant="body1"
               to={RoutePaths.home}>
               Tài liệu
             </Typography>
 
             {useInfo ? (
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <Typography variant="body1" sx={{ color: '#fff' }}>
-                  Hi {useInfo.username}
-                </Typography>
-                <IconButton onClick={handleLogout} sx={{ color: '#f00' }}>
-                  <PowerSettingsNewIcon />
-                </IconButton>
-              </Stack>
+              <Typography variant="body1" sx={{ color: '#fff' }}>
+                Hi {useInfo.username}
+              </Typography>
             ) : (
               <StyledButton
                 variant="contained"

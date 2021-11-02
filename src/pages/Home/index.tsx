@@ -3,19 +3,27 @@ import {
   colors,
   Container,
   Divider,
+  Stack,
   Theme,
   Typography
 } from '@mui/material';
 import { SxProps } from '@mui/system';
+import SearchTable from 'components/SearchTable';
+import StatisticTable from 'components/StatisticTable';
 import { Bar, Line } from 'react-chartjs-2';
 import { AppLayout } from 'theme/layout';
 import {
   injectedByDay,
-  injectedByTotalSupplied
+  injectedByTotalSupplied,
+  statisticVaccinationByArea,
+  statisticVaccinationByLocal
 } from 'utils/fakeDataDashboard';
 import {
+  getDistrict,
   getHighestInjectionRate,
-  getLowestInjectionRate
+  getLowestInjectionRate,
+  getProvince,
+  getWard
 } from 'utils/filterData';
 
 const boxInfoStyle: SxProps<Theme> = {
@@ -103,7 +111,7 @@ const Home = () => {
   return (
     <AppLayout>
       <Box sx={{ backgroundColor: '#fff', flex: 1 }}>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Box
             my={3}
             px={3}
@@ -155,16 +163,15 @@ const Home = () => {
             </Box>
           </Box>
           <Box sx={{ display: 'flex', mt: 5 }}>
-            <Box
+            <Stack
               sx={{
                 ...boxStyle,
                 flex: 1,
                 px: 2,
-                py: 3,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-              }}>
+                py: 3
+              }}
+              direction="column"
+              alignItems="center">
               <Typography variant="h6" width="100%" align="left">
                 10 Địa phương có tỷ lệ tiêm cao nhất
               </Typography>
@@ -194,18 +201,21 @@ const Home = () => {
                   height={410}
                 />
               </Box>
-            </Box>
+              <Typography variant="body2" mt="4px" align="center">
+                <Box component="b">Ghi chú</Box>: Số mũi tiêm thực tế có thể
+                nhiều hơn số liều vắc xin phân bổ
+              </Typography>
+            </Stack>
             <Box sx={{ width: '24px' }} />
-            <Box
+            <Stack
               sx={{
                 ...boxStyle,
                 flex: 1,
                 px: 2,
-                py: 3,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-              }}>
+                py: 3
+              }}
+              direction="column"
+              alignItems="center">
               <Typography variant="h6" width="100%" align="left">
                 10 Địa phương có tỷ lệ tiêm thấp nhất
               </Typography>
@@ -237,7 +247,104 @@ const Home = () => {
                   height={410}
                 />
               </Box>
-            </Box>
+              <Typography variant="body2" mt="4px" align="center">
+                <Box component="b">Ghi chú</Box>: Tỷ lệ tiêm tại một số tỉnh có
+                thể thấp do chưa nhận đủ vắc xin theo quyết định phân bổ
+              </Typography>
+            </Stack>
+          </Box>
+          <Box sx={boxStyle} mt={10} px={2}>
+            <Typography variant="h6" p={2}>
+              Số liệu vắc xin theo địa phương
+            </Typography>
+            <Divider />
+            <StatisticTable
+              data={{
+                heading: [
+                  'STT',
+                  'Tỉnh/Thành phố',
+                  'Dự kiến KH phân bổ',
+                  'Phân bổ thực tế',
+                  'Dân số >= 18 tuổi',
+                  'Số liều đã tiêm',
+                  'Tỷ lệ dự kiến phân bổ theo kế hoạch/ dân số (>= 18 tuổi)',
+                  'Tỷ lệ đã phân bổ/ dân số (>= 18 tuổi)',
+                  'Tỷ lệ đã tiêm ít nhất 1 mũi/ dân số (>= 18 tuổi)',
+                  'Tỷ lệ tiêm chủng/ Vắc xin phân bổ thực tế',
+                  'Tỷ lệ phân bổ vắc xin/Tổng số phân bổ cả nước'
+                ],
+                dataSet: statisticVaccinationByLocal.map((record, index) => {
+                  const { provinceId, ...otherValues } = record;
+                  return [
+                    index + 1,
+                    getProvince(provinceId)?.label,
+                    ...Object.values(otherValues)
+                  ];
+                })
+              }}
+              options={{
+                maxHeight: '850px',
+                percentColumns: [
+                  {
+                    number: 6,
+                    color: '#C65312'
+                  },
+                  {
+                    number: 7,
+                    color: '#3D94CF'
+                  },
+                  {
+                    number: 8,
+                    color: '#4E8A4F'
+                  },
+                  {
+                    number: 9,
+                    color: '#AF8612'
+                  },
+                  {
+                    number: 10,
+                    color: 'rgb(45, 33, 136)'
+                  }
+                ]
+              }}
+            />
+            <Stack direction="row" justifyContent="center" py={3}>
+              <Box sx={{ color: colors.indigo[700], cursor: 'pointer' }}>
+                Xem thêm
+              </Box>
+            </Stack>
+          </Box>
+          <Box sx={boxStyle} mt={4}>
+            <Typography variant="h6" p={2}>
+              Tra cứu điểm tiêm theo địa bàn
+            </Typography>
+            <SearchTable
+              data={{
+                heading: [
+                  'STT',
+                  'Tên điểm tiêm',
+                  'Số nhà. tên đường',
+                  'Xã/Phường',
+                  'Quận/Huyện',
+                  'Tỉnh/Thành Phố',
+                  'Người đứng đầu cơ sở tiêm chủng',
+                  'Số bàn tiêm'
+                ],
+                dataSet: statisticVaccinationByArea.map((record, index) => {
+                  const { provinceId, districtId, wardId } = record;
+                  return [
+                    index + 1,
+                    record.injectionSiteName,
+                    record.apartmentNumber,
+                    getWard(provinceId, districtId, wardId)?.label,
+                    getDistrict(provinceId, districtId)?.label,
+                    getProvince(provinceId)?.label,
+                    record.leader,
+                    record.numberOfInjectionTables
+                  ];
+                })
+              }}
+            />
           </Box>
         </Container>
       </Box>

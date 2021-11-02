@@ -10,7 +10,7 @@ const Footer = () => {
         pt: 4,
         color: '#fff'
       }}>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Stack direction="row" justifyContent="space-between">
           <Box>
             <Typography variant="body2">
