@@ -34,7 +34,7 @@ const Step3 = (props: IProps) => {
 
   const selectedProvince: number = watch('provinceId');
   const selectedDistrict: number = watch('districtId');
-  const selectedWard: number = watch('wardsId');
+  const selectedWard: number = watch('wardId');
   const [provinceOptions] = useState<IProvince[]>(addressData);
   const [districtOptions, setDistrictOptions] = useState<IDistrict[]>([]);
   const [wardOptions, setWardOptions] = useState<IWard[]>([]);
@@ -44,23 +44,23 @@ const Step3 = (props: IProps) => {
   const disableButton =
     !!errors.provinceId ||
     !!errors.districtId ||
-    !!errors.wardsId ||
+    !!errors.wardId ||
     watch('provinceId') === -1 ||
     watch('districtId') === -1 ||
-    watch('wardsId') === -1;
+    watch('wardId') === -1;
 
   useEffect(() => {
     if (selectedProvince === -1) {
       setError('provinceId', { message: 'Trường này là bắt buộc' });
       setValue('districtId', -1);
-      setValue('wardsId', -1);
+      setValue('wardId', -1);
     } else {
       clearErrors('provinceId');
     }
 
     if (selectedDistrict === -1) {
       setError('districtId', { message: 'Trường này là bắt buộc' });
-      setValue('wardsId', -1);
+      setValue('wardId', -1);
       setDistrictInputValue('');
     } else {
       setDistrictInputValue((prevState) => {
@@ -73,14 +73,14 @@ const Step3 = (props: IProps) => {
     }
 
     if (selectedWard === -1) {
-      setError('wardsId', { message: 'Trường này là bắt buộc' });
+      setError('wardId', { message: 'Trường này là bắt buộc' });
       setWardInputValue('');
     } else {
       setWardInputValue((prevState) => {
         const ward = wardOptions.find(({ id }) => id === selectedWard);
         return ward ? ward.label : '';
       });
-      clearErrors('wardsId');
+      clearErrors('wardId');
     }
   }, [
     clearErrors,
@@ -117,7 +117,7 @@ const Step3 = (props: IProps) => {
         const districtIndex = districtOptions.findIndex(
           ({ id }) => id === selectedDistrict
         );
-        setValue('wardsId', -1);
+        setValue('wardId', -1);
         if (districtIndex > -1) {
           return districtOptions[districtIndex].children;
         } else {
@@ -218,7 +218,7 @@ const Step3 = (props: IProps) => {
         <Label required>Xã/Phường</Label>
         <Controller
           control={control}
-          name="wardsId"
+          name="wardId"
           render={({ field, fieldState: { error, invalid } }) => {
             const valueAutocomplete = wardOptions.find(
               ({ id }) => id === field.value
@@ -234,8 +234,8 @@ const Step3 = (props: IProps) => {
                   value: IWard | null,
                   reason: AutocompleteChangeReason
                 ) => {
-                  setValue('wardsId', value ? value.id : -1);
-                  setFocus('wardsId');
+                  setValue('wardId', value ? value.id : -1);
+                  setFocus('wardId');
                 }}
                 renderInput={(params) => (
                   <TextField
@@ -244,9 +244,9 @@ const Step3 = (props: IProps) => {
                     sx={styleInputLarge}
                     onChange={(e) => setWardInputValue(e.target.value)}
                     inputProps={{ ...params.inputProps, value: wardInputValue }}
-                    error={invalid && touchedFields.wardsId}
+                    error={invalid && touchedFields.wardId}
                     helperText={
-                      invalid && touchedFields.wardsId && error?.message
+                      invalid && touchedFields.wardId && error?.message
                     }
                   />
                 )}
