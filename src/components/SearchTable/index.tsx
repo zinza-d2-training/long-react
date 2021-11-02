@@ -145,7 +145,7 @@ const SearchTable = (props: IProps) => {
   };
 
   return (
-    <Box>
+    <Box px={2}>
       <Stack direction="row" spacing={2} px={2} pb={2}>
         <Autocomplete
           options={provinceOptions}
