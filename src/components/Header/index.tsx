@@ -6,6 +6,7 @@ import {
   Container,
   Menu,
   MenuItem,
+  MenuList,
   Stack,
   Theme,
   Typography
@@ -32,10 +33,10 @@ const Header = () => {
   const useInfo = useAppSelector(authSelector).userInfo;
 
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleCloseMenu = () => {
     setAnchorEl(null);
   };
 
@@ -85,7 +86,7 @@ const Header = () => {
               color="#fff"
               sx={{ textTransform: 'unset' }}
               component={Button}
-              onClick={handleClick}
+              onMouseOver={handleOpenMenu}
               endIcon={<KeyboardArrowDownIcon />}
               variant="body1">
               Tra cứu
@@ -119,27 +120,37 @@ const Header = () => {
                 </Typography>
               </StyledButton>
             )}
-            <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
-              <MenuItem>
-                <Typography
-                  component={Link}
-                  onClick={handleClose}
-                  variant="body2"
-                  sx={menuItemStyle}
-                  to={RoutePaths.home}>
-                  Tra cứu chứng nhận tiêm
-                </Typography>
-              </MenuItem>
-              <MenuItem>
-                <Typography
-                  component={Link}
-                  onClick={handleClose}
-                  variant="body2"
-                  sx={menuItemStyle}
-                  to={RoutePaths.home}>
-                  Tra cứu kết quả đăng ký
-                </Typography>
-              </MenuItem>
+            <Menu
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleCloseMenu}
+              sx={{
+                '.MuiPaper-root': {
+                  boxShadow: '0px 0px 30px rgba(127, 137, 161, 0.4)'
+                }
+              }}>
+              <MenuList onMouseLeave={handleCloseMenu}>
+                <MenuItem>
+                  <Typography
+                    component={Link}
+                    onClick={handleCloseMenu}
+                    variant="body2"
+                    sx={menuItemStyle}
+                    to={RoutePaths.home}>
+                    Tra cứu chứng nhận tiêm
+                  </Typography>
+                </MenuItem>
+                <MenuItem>
+                  <Typography
+                    component={Link}
+                    onClick={handleCloseMenu}
+                    variant="body2"
+                    sx={menuItemStyle}
+                    to={RoutePaths.home}>
+                    Tra cứu kết quả đăng ký
+                  </Typography>
+                </MenuItem>
+              </MenuList>
             </Menu>
           </Stack>
         </Box>
