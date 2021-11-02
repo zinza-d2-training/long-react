@@ -124,6 +124,7 @@ const Header = () => {
               open={open}
               anchorEl={anchorEl}
               onClose={handleCloseMenu}
+              autoFocus={false}
               sx={{
                 '.MuiPaper-root': {
                   boxShadow: '0px 0px 30px rgba(127, 137, 161, 0.4)'

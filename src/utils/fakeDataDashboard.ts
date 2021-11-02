@@ -44,87 +44,87 @@ export const injectedByDay: IInjectedByDay[] = [
   },
   {
     day: new Date('10/11/2021'),
-    amount: 1381864
+    amount: 934703
   },
   {
     day: new Date('10/12/2021'),
-    amount: 1181761
+    amount: 1142514
   },
   {
     day: new Date('10/13/2021'),
-    amount: 1086361
+    amount: 1204947
   },
   {
     day: new Date('10/14/2021'),
-    amount: 1274649
+    amount: 1547763
   },
   {
     day: new Date('10/15/2021'),
-    amount: 1165291
+    amount: 1279973
   },
   {
     day: new Date('10/16/2021'),
-    amount: 1481934
+    amount: 1512310
   },
   {
     day: new Date('10/17/2021'),
-    amount: 1113685
+    amount: 1506365
   },
   {
     day: new Date('10/18/2021'),
-    amount: 1220757
+    amount: 1609812
   },
   {
     day: new Date('10/19/2021'),
-    amount: 2200000
+    amount: 2062348
   },
   {
     day: new Date('10/20/2021'),
-    amount: 1381864
+    amount: 1800271
   },
   {
     day: new Date('10/21/2021'),
-    amount: 1181761
+    amount: 1535250
   },
   {
     day: new Date('10/22/2021'),
-    amount: 1086361
+    amount: 1154115
   },
   {
     day: new Date('10/23/2021'),
-    amount: 1274649
+    amount: 1030833
   },
   {
     day: new Date('10/24/2021'),
-    amount: 1165291
+    amount: 1086485
   },
   {
     day: new Date('10/25/2021'),
-    amount: 1481934
+    amount: 915269
   },
   {
     day: new Date('10/26/2021'),
-    amount: 1113685
+    amount: 1007267
   },
   {
     day: new Date('10/27/2021'),
-    amount: 1220757
+    amount: 1167446
   },
   {
     day: new Date('10/28/2021'),
-    amount: 1118526
+    amount: 1651657
   },
   {
     day: new Date('10/29/2021'),
-    amount: 1113685
+    amount: 1586904
   },
   {
     day: new Date('10/30/2021'),
-    amount: 1220757
+    amount: 911698
   },
   {
     day: new Date('10/31/2021'),
-    amount: 1118526
+    amount: 541601
   }
 ];
 

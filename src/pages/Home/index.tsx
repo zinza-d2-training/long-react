@@ -156,6 +156,7 @@ const Home = () => {
                   }
                 }
               }}
+              height={100}
             />
           </Box>
           <Box sx={{ display: 'flex', mt: 5 }}>
