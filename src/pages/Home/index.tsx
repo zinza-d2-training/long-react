@@ -146,19 +146,17 @@ const Home = () => {
             </Box>
           </Box>
           <Box p={4} sx={boxStyle}>
-            <Box>
-              <Typography variant="h6">Dữ liệu tiêm theo ngày</Typography>
-              <Line
-                data={dataInjectedByDay}
-                options={{
-                  scales: {
-                    y: {
-                      beginAtZero: false
-                    }
+            <Typography variant="h6">Dữ liệu tiêm theo ngày</Typography>
+            <Line
+              data={dataInjectedByDay}
+              options={{
+                scales: {
+                  y: {
+                    beginAtZero: false
                   }
-                }}
-              />
-            </Box>
+                }
+              }}
+            />
           </Box>
           <Box sx={{ display: 'flex', mt: 5 }}>
             <Stack
