@@ -104,6 +104,12 @@ const SearchTable = (props: IProps) => {
     setSelectedWard(null);
   }, [districtOptions, selectedDistrict]);
 
+  useEffect(() => {
+    if (!selectedWard && !selectedDistrict && !selectedProvince) {
+      setTableData(data);
+    }
+  }, [data, selectedDistrict, selectedProvince, selectedWard]);
+
   const handleChangeProvince = (
     event: React.SyntheticEvent<Element, Event>,
     value: IProvince | null,
