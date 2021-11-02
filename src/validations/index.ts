@@ -31,5 +31,5 @@ export const registerSchema = yup.object().shape({
     ),
   provinceId: yup.number().required('Trường này là bắt buộc'),
   districtId: yup.number().required('Trường này là bắt buộc'),
-  wardsId: yup.number().required('Trường này là bắt buộc')
+  wardId: yup.number().required('Trường này là bắt buộc')
 });
