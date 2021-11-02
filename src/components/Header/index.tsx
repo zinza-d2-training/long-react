@@ -64,7 +64,7 @@ const Header = () => {
               CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
             </Typography>
           </Stack>
-          <Stack direction="row" alignItems="center" spacing="30px">
+          <Stack direction="row" alignItems="center" spacing={3}>
             <Typography
               color="#fff"
               sx={{ textDecoration: 'none' }}
@@ -124,7 +124,7 @@ const Header = () => {
                 <Typography
                   component={Link}
                   onClick={handleClose}
-                  variant="body1"
+                  variant="body2"
                   sx={menuItemStyle}
                   to={RoutePaths.home}>
                   Tra cứu chứng nhận tiêm
@@ -134,7 +134,7 @@ const Header = () => {
                 <Typography
                   component={Link}
                   onClick={handleClose}
-                  variant="body1"
+                  variant="body2"
                   sx={menuItemStyle}
                   to={RoutePaths.home}>
                   Tra cứu kết quả đăng ký

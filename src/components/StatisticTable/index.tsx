@@ -53,7 +53,10 @@ const StatisticTable = (props: IProps) => {
                     );
                     if (configColumn) {
                       return (
-                        <TableCell key={'' + data + index} align="center">
+                        <TableCell
+                          sx={{ py: 1 }}
+                          key={'' + data + index}
+                          align="center">
                           <Box
                             sx={{
                               width: '100%',
@@ -70,7 +73,10 @@ const StatisticTable = (props: IProps) => {
                     }
                   }
                   return (
-                    <TableCell key={'' + data + index} align="center">
+                    <TableCell
+                      sx={{ py: 1 }}
+                      key={'' + data + index}
+                      align="center">
                       {data?.toLocaleString()}
                     </TableCell>
                   );
