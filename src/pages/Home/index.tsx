@@ -19,11 +19,9 @@ import {
   statisticVaccinationByLocal
 } from 'utils/fakeDataDashboard';
 import {
-  getDistrict,
   getHighestInjectionRate,
   getLowestInjectionRate,
-  getProvince,
-  getWard
+  getProvince
 } from 'utils/filterData';
 
 const boxInfoStyle: SxProps<Theme> = {
@@ -318,33 +316,7 @@ const Home = () => {
             <Typography variant="h6" p={2}>
               Tra cứu điểm tiêm theo địa bàn
             </Typography>
-            <SearchTable
-              data={{
-                heading: [
-                  'STT',
-                  'Tên điểm tiêm',
-                  'Số nhà. tên đường',
-                  'Xã/Phường',
-                  'Quận/Huyện',
-                  'Tỉnh/Thành Phố',
-                  'Người đứng đầu cơ sở tiêm chủng',
-                  'Số bàn tiêm'
-                ],
-                dataSet: statisticVaccinationByArea.map((record, index) => {
-                  const { provinceId, districtId, wardId } = record;
-                  return [
-                    index + 1,
-                    record.injectionSiteName,
-                    record.apartmentNumber,
-                    getWard(provinceId, districtId, wardId)?.label,
-                    getDistrict(provinceId, districtId)?.label,
-                    getProvince(provinceId)?.label,
-                    record.leader,
-                    record.numberOfInjectionTables
-                  ];
-                })
-              }}
-            />
+            <SearchTable data={statisticVaccinationByArea} />
           </Box>
         </Container>
       </Box>

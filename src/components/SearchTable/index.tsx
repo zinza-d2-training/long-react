@@ -8,49 +8,84 @@ import {
 } from '@mui/material';
 import StatisticTable from 'components/StatisticTable';
 import StyledButton from 'components/Button';
-import { IDistrict, IProvince, ITableData, IWard } from 'models';
+import {
+  IDistrict,
+  IProvince,
+  IStatisticVaccinationByArea,
+  ITableData,
+  IWard
+} from 'models';
 import { useEffect, useState } from 'react';
 import { styleInputMedium } from 'theme';
 import { addressData } from 'utils/addressData';
 import SearchIcon from '@mui/icons-material/Search';
 import { AutocompleteChangeReason } from '@mui/core';
 import * as _ from 'lodash';
+import { getDistrict, getProvince, getWard } from 'utils/filterData';
 
+const convertData = (input: IStatisticVaccinationByArea[]): ITableData => {
+  return {
+    heading: [
+      'STT',
+      'Tên điểm tiêm',
+      'Số nhà. tên đường',
+      'Xã/Phường',
+      'Quận/Huyện',
+      'Tỉnh/Thành Phố',
+      'Người đứng đầu cơ sở tiêm chủng',
+      'Số bàn tiêm'
+    ],
+    dataSet: input.map((record, index) => {
+      const { provinceId, districtId, wardId } = record;
+      return [
+        index + 1,
+        record.injectionSiteName,
+        record.apartmentNumber,
+        getWard(provinceId, districtId, wardId)?.label,
+        getDistrict(provinceId, districtId)?.label,
+        getProvince(provinceId)?.label,
+        record.leader,
+        record.numberOfInjectionTables
+      ];
+    })
+  };
+};
 interface IProps {
-  data: ITableData;
+  data: IStatisticVaccinationByArea[];
 }
 
 const search = (
-  data: ITableData,
+  data: IStatisticVaccinationByArea[],
   options: {
-    provinceName?: string;
-    districtName?: string;
-    wardName?: string;
+    provinceId?: number;
+    districtId?: number;
+    wardId?: number;
   }
-): ITableData => {
-  const { provinceName, districtName, wardName } = options;
+): IStatisticVaccinationByArea[] => {
+  const { provinceId, districtId, wardId } = options;
   const result = _.cloneDeep(data);
-  result.dataSet = result.dataSet.filter((record) => {
-    if (!wardName) {
-      if (!districtName) {
-        return record[5] === provinceName;
+  return result.filter((record) => {
+    if (!wardId) {
+      if (!districtId) {
+        return record.provinceId === provinceId;
       } else {
-        return record[4] === districtName && record[5] === provinceName;
+        return (
+          record.districtId === districtId && record.provinceId === provinceId
+        );
       }
     } else {
       return (
-        record[3] === wardName &&
-        record[4] === districtName &&
-        record[5] === provinceName
+        record.wardId === wardId &&
+        record.districtId === districtId &&
+        record.provinceId === provinceId
       );
     }
   });
-  return result;
 };
 
 const SearchTable = (props: IProps) => {
   const { data } = props;
-  const [tableData, setTableData] = useState<ITableData>(data);
+  const [tableData, setTableData] = useState<ITableData>(convertData(data));
   const [provinceOptions] = useState<IProvince[]>(addressData);
   const [districtOptions, setDistrictOptions] = useState<IDistrict[]>([]);
   const [wardOptions, setWardOptions] = useState<IWard[]>([]);
@@ -106,7 +141,7 @@ const SearchTable = (props: IProps) => {
 
   useEffect(() => {
     if (!selectedWard && !selectedDistrict && !selectedProvince) {
-      setTableData(data);
+      setTableData(convertData(data));
     }
   }, [data, selectedDistrict, selectedProvince, selectedWard]);
 
@@ -136,11 +171,13 @@ const SearchTable = (props: IProps) => {
 
   const handleSearch = () => {
     setTableData(
-      search(data, {
-        provinceName: selectedProvince?.label,
-        districtName: selectedDistrict?.label,
-        wardName: selectedWard?.label
-      })
+      convertData(
+        search(data, {
+          provinceId: selectedProvince?.id,
+          districtId: selectedDistrict?.id,
+          wardId: selectedWard?.id
+        })
+      )
     );
   };
 
