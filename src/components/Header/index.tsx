@@ -126,7 +126,7 @@ const Header = () => {
                   onClick={handleClose}
                   variant="body1"
                   sx={menuItemStyle}
-                  to={RoutePaths.home}>
+                  to={RoutePaths.vaccineCertificate}>
                   Tra cứu chứng nhận tiêm
                 </Typography>
               </MenuItem>

@@ -33,3 +33,12 @@ export const registerSchema = yup.object().shape({
   districtId: yup.number().required('Đây là trường bắt buộc'),
   wardId: yup.number().required('Đây là trường bắt buộc')
 });
+
+export const certificationSchema = yup.object().shape({
+  fullName: yup.string().required('Họ tên không được bỏ trống'),
+  dob: yup.date().required('Ngày sinh không được bỏ trống'),
+  gender: yup.number().required('Giới tính không được bỏ trống'),
+  phone: yup.string().required('Số điện thoại không được bỏ trống'),
+  citizenId: yup.string(),
+  healthInsuranceCardNumber: yup.string()
+});

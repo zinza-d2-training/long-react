@@ -10,36 +10,63 @@ import {
 } from '@mui/material';
 import StyledButton from 'components/Button';
 import StyledDialogTitle from 'components/DialogTitle';
+import { useClock } from 'hooks';
+import { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
+import { isNumberOrNull } from 'utils/validate';
 
+const START_TIME = { hours: 0, minutes: 0, seconds: 0 };
 interface IProps {
   open: boolean;
-  otp: string;
-  isShowReSendOtp: boolean;
-  time: string;
-  onReSendOtp: () => void;
-  onChangeOtp: (otp: string) => void;
   onClose: () => void;
   onConfirm: () => void;
 }
+
 const OtpDialog = (props: IProps) => {
-  const {
-    open,
-    onClose,
-    otp,
-    onChangeOtp,
-    isShowReSendOtp,
-    onReSendOtp,
-    onConfirm,
-    time
-  } = props;
+  const { open, onClose, onConfirm } = props;
+  const [otp, setOtp] = useState<string>('');
+  const [isShowReSendOtp, setIsShowReSendOtp] = useState<boolean>(false);
+
+  const { time, setTime } = useClock(START_TIME);
+
+  useEffect(() => {
+    setTime({ hours: 0, minutes: 2, seconds: 0 });
+  }, [setTime]);
+
+  useEffect(() => {
+    if (time === '00:00:00') {
+      setIsShowReSendOtp(true);
+    } else {
+      setIsShowReSendOtp(false);
+    }
+  }, [time]);
+
+  const handleChangeOtp = (otp: string) => {
+    if (isNumberOrNull(otp)) {
+      setOtp(otp);
+    }
+  };
+  const handleReSendOtp = () => {
+    setTime({ hours: 0, minutes: 2, seconds: 0 });
+  };
+
+  const handleClose = () => {
+    setOtp('');
+    onClose();
+  };
+
+  const handleConfirm = () => {
+    setOtp('');
+    onConfirm();
+  };
+
   return (
     <Dialog open={open} hideBackdrop sx={{ '.container': { width: '500px' } }}>
       <StyledDialogTitle>
         <Typography component="p" variant="h6">
           Xác thực OTP
         </Typography>
-        <IconButton onClick={onClose}>
+        <IconButton onClick={handleClose}>
           <ClearIcon />
         </IconButton>
       </StyledDialogTitle>
@@ -61,7 +88,7 @@ const OtpDialog = (props: IProps) => {
         </Typography>
         <OtpInput
           value={otp}
-          onChange={onChangeOtp}
+          onChange={handleChangeOtp}
           numInputs={6}
           separator={<Box width="16px"></Box>}
           inputStyle={{
@@ -84,7 +111,7 @@ const OtpDialog = (props: IProps) => {
           variant="body1"
           align="center"
           sx={{ my: 3, color: colors.blueGrey['400'] }}>
-          Nếu bạn không nhân được tin nhắn, xin vui lòng thử lại sau: {time}
+          Nếu bạn không nhận được tin nhắn, xin vui lòng thử lại sau: {time}
         </Typography>
         {isShowReSendOtp && (
           <Typography
@@ -94,17 +121,17 @@ const OtpDialog = (props: IProps) => {
               mb: 3,
               cursor: 'pointer'
             }}
-            onClick={onReSendOtp}>
+            onClick={handleReSendOtp}>
             Gửi lại mã OTP?
           </Typography>
         )}
         <Box>
-          <StyledButton variant="outlined" sx={{ mr: 2 }} onClick={onClose}>
+          <StyledButton variant="outlined" sx={{ mr: 2 }} onClick={handleClose}>
             Hủy bỏ
           </StyledButton>
           <StyledButton
             variant="contained"
-            onClick={onConfirm}
+            onClick={handleConfirm}
             disabled={otp.trim().length < 6}>
             Xác nhận
           </StyledButton>
