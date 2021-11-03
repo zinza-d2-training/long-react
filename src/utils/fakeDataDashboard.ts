@@ -5,7 +5,7 @@ import {
   IStatisticVaccinationByLocal
 } from 'models';
 
-export const injectedByDay: IInjectedByDay[] = [
+export const fakeInjectedByDay: IInjectedByDay[] = [
   {
     day: new Date('10/02/2021'),
     amount: 1381864
@@ -128,7 +128,7 @@ export const injectedByDay: IInjectedByDay[] = [
   }
 ];
 
-export const injectedByTotalSupplied: IInjectedByTotalSupplied[] = [
+export const fakeInjectedByTotalSupplied: IInjectedByTotalSupplied[] = [
   {
     province: 'Phú Thọ',
     amount: 853936,
@@ -231,7 +231,7 @@ export const injectedByTotalSupplied: IInjectedByTotalSupplied[] = [
   }
 ];
 
-export const statisticVaccinationByLocal: IStatisticVaccinationByLocal[] = [
+export const fakeStatisticVaccinationByLocal: IStatisticVaccinationByLocal[] = [
   {
     provinceId: 1,
     distributionPlan: 11376541,
@@ -354,7 +354,34 @@ export const statisticVaccinationByLocal: IStatisticVaccinationByLocal[] = [
   }
 ];
 
-export const statisticVaccinationByArea: IStatisticVaccinationByArea[] = [
+export const fakeStatisticVaccinationByArea: IStatisticVaccinationByArea[] = [
+  {
+    injectionSiteName: 'Bệnh viện Đa khoa Medlatec',
+    apartmentNumber: '42-44 Nghĩa Dũng',
+    wardId: 1,
+    districtId: 1,
+    provinceId: 1,
+    leader: 'Nguyễn Thị Kim Liên',
+    numberOfInjectionTables: 1
+  },
+  {
+    injectionSiteName: 'Bệnh viện Đa khoa Medlatec',
+    apartmentNumber: '42-44 Nghĩa Dũng',
+    wardId: 1,
+    districtId: 1,
+    provinceId: 2,
+    leader: 'Nguyễn Thị Kim Liên',
+    numberOfInjectionTables: 1
+  },
+  {
+    injectionSiteName: 'Bệnh viện Đa khoa Medlatec',
+    apartmentNumber: '42-44 Nghĩa Dũng',
+    wardId: 1,
+    districtId: 2,
+    provinceId: 1,
+    leader: 'Nguyễn Thị Kim Liên',
+    numberOfInjectionTables: 1
+  },
   {
     injectionSiteName: 'Bệnh viện Đa khoa Medlatec',
     apartmentNumber: '42-44 Nghĩa Dũng',

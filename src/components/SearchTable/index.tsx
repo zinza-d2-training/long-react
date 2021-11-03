@@ -52,6 +52,7 @@ const convertData = (input: IStatisticVaccinationByArea[]): ITableData => {
 };
 interface IProps {
   data: IStatisticVaccinationByArea[];
+  onLoadMoreData?: () => void;
 }
 
 const search = (
@@ -84,7 +85,7 @@ const search = (
 };
 
 const SearchTable = (props: IProps) => {
-  const { data } = props;
+  const { data, onLoadMoreData } = props;
   const [tableData, setTableData] = useState<ITableData>(convertData(data));
   const [provinceOptions] = useState<IProvince[]>(addressData);
   const [districtOptions, setDistrictOptions] = useState<IDistrict[]>([]);
@@ -99,6 +100,7 @@ const SearchTable = (props: IProps) => {
   const [inputProvince, setInputProvince] = useState('');
   const [inputDistrict, setInputDistrict] = useState('');
   const [inputWard, setInputWard] = useState('');
+  const [hasLoadMore, setHasLoadMore] = useState(true);
 
   useEffect(() => {
     if (selectedProvince) {
@@ -141,9 +143,14 @@ const SearchTable = (props: IProps) => {
 
   useEffect(() => {
     if (!selectedWard && !selectedDistrict && !selectedProvince) {
+      setHasLoadMore(true);
       setTableData(convertData(data));
     }
   }, [data, selectedDistrict, selectedProvince, selectedWard]);
+
+  useEffect(() => {
+    setTableData(convertData(data));
+  }, [data]);
 
   const handleChangeProvince = (
     event: React.SyntheticEvent<Element, Event>,
@@ -170,6 +177,7 @@ const SearchTable = (props: IProps) => {
   };
 
   const handleSearch = () => {
+    setHasLoadMore(false);
     setTableData(
       convertData(
         search(data, {
@@ -253,7 +261,14 @@ const SearchTable = (props: IProps) => {
         </StyledButton>
       </Stack>
       <Divider />
-      <StatisticTable data={tableData} />
+      <StatisticTable
+        data={tableData}
+        onLoadMoreData={onLoadMoreData}
+        options={{
+          maxHeight: '500px',
+          hasLoadMore
+        }}
+      />
     </Box>
   );
 };

@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   colors,
   Container,
   Divider,
@@ -10,14 +11,25 @@ import {
 import { SxProps } from '@mui/system';
 import SearchTable from 'components/SearchTable';
 import StatisticTable from 'components/StatisticTable';
+import {
+  IInjectedByDay,
+  IInjectedByTotalSupplied,
+  IStatisticVaccinationByArea,
+  IStatisticVaccinationByLocal
+} from 'models';
+import { useState } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import { AppLayout } from 'theme/layout';
 import {
-  injectedByDay,
-  injectedByTotalSupplied,
-  statisticVaccinationByArea,
-  statisticVaccinationByLocal
+  fakeInjectedByDay,
+  fakeInjectedByTotalSupplied,
+  fakeStatisticVaccinationByArea,
+  fakeStatisticVaccinationByLocal
 } from 'utils/fakeDataDashboard';
+import {
+  fakeLoadMoreStatisticVaccinationByArea,
+  fakeLoadMoreStatisticVaccinationByLocal
+} from 'utils/fakeLoadMoreData';
 import {
   getHighestInjectionRate,
   getLowestInjectionRate,
@@ -55,55 +67,39 @@ const boxStyle: SxProps<Theme> = {
 };
 
 const Home = () => {
-  const dataInjectedByDay = {
-    labels: injectedByDay.map(
-      ({ day }) => `${day.getDate()}/${day.getMonth() + 1}`
-    ),
-    datasets: [
-      {
-        label: 'Đã tiêm',
-        data: injectedByDay.map(({ amount }) => amount),
-        fill: false,
-        backgroundColor: colors.indigo[700],
-        borderColor: colors.indigo[700]
-      }
-    ]
-  };
+  const [injectedByDay] = useState<IInjectedByDay[]>(fakeInjectedByDay);
+  const [injectedByTotalSupplied] = useState<IInjectedByTotalSupplied[]>(
+    fakeInjectedByTotalSupplied
+  );
+  const [statisticVaccinationByArea, setStatisticVaccinationByArea] = useState<
+    IStatisticVaccinationByArea[]
+  >(fakeStatisticVaccinationByArea);
+  const [statisticVaccinationByLocal, setStatisticVaccinationByLocal] =
+    useState<IStatisticVaccinationByLocal[]>(fakeStatisticVaccinationByLocal);
 
   const highestInjectionRate = getHighestInjectionRate(
     injectedByTotalSupplied,
     10
   );
 
-  const dataHighestInjectionRate = {
-    labels: highestInjectionRate.map((item) => item.province),
-    datasets: [
-      {
-        label: 'Tổng tiêm / tổng phân bố (%)',
-        data: highestInjectionRate.map((item) => item.percent),
-        backgroundColor: [colors.indigo[700]],
-        borderWidth: 0,
-        maxBarThickness: 20
-      }
-    ]
-  };
-
   const lowestInjectionRate = getLowestInjectionRate(
     injectedByTotalSupplied,
     10
   );
 
-  const dataLowestInjectionRate = {
-    labels: lowestInjectionRate.map((item) => item.province),
-    datasets: [
-      {
-        label: 'Tổng tiêm / tổng phân bố (%)',
-        data: lowestInjectionRate.map((item) => item.percent),
-        backgroundColor: [colors.blue[500]],
-        borderWidth: 0,
-        maxBarThickness: 20
-      }
-    ]
+  const handleLoadMoreVaccinationByLocal = () => {
+    const newData: IStatisticVaccinationByLocal[] =
+      fakeLoadMoreStatisticVaccinationByLocal;
+    setStatisticVaccinationByLocal([
+      ...statisticVaccinationByLocal,
+      ...newData
+    ]);
+  };
+
+  const handleLoadMoreVaccinationByArea = () => {
+    const newData: IStatisticVaccinationByArea[] =
+      fakeLoadMoreStatisticVaccinationByArea;
+    setStatisticVaccinationByArea([...statisticVaccinationByArea, ...newData]);
   };
 
   return (
@@ -150,7 +146,20 @@ const Home = () => {
           <Box p={4} sx={boxStyle}>
             <Typography variant="h6">Dữ liệu tiêm theo ngày</Typography>
             <Line
-              data={dataInjectedByDay}
+              data={{
+                labels: injectedByDay.map(
+                  ({ day }) => `${day.getDate()}/${day.getMonth() + 1}`
+                ),
+                datasets: [
+                  {
+                    label: 'Đã tiêm',
+                    data: injectedByDay.map(({ amount }) => amount),
+                    fill: false,
+                    backgroundColor: colors.indigo[700],
+                    borderColor: colors.indigo[700]
+                  }
+                ]
+              }}
               options={{
                 scales: {
                   y: {
@@ -196,7 +205,18 @@ const Home = () => {
                       }
                     }
                   }}
-                  data={dataHighestInjectionRate}
+                  data={{
+                    labels: highestInjectionRate.map((item) => item.province),
+                    datasets: [
+                      {
+                        label: 'Tổng tiêm / tổng phân bố (%)',
+                        data: highestInjectionRate.map((item) => item.percent),
+                        backgroundColor: [colors.indigo[700]],
+                        borderWidth: 0,
+                        maxBarThickness: 20
+                      }
+                    ]
+                  }}
                   height={310}
                 />
               </Box>
@@ -242,7 +262,18 @@ const Home = () => {
                       }
                     }
                   }}
-                  data={dataLowestInjectionRate}
+                  data={{
+                    labels: lowestInjectionRate.map((item) => item.province),
+                    datasets: [
+                      {
+                        label: 'Tổng tiêm / tổng phân bố (%)',
+                        data: lowestInjectionRate.map((item) => item.percent),
+                        backgroundColor: [colors.blue[500]],
+                        borderWidth: 0,
+                        maxBarThickness: 20
+                      }
+                    ]
+                  }}
                   height={310}
                 />
               </Box>
@@ -308,7 +339,15 @@ const Home = () => {
               }}
             />
             <Stack direction="row" justifyContent="center" py={3}>
-              <Box sx={{ color: colors.indigo[700], cursor: 'pointer' }}>
+              <Box
+                component={Button}
+                sx={{
+                  color: colors.indigo[700],
+                  textTransform: 'unset',
+                  fontSize: '18px',
+                  fontWeight: '400'
+                }}
+                onClick={handleLoadMoreVaccinationByLocal}>
                 Xem thêm
               </Box>
             </Stack>
@@ -317,7 +356,10 @@ const Home = () => {
             <Typography variant="h6" p={2}>
               Tra cứu điểm tiêm theo địa bàn
             </Typography>
-            <SearchTable data={statisticVaccinationByArea} />
+            <SearchTable
+              data={statisticVaccinationByArea}
+              onLoadMoreData={handleLoadMoreVaccinationByArea}
+            />
           </Box>
         </Container>
       </Box>
