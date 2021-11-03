@@ -7,3 +7,4 @@ export * from './dashBoard';
 export * from './table';
 export * from './certificate';
 export * from './injectionRegistration';
+export * from './vaccineRegistration';
