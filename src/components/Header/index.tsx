@@ -4,15 +4,18 @@ import {
   Button,
   colors,
   Container,
-  Menu,
+  Popper,
   MenuItem,
   Stack,
   Theme,
-  Typography
+  Typography,
+  Paper,
+  Grow,
+  MenuList
 } from '@mui/material';
 import { SxProps } from '@mui/system';
 import StyledButton from 'components/Button';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RoutePaths } from 'routes';
 import { useAppSelector } from 'store';
@@ -27,16 +30,23 @@ const menuItemStyle: SxProps<Theme> = {
 };
 
 const Header = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
   const useInfo = useAppSelector(authSelector).userInfo;
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLButtonElement>(null);
 
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleOpenMenu = () => {
+    setOpen(true);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+
+  const handleCloseMenu = (event: Event | React.SyntheticEvent) => {
+    // if (
+    //   anchorRef.current &&
+    //   anchorRef.current.contains(event.target as HTMLElement)
+    // ) {
+    //   return;
+    // }
+
+    setOpen(false);
   };
 
   return (
@@ -81,15 +91,71 @@ const Header = () => {
               to={RoutePaths.home}>
               Đăng ký tiêm
             </Typography>
-            <Typography
-              color="#fff"
-              sx={{ textTransform: 'unset' }}
-              component={Button}
-              onClick={handleClick}
-              endIcon={<KeyboardArrowDownIcon />}
-              variant="body1">
-              Tra cứu
-            </Typography>
+            <Box component="div" onMouseLeave={handleCloseMenu}>
+              <Typography
+                ref={anchorRef}
+                id="composition-button"
+                aria-controls={open ? 'composition-menu' : undefined}
+                aria-expanded={open ? 'true' : undefined}
+                aria-haspopup="true"
+                onMouseEnter={handleOpenMenu}
+                color="#fff"
+                sx={{ textTransform: 'unset' }}
+                component={Button}
+                endIcon={<KeyboardArrowDownIcon />}
+                variant="body1">
+                Tra cứu
+              </Typography>
+              <Popper
+                open={open}
+                anchorEl={anchorRef.current}
+                role={undefined}
+                placement="bottom-start"
+                transition
+                disablePortal>
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{
+                      transformOrigin:
+                        placement === 'bottom-start'
+                          ? 'left top'
+                          : 'left bottom'
+                    }}>
+                    <Paper
+                      sx={{
+                        boxShadow: '0px 0px 30px rgba(127, 137, 161, 0.4)'
+                      }}>
+                      <MenuList
+                        autoFocusItem={open}
+                        id="composition-menu"
+                        aria-labelledby="composition-button">
+                        <MenuItem>
+                          <Typography
+                            component={Link}
+                            onClick={handleCloseMenu}
+                            variant="body2"
+                            sx={menuItemStyle}
+                            to={RoutePaths.vaccineCertificate}>
+                            Tra cứu chứng nhận tiêm
+                          </Typography>
+                        </MenuItem>
+                        <MenuItem>
+                          <Typography
+                            component={Link}
+                            onClick={handleCloseMenu}
+                            variant="body2"
+                            sx={menuItemStyle}
+                            to={RoutePaths.home}>
+                            Tra cứu kết quả đăng ký
+                          </Typography>
+                        </MenuItem>
+                      </MenuList>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </Box>
             <Typography
               color="#fff"
               sx={{ textDecoration: 'none' }}
@@ -119,28 +185,6 @@ const Header = () => {
                 </Typography>
               </StyledButton>
             )}
-            <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
-              <MenuItem>
-                <Typography
-                  component={Link}
-                  onClick={handleClose}
-                  variant="body1"
-                  sx={menuItemStyle}
-                  to={RoutePaths.vaccineCertificate}>
-                  Tra cứu chứng nhận tiêm
-                </Typography>
-              </MenuItem>
-              <MenuItem>
-                <Typography
-                  component={Link}
-                  onClick={handleClose}
-                  variant="body1"
-                  sx={menuItemStyle}
-                  to={RoutePaths.home}>
-                  Tra cứu kết quả đăng ký
-                </Typography>
-              </MenuItem>
-            </Menu>
           </Stack>
         </Box>
       </Container>
