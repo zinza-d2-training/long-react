@@ -14,6 +14,7 @@ import {
 import StyledButton from 'components/Button';
 import Label from 'components/Label';
 import OtpDialog from 'components/OtpDialog';
+import PageTitle from 'components/PageTitle';
 import { ICertificateSearch } from 'models';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -58,20 +59,7 @@ const VaccineCertificate = () => {
   };
   return (
     <AppLayout>
-      <Box
-        mt={4}
-        mb={5}
-        height="64px"
-        px={4}
-        sx={{
-          backgroundColor: colors.grey[100],
-          display: 'flex',
-          alignItems: 'center'
-        }}>
-        <Container maxWidth="xl">
-          <Typography variant="h6">Tra cứu chứng nhận tiêm</Typography>
-        </Container>
-      </Box>
+      <PageTitle>Tra cứu chứng nhận tiêm</PageTitle>
       <Box mb="86px">
         <Container maxWidth="xl">
           <Box

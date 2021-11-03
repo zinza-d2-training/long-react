@@ -1,13 +1,9 @@
-import {
-  Autocomplete,
-  Box,
-  colors,
-  Divider,
-  Stack,
-  TextField
-} from '@mui/material';
-import StatisticTable from 'components/StatisticTable';
+import { AutocompleteChangeReason } from '@mui/core';
+import SearchIcon from '@mui/icons-material/Search';
+import { Autocomplete, Box, Divider, Stack, TextField } from '@mui/material';
 import StyledButton from 'components/Button';
+import StatisticTable from 'components/StatisticTable';
+import * as _ from 'lodash';
 import {
   IDistrict,
   IProvince,
@@ -18,9 +14,6 @@ import {
 import { useEffect, useState } from 'react';
 import { styleInputMedium } from 'theme';
 import { addressData } from 'utils/addressData';
-import SearchIcon from '@mui/icons-material/Search';
-import { AutocompleteChangeReason } from '@mui/core';
-import * as _ from 'lodash';
 import { getDistrict, getProvince, getWard } from 'utils/filterData';
 
 const convertData = (input: IStatisticVaccinationByArea[]): ITableData => {

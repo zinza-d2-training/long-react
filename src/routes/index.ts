@@ -1,6 +1,7 @@
 import { IRoute, RouteType } from 'models';
 import ForgotPassword from 'pages/ForgotPassword';
 import Home from 'pages/Home';
+import InjectionRegistration from 'pages/InjectionRegistration';
 import Login from 'pages/Login';
 import Register from 'pages/Register';
 import VaccineCertificate from 'pages/VaccineCertificate';
@@ -10,6 +11,7 @@ export const RoutePaths = {
   forgotPassword: '/forgot-password',
   register: '/register',
   vaccineCertificate: '/vaccine-certificate',
+  injectionRegistration: '/injection-registration',
   home: '/'
 };
 
@@ -39,6 +41,13 @@ const routes: IRoute[] = [
     key: 'route_vaccine_certificate',
     path: RoutePaths.vaccineCertificate,
     component: VaccineCertificate,
+    exact: true,
+    routeType: RouteType.PUBLIC_ROUTE
+  },
+  {
+    key: 'route_injection_registration',
+    path: RoutePaths.injectionRegistration,
+    component: InjectionRegistration,
     exact: true,
     routeType: RouteType.PUBLIC_ROUTE
   },
