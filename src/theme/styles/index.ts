@@ -22,8 +22,7 @@ export const styleInputLarge: SxProps<Theme> = {
 export const styleInputMedium: SxProps<Theme> = {
   '.MuiInputBase-root': {
     height: '40px',
-    p: 0,
-    pl: 1
+    p: 0
   },
   '.MuiFormHelperText-root': {
     marginLeft: 0,

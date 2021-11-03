@@ -1,31 +1,17 @@
 import { Box, TextField, Typography } from '@mui/material';
 import StyledButton from 'components/Button';
 import OtpDialog from 'components/OtpDialog';
-import { useClock } from 'hooks';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { RoutePaths } from 'routes';
 import { styleInputLarge } from 'theme';
 import { isNumberOrNull } from 'utils/validate';
 
-const START_TIME = { hours: 0, minutes: 0, seconds: 0 };
-
 const ForgotPassword = () => {
   const [citizenId, setCitizenId] = useState<string>('');
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-  const [otp, setOtp] = useState<string>('');
-  const [isShowReSendOtp, setIsShowReSendOtp] = useState<boolean>(false);
 
   const history = useHistory();
-  const { time, setTime } = useClock(START_TIME);
-
-  useEffect(() => {
-    if (time === '00:00:00') {
-      setIsShowReSendOtp(true);
-    } else {
-      setIsShowReSendOtp(false);
-    }
-  }, [time]);
 
   const handleChangeCitizenId = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
@@ -37,27 +23,15 @@ const ForgotPassword = () => {
   const handleOpenModal = () => {
     if (citizenId.trim()) {
       setIsOpenModal(true);
-      setTime({ hours: 0, minutes: 2, seconds: 0 });
     }
   };
 
   const handleCloseModal = () => {
-    setOtp('');
     setIsOpenModal(false);
   };
 
   const backToLoginPage = () => {
     history.push(RoutePaths.login);
-  };
-
-  const handleChangeOtp = (otp: string) => {
-    if (isNumberOrNull(otp)) {
-      setOtp(otp);
-    }
-  };
-
-  const handleReSendOtp = () => {
-    setTime({ hours: 0, minutes: 2, seconds: 0 });
   };
 
   const handleConfirm = () => {
@@ -114,11 +88,6 @@ const ForgotPassword = () => {
           </Box>
           <OtpDialog
             open={isOpenModal}
-            otp={otp}
-            isShowReSendOtp={isShowReSendOtp}
-            time={time}
-            onReSendOtp={handleReSendOtp}
-            onChangeOtp={handleChangeOtp}
             onClose={handleCloseModal}
             onConfirm={handleConfirm}
           />

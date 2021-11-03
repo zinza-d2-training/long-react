@@ -255,7 +255,6 @@ const SearchTable = (props: IProps) => {
           disabled={!selectedWard && !selectedProvince && !selectedDistrict}
           startIcon={<SearchIcon />}
           variant="contained"
-          sx={{ backgroundColor: colors.indigo[700] }}
           onClick={handleSearch}>
           Tìm kiếm
         </StyledButton>

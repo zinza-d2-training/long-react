@@ -5,3 +5,4 @@ export * from './address';
 export * from './route';
 export * from './dashBoard';
 export * from './table';
+export * from './certificate';
