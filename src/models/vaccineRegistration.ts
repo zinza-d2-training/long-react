@@ -1,3 +1,5 @@
+import { ICountry } from './country';
+
 export interface IRegistrantInfo {
   fullName: string;
   dob: Date | null;
@@ -13,7 +15,7 @@ export interface IRegistrantInfo {
   districtId: number;
   wardId: number;
   ethnic: string;
-  nationalityId: string;
+  nationality: ICountry | null;
   priorityGroup: number;
 }
 
@@ -23,7 +25,7 @@ export interface IVaccinationRegistrationInfo {
 }
 
 export interface IHistoryOfFirstInjection {
-  vaccineName: string;
+  vaccineId: number;
   injectionDate: Date | null;
   shipmentNumber: string;
   vaccinePlace: string;
