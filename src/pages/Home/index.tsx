@@ -109,42 +109,44 @@ const Home = () => {
   return (
     <AppLayout>
       <Box sx={{ backgroundColor: '#fff', flex: 1 }}>
+        <Box my={3} px={3} py={2} sx={{ backgroundColor: '#F7FBFE' }}>
+          <Container maxWidth="xl">
+            <Box sx={{ display: 'flex' }}>
+              <Box sx={boxInfoStyle}>
+                <img src="images/ic_register_people.png" alt="" />
+                <Box ml={2}>
+                  <Typography sx={titleStyle}>
+                    Đối tượng đăng ký tiêm
+                  </Typography>
+                  <Typography sx={amountStyle}>
+                    11,203,873 <Box component="i">(lượt)</Box>
+                  </Typography>
+                </Box>
+              </Box>
+              <Divider orientation="vertical" flexItem />
+              <Box sx={boxInfoStyle}>
+                <img src="images/ic_injection.png" alt="" />
+                <Box ml={2}>
+                  <Typography sx={titleStyle}>Số mũi tiêm hôm qua</Typography>
+                  <Typography sx={amountStyle}>
+                    11,203,873 <Box component="i">(mũi)</Box>
+                  </Typography>
+                </Box>
+              </Box>
+              <Divider orientation="vertical" flexItem />
+              <Box sx={boxInfoStyle}>
+                <img src="images/ic_injected_people.png" alt="" />
+                <Box ml={2}>
+                  <Typography sx={titleStyle}>Số mũi tiêm toàn quốc</Typography>
+                  <Typography sx={amountStyle}>
+                    11,203,873 <Box component="i">(mũi)</Box>
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Container>
+        </Box>
         <Container maxWidth="xl">
-          <Box
-            my={3}
-            px={3}
-            py={2}
-            sx={{ backgroundColor: '#F7FBFE', display: 'flex' }}>
-            <Box sx={boxInfoStyle}>
-              <img src="images/ic_register_people.png" alt="" />
-              <Box ml={2}>
-                <Typography sx={titleStyle}>Đối tượng đăng ký tiêm</Typography>
-                <Typography sx={amountStyle}>
-                  11,203,873 <Box component="i">(lượt)</Box>
-                </Typography>
-              </Box>
-            </Box>
-            <Divider orientation="vertical" flexItem />
-            <Box sx={boxInfoStyle}>
-              <img src="images/ic_injection.png" alt="" />
-              <Box ml={2}>
-                <Typography sx={titleStyle}>Số mũi tiêm hôm qua</Typography>
-                <Typography sx={amountStyle}>
-                  11,203,873 <Box component="i">(mũi)</Box>
-                </Typography>
-              </Box>
-            </Box>
-            <Divider orientation="vertical" flexItem />
-            <Box sx={boxInfoStyle}>
-              <img src="images/ic_injected_people.png" alt="" />
-              <Box ml={2}>
-                <Typography sx={titleStyle}>Số mũi tiêm toàn quốc</Typography>
-                <Typography sx={amountStyle}>
-                  11,203,873 <Box component="i">(mũi)</Box>
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
           <Box p={4} sx={boxStyle}>
             <Typography variant="h6">Dữ liệu tiêm theo ngày</Typography>
             <Line
@@ -195,7 +197,7 @@ const Home = () => {
                     }
                   }}
                   data={dataHighestInjectionRate}
-                  height={410}
+                  height={310}
                 />
               </Box>
               <Typography variant="body2" mt="4px" align="center">
@@ -241,7 +243,7 @@ const Home = () => {
                     }
                   }}
                   data={dataLowestInjectionRate}
-                  height={410}
+                  height={310}
                 />
               </Box>
               <Typography variant="body2" mt="4px" align="center">
