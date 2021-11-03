@@ -81,7 +81,7 @@ const Header = () => {
               sx={{ textDecoration: 'none' }}
               component={Link}
               variant="body1"
-              to={RoutePaths.injectionRegistration}>
+              to={RoutePaths.home}>
               Đăng ký tiêm
             </Typography>
             <Box component="div" onMouseLeave={handleCloseMenu}>
@@ -139,7 +139,7 @@ const Header = () => {
                             onClick={handleCloseMenu}
                             variant="body2"
                             sx={menuItemStyle}
-                            to={RoutePaths.home}>
+                            to={RoutePaths.injectionRegistration}>
                             Tra cứu kết quả đăng ký
                           </Typography>
                         </MenuItem>
