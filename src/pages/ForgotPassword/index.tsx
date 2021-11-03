@@ -4,7 +4,7 @@ import OtpDialog from 'components/OtpDialog';
 import { useClock } from 'hooks';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { PATH_LOGIN } from 'routes';
+import { RoutePaths } from 'routes';
 import { styleInputLarge } from 'theme';
 import { isNumberOrNull } from 'utils/validate';
 
@@ -47,7 +47,7 @@ const ForgotPassword = () => {
   };
 
   const backToLoginPage = () => {
-    history.push(PATH_LOGIN);
+    history.push(RoutePaths.login);
   };
 
   const handleChangeOtp = (otp: string) => {

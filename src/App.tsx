@@ -1,8 +1,8 @@
 import { CssBaseline } from '@mui/material';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { RouteType } from 'models';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import routes from 'routes';
-import Layout, { PrivateRoute } from 'theme/layout';
-import AuthRoute from 'theme/layout/AuthRoute';
+import Layout, { PrivateRoute, AuthRoute } from 'theme/layout';
 
 function App() {
   return (
@@ -11,25 +11,13 @@ function App() {
       <Layout>
         <Router>
           <Switch>
-            {routes.map(({ id, path, component, exact, privateRoute }) => {
-              if (privateRoute) {
-                return (
-                  <PrivateRoute
-                    key={id}
-                    path={path}
-                    exact={exact}
-                    component={component}
-                  />
-                );
+            {routes.map(({ routeType, ...routeProps }) => {
+              if (routeType === RouteType.PRIVATE_ROUTE) {
+                return <PrivateRoute {...routeProps} />;
+              } else if (routeType === RouteType.AUTH_ROUTE) {
+                return <AuthRoute {...routeProps} />;
               } else {
-                return (
-                  <AuthRoute
-                    key={id}
-                    path={path}
-                    exact={exact}
-                    component={component}
-                  />
-                );
+                return <Route {...routeProps} />;
               }
             })}
           </Switch>

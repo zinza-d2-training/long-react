@@ -18,3 +18,22 @@ export const styleInputLarge: SxProps<Theme> = {
     height: '100%'
   }
 };
+
+export const styleInputMedium: SxProps<Theme> = {
+  '.MuiInputBase-root': {
+    height: '40px',
+    p: 0,
+    pl: 1
+  },
+  '.MuiFormHelperText-root': {
+    marginLeft: 0,
+    marginRight: 0
+  },
+  '.MuiInputBase-root .MuiAutocomplete-input': {
+    paddingTop: '4.5px !important',
+    paddingBottom: '4.5px !important'
+  },
+  '& > div': {
+    height: '100%'
+  }
+};

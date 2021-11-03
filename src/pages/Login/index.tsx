@@ -12,9 +12,9 @@ import Label from 'components/Label';
 import { ILogin } from 'models';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Link, Link as RouterLink } from 'react-router-dom';
-import { PATH_FORGOT_PASSWORD, PATH_REGISTER } from 'routes';
+import { RoutePaths } from 'routes';
 import { useAppDispatch, useAppSelector } from 'store';
-import { authSelector, login } from 'store/slices/authSlice';
+import { authSelector, getUserInfo, login } from 'store/slices/authSlice';
 import { styleInputLarge } from 'theme';
 import { loginSchema } from 'validations';
 
@@ -30,8 +30,11 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector(authSelector);
 
-  const onSubmit: SubmitHandler<ILogin> = (data) => {
-    dispatch(login(data));
+  const onSubmit: SubmitHandler<ILogin> = async (data) => {
+    try {
+      await dispatch(login(data));
+      await dispatch(getUserInfo());
+    } catch {}
   };
 
   return (
@@ -116,7 +119,7 @@ const Login = () => {
               }}>
               <Typography
                 component={Link}
-                to={PATH_FORGOT_PASSWORD}
+                to={RoutePaths.forgotPassword}
                 variant="body2"
                 align="right"
                 sx={{ color: colors.indigo[600], textDecoration: 'none' }}>
@@ -152,7 +155,7 @@ const Login = () => {
             </Typography>
             <Button
               component={RouterLink}
-              to={PATH_REGISTER}
+              to={RoutePaths.register}
               variant="outlined"
               fullWidth
               sx={{

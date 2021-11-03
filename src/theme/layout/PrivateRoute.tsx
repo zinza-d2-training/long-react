@@ -1,11 +1,13 @@
 import { Redirect, Route, RouteProps } from 'react-router';
-import { PATH_LOGIN } from 'routes';
+import { RoutePaths } from 'routes';
 import { useAppSelector } from 'store';
 import { authSelector } from 'store/slices/authSlice';
 
 const PrivateRoute = (props: RouteProps) => {
-  const token = useAppSelector(authSelector).token;
-  if (token) {
+  const auth = useAppSelector(authSelector);
+  const token = auth.token;
+  const useInfo = auth.userInfo;
+  if (token && useInfo) {
     return (
       <Route
         path={props.path}
@@ -14,7 +16,7 @@ const PrivateRoute = (props: RouteProps) => {
       />
     );
   } else {
-    return <Redirect to={PATH_LOGIN} />;
+    return <Redirect to={RoutePaths.login} />;
   }
 };
 

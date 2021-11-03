@@ -1,5 +1,5 @@
-import { ILogin, IResponseLogin } from 'models';
-import { fakeAccountData } from 'utils/fakeData';
+import { ILogin, IResponseLogin, IUserInfo } from 'models';
+import { fakeAccountData, fakeUserInfoData } from 'utils/fakeData';
 
 export const authApi = {
   login(body: ILogin): Promise<IResponseLogin> {
@@ -22,6 +22,13 @@ export const authApi = {
           });
         }
       }, 2000);
+    });
+  },
+  getUserInfo(): Promise<IUserInfo> {
+    return new Promise((res, rej) => {
+      setTimeout(() => {
+        res(fakeUserInfoData);
+      }, 1000);
     });
   }
 };

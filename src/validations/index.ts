@@ -29,7 +29,7 @@ export const registerSchema = yup.object().shape({
       /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im,
       'Số điện thoại không hợp lệ'
     ),
-  provinceId: yup.number().required('Trường này là bắt buộc'),
-  districtId: yup.number().required('Trường này là bắt buộc'),
-  wardId: yup.number().required('Trường này là bắt buộc')
+  provinceId: yup.number().required('Đây là trường bắt buộc'),
+  districtId: yup.number().required('Đây là trường bắt buộc'),
+  wardId: yup.number().required('Đây là trường bắt buộc')
 });

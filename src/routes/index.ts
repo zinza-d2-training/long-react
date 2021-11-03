@@ -1,49 +1,44 @@
+import { IRoute, RouteType } from 'models';
 import ForgotPassword from 'pages/ForgotPassword';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import Register from 'pages/Register';
 
-interface IRoute {
-  id: string;
-  path: string;
-  component: React.ComponentType;
-  privateRoute: boolean;
-  exact: boolean;
-}
-
-export const PATH_LOGIN = '/login';
-export const PATH_FORGOT_PASSWORD = '/forgot-password';
-export const PATH_REGISTER = '/register';
-export const PATH_HOME = '/';
+export const RoutePaths = {
+  login: '/login',
+  forgotPassword: '/forgot-password',
+  register: '/register',
+  home: '/'
+};
 
 const routes: IRoute[] = [
   {
-    id: 'route_login',
-    path: PATH_LOGIN,
+    key: 'route_login',
+    path: RoutePaths.login,
     component: Login,
     exact: true,
-    privateRoute: false
+    routeType: RouteType.AUTH_ROUTE
   },
   {
-    id: 'route_forgot_password',
-    path: PATH_FORGOT_PASSWORD,
+    key: 'route_forgot_password',
+    path: RoutePaths.forgotPassword,
     component: ForgotPassword,
     exact: true,
-    privateRoute: false
+    routeType: RouteType.AUTH_ROUTE
   },
   {
-    id: 'route_register',
-    path: PATH_REGISTER,
+    key: 'route_register',
+    path: RoutePaths.register,
     component: Register,
     exact: true,
-    privateRoute: false
+    routeType: RouteType.AUTH_ROUTE
   },
   {
-    id: 'route_home',
-    path: PATH_HOME,
+    key: 'route_home',
+    path: RoutePaths.home,
     component: Home,
     exact: true,
-    privateRoute: true
+    routeType: RouteType.PUBLIC_ROUTE
   }
 ];
 
