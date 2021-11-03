@@ -10,16 +10,19 @@ import {
 import { Box } from '@mui/system';
 import PercentageBar from 'components/PercentageBar';
 import { IOptionsTable, ITableData } from 'models';
+import { Waypoint } from 'react-waypoint';
 
 interface IProps {
   data: ITableData;
   options?: IOptionsTable;
+  onLoadMoreData?: () => void;
 }
 
 const StatisticTable = (props: IProps) => {
   const {
     data: { heading, dataSet },
-    options = {}
+    options = {},
+    onLoadMoreData
   } = props;
   return (
     <Box>
@@ -39,21 +42,39 @@ const StatisticTable = (props: IProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dataSet.map((row, index) => (
+            {dataSet.map((row, rowIndex) => (
               <TableRow
-                key={'' + row[1] + row[2] + index}
+                key={'' + row[1]?.toString() + row[2]?.toString() + rowIndex}
                 sx={
-                  index % 2 === 0 ? { backgroundColor: colors.grey[100] } : {}
+                  rowIndex % 2 === 0
+                    ? { backgroundColor: colors.grey[100] }
+                    : {}
                 }>
-                {row.map((data, index) => {
+                {row.map((data, cellIndex) => {
                   if (options.percentColumns) {
                     const { percentColumns } = options;
                     const configColumn = percentColumns.find(
-                      (column) => column.number === index
+                      (column) => column.number === cellIndex
                     );
                     if (configColumn) {
                       return (
-                        <TableCell key={'' + data + index} align="center">
+                        <TableCell
+                          sx={{ py: 1 }}
+                          key={'' + data + cellIndex}
+                          align="center">
+                          {cellIndex === 0 && rowIndex === dataSet.length - 1 && (
+                            <Waypoint
+                              onEnter={
+                                options.hasLoadMore ? onLoadMoreData : () => {}
+                              }>
+                              <div
+                                style={{
+                                  width: '3px',
+                                  height: '3px',
+                                  backgroundColor: '#f00'
+                                }}></div>
+                            </Waypoint>
+                          )}
                           <Box
                             sx={{
                               width: '100%',
@@ -70,7 +91,18 @@ const StatisticTable = (props: IProps) => {
                     }
                   }
                   return (
-                    <TableCell key={'' + data + index} align="center">
+                    <TableCell
+                      sx={{ py: 1 }}
+                      key={'' + data + cellIndex}
+                      align="center">
+                      {cellIndex === 0 && rowIndex === dataSet.length - 1 && (
+                        <Waypoint
+                          onEnter={
+                            options.hasLoadMore ? onLoadMoreData : () => {}
+                          }>
+                          <div></div>
+                        </Waypoint>
+                      )}
                       {data?.toLocaleString()}
                     </TableCell>
                   );

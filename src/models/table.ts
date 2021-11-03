@@ -10,4 +10,5 @@ export interface IOptionsTable {
   }[];
   minHeight?: string;
   maxHeight?: string;
+  hasLoadMore?: boolean;
 }

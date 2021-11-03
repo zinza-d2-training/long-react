@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   colors,
   Container,
   Divider,
@@ -10,20 +11,29 @@ import {
 import { SxProps } from '@mui/system';
 import SearchTable from 'components/SearchTable';
 import StatisticTable from 'components/StatisticTable';
+import {
+  IInjectedByDay,
+  IInjectedByTotalSupplied,
+  IStatisticVaccinationByArea,
+  IStatisticVaccinationByLocal
+} from 'models';
+import { useState } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import { AppLayout } from 'theme/layout';
 import {
-  injectedByDay,
-  injectedByTotalSupplied,
-  statisticVaccinationByArea,
-  statisticVaccinationByLocal
+  fakeInjectedByDay,
+  fakeInjectedByTotalSupplied,
+  fakeStatisticVaccinationByArea,
+  fakeStatisticVaccinationByLocal
 } from 'utils/fakeDataDashboard';
 import {
-  getDistrict,
+  fakeLoadMoreStatisticVaccinationByArea,
+  fakeLoadMoreStatisticVaccinationByLocal
+} from 'utils/fakeLoadMoreData';
+import {
   getHighestInjectionRate,
   getLowestInjectionRate,
-  getProvince,
-  getWard
+  getProvince
 } from 'utils/filterData';
 
 const boxInfoStyle: SxProps<Theme> = {
@@ -57,110 +67,108 @@ const boxStyle: SxProps<Theme> = {
 };
 
 const Home = () => {
-  const dataInjectedByDay = {
-    labels: injectedByDay.map(
-      ({ day }) => `${day.getDate()}/${day.getMonth() + 1}`
-    ),
-    datasets: [
-      {
-        label: 'Đã tiêm',
-        data: injectedByDay.map(({ amount }) => amount),
-        fill: false,
-        backgroundColor: colors.indigo[700],
-        borderColor: colors.indigo[700]
-      }
-    ]
-  };
+  const [injectedByDay] = useState<IInjectedByDay[]>(fakeInjectedByDay);
+  const [injectedByTotalSupplied] = useState<IInjectedByTotalSupplied[]>(
+    fakeInjectedByTotalSupplied
+  );
+  const [statisticVaccinationByArea, setStatisticVaccinationByArea] = useState<
+    IStatisticVaccinationByArea[]
+  >(fakeStatisticVaccinationByArea);
+  const [statisticVaccinationByLocal, setStatisticVaccinationByLocal] =
+    useState<IStatisticVaccinationByLocal[]>(fakeStatisticVaccinationByLocal);
 
   const highestInjectionRate = getHighestInjectionRate(
     injectedByTotalSupplied,
     10
   );
 
-  const dataHighestInjectionRate = {
-    labels: highestInjectionRate.map((item) => item.province),
-    datasets: [
-      {
-        label: 'Tổng tiêm / tổng phân bố (%)',
-        data: highestInjectionRate.map((item) => item.percent),
-        backgroundColor: [colors.indigo[700]],
-        borderWidth: 0,
-        maxBarThickness: 20
-      }
-    ]
-  };
-
   const lowestInjectionRate = getLowestInjectionRate(
     injectedByTotalSupplied,
     10
   );
 
-  const dataLowestInjectionRate = {
-    labels: lowestInjectionRate.map((item) => item.province),
-    datasets: [
-      {
-        label: 'Tổng tiêm / tổng phân bố (%)',
-        data: lowestInjectionRate.map((item) => item.percent),
-        backgroundColor: [colors.blue[500]],
-        borderWidth: 0,
-        maxBarThickness: 20
-      }
-    ]
+  const handleLoadMoreVaccinationByLocal = () => {
+    const newData: IStatisticVaccinationByLocal[] =
+      fakeLoadMoreStatisticVaccinationByLocal;
+    setStatisticVaccinationByLocal([
+      ...statisticVaccinationByLocal,
+      ...newData
+    ]);
+  };
+
+  const handleLoadMoreVaccinationByArea = () => {
+    const newData: IStatisticVaccinationByArea[] =
+      fakeLoadMoreStatisticVaccinationByArea;
+    setStatisticVaccinationByArea([...statisticVaccinationByArea, ...newData]);
   };
 
   return (
     <AppLayout>
       <Box sx={{ backgroundColor: '#fff', flex: 1 }}>
+        <Box my={3} px={3} py={2} sx={{ backgroundColor: '#F7FBFE' }}>
+          <Container maxWidth="xl">
+            <Box sx={{ display: 'flex' }}>
+              <Box sx={boxInfoStyle}>
+                <img src="images/ic_register_people.png" alt="" />
+                <Box ml={2}>
+                  <Typography sx={titleStyle}>
+                    Đối tượng đăng ký tiêm
+                  </Typography>
+                  <Typography sx={amountStyle}>
+                    11,203,873 <Box component="i">(lượt)</Box>
+                  </Typography>
+                </Box>
+              </Box>
+              <Divider orientation="vertical" flexItem />
+              <Box sx={boxInfoStyle}>
+                <img src="images/ic_injection.png" alt="" />
+                <Box ml={2}>
+                  <Typography sx={titleStyle}>Số mũi tiêm hôm qua</Typography>
+                  <Typography sx={amountStyle}>
+                    11,203,873 <Box component="i">(mũi)</Box>
+                  </Typography>
+                </Box>
+              </Box>
+              <Divider orientation="vertical" flexItem />
+              <Box sx={boxInfoStyle}>
+                <img src="images/ic_injected_people.png" alt="" />
+                <Box ml={2}>
+                  <Typography sx={titleStyle}>Số mũi tiêm toàn quốc</Typography>
+                  <Typography sx={amountStyle}>
+                    11,203,873 <Box component="i">(mũi)</Box>
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Container>
+        </Box>
         <Container maxWidth="xl">
-          <Box
-            my={3}
-            px={3}
-            py={2}
-            sx={{ backgroundColor: '#F7FBFE', display: 'flex' }}>
-            <Box sx={boxInfoStyle}>
-              <img src="images/ic_register_people.png" alt="" />
-              <Box ml={2}>
-                <Typography sx={titleStyle}>Đối tượng đăng ký tiêm</Typography>
-                <Typography sx={amountStyle}>
-                  11,203,873 <Box component="i">(lượt)</Box>
-                </Typography>
-              </Box>
-            </Box>
-            <Divider orientation="vertical" flexItem />
-            <Box sx={boxInfoStyle}>
-              <img src="images/ic_injection.png" alt="" />
-              <Box ml={2}>
-                <Typography sx={titleStyle}>Số mũi tiêm hôm qua</Typography>
-                <Typography sx={amountStyle}>
-                  11,203,873 <Box component="i">(mũi)</Box>
-                </Typography>
-              </Box>
-            </Box>
-            <Divider orientation="vertical" flexItem />
-            <Box sx={boxInfoStyle}>
-              <img src="images/ic_injected_people.png" alt="" />
-              <Box ml={2}>
-                <Typography sx={titleStyle}>Số mũi tiêm toàn quốc</Typography>
-                <Typography sx={amountStyle}>
-                  11,203,873 <Box component="i">(mũi)</Box>
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
           <Box p={4} sx={boxStyle}>
-            <Box>
-              <Typography variant="h6">Dữ liệu tiêm theo ngày</Typography>
-              <Line
-                data={dataInjectedByDay}
-                options={{
-                  scales: {
-                    y: {
-                      beginAtZero: false
-                    }
+            <Typography variant="h6">Dữ liệu tiêm theo ngày</Typography>
+            <Line
+              data={{
+                labels: injectedByDay.map(
+                  ({ day }) => `${day.getDate()}/${day.getMonth() + 1}`
+                ),
+                datasets: [
+                  {
+                    label: 'Đã tiêm',
+                    data: injectedByDay.map(({ amount }) => amount),
+                    fill: false,
+                    backgroundColor: colors.indigo[700],
+                    borderColor: colors.indigo[700]
                   }
-                }}
-              />
-            </Box>
+                ]
+              }}
+              options={{
+                scales: {
+                  y: {
+                    beginAtZero: false
+                  }
+                }
+              }}
+              height={100}
+            />
           </Box>
           <Box sx={{ display: 'flex', mt: 5 }}>
             <Stack
@@ -197,8 +205,19 @@ const Home = () => {
                       }
                     }
                   }}
-                  data={dataHighestInjectionRate}
-                  height={410}
+                  data={{
+                    labels: highestInjectionRate.map((item) => item.province),
+                    datasets: [
+                      {
+                        label: 'Tổng tiêm / tổng phân bố (%)',
+                        data: highestInjectionRate.map((item) => item.percent),
+                        backgroundColor: [colors.indigo[700]],
+                        borderWidth: 0,
+                        maxBarThickness: 20
+                      }
+                    ]
+                  }}
+                  height={310}
                 />
               </Box>
               <Typography variant="body2" mt="4px" align="center">
@@ -243,8 +262,19 @@ const Home = () => {
                       }
                     }
                   }}
-                  data={dataLowestInjectionRate}
-                  height={410}
+                  data={{
+                    labels: lowestInjectionRate.map((item) => item.province),
+                    datasets: [
+                      {
+                        label: 'Tổng tiêm / tổng phân bố (%)',
+                        data: lowestInjectionRate.map((item) => item.percent),
+                        backgroundColor: [colors.blue[500]],
+                        borderWidth: 0,
+                        maxBarThickness: 20
+                      }
+                    ]
+                  }}
+                  height={310}
                 />
               </Box>
               <Typography variant="body2" mt="4px" align="center">
@@ -309,7 +339,15 @@ const Home = () => {
               }}
             />
             <Stack direction="row" justifyContent="center" py={3}>
-              <Box sx={{ color: colors.indigo[700], cursor: 'pointer' }}>
+              <Box
+                component={Button}
+                sx={{
+                  color: colors.indigo[700],
+                  textTransform: 'unset',
+                  fontSize: '18px',
+                  fontWeight: '400'
+                }}
+                onClick={handleLoadMoreVaccinationByLocal}>
                 Xem thêm
               </Box>
             </Stack>
@@ -319,31 +357,8 @@ const Home = () => {
               Tra cứu điểm tiêm theo địa bàn
             </Typography>
             <SearchTable
-              data={{
-                heading: [
-                  'STT',
-                  'Tên điểm tiêm',
-                  'Số nhà. tên đường',
-                  'Xã/Phường',
-                  'Quận/Huyện',
-                  'Tỉnh/Thành Phố',
-                  'Người đứng đầu cơ sở tiêm chủng',
-                  'Số bàn tiêm'
-                ],
-                dataSet: statisticVaccinationByArea.map((record, index) => {
-                  const { provinceId, districtId, wardId } = record;
-                  return [
-                    index + 1,
-                    record.injectionSiteName,
-                    record.apartmentNumber,
-                    getWard(provinceId, districtId, wardId)?.label,
-                    getDistrict(provinceId, districtId)?.label,
-                    getProvince(provinceId)?.label,
-                    record.leader,
-                    record.numberOfInjectionTables
-                  ];
-                })
-              }}
+              data={statisticVaccinationByArea}
+              onLoadMoreData={handleLoadMoreVaccinationByArea}
             />
           </Box>
         </Container>

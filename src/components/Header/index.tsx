@@ -67,7 +67,7 @@ const Header = () => {
               CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
             </Typography>
           </Stack>
-          <Stack direction="row" alignItems="center" spacing="30px">
+          <Stack direction="row" alignItems="center" spacing={3}>
             <Typography
               color="#fff"
               sx={{ textDecoration: 'none' }}

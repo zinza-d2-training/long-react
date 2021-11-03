@@ -6,7 +6,6 @@ import { FC } from 'react';
 
 const appStyle: SxProps<Theme> = {
   minHeight: '100vh',
-  width: '100vw',
   display: 'flex',
   flexDirection: 'column'
 };
