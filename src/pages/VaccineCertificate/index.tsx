@@ -222,20 +222,12 @@ const VaccineCertificate = () => {
               <StyledButton
                 variant="outlined"
                 startIcon={<ArrowBackIcon />}
-                sx={{
-                  borderColor: colors.indigo[700],
-                  color: colors.indigo[700]
-                }}
                 type="reset">
                 Nhập lại
               </StyledButton>
               <StyledButton
                 variant="contained"
                 startIcon={<ArrowBackIcon />}
-                sx={{
-                  backgroundColor: colors.indigo[700],
-                  '&:hover': { backgroundColor: colors.indigo[700] }
-                }}
                 type="submit">
                 Tra cứu
               </StyledButton>

@@ -17,6 +17,7 @@ import QRCode from 'react-qr-code';
 import PersonIcon from '@mui/icons-material/Person';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import FeaturedVideoIcon from '@mui/icons-material/FeaturedVideo';
+import StyledButton from 'components/Button';
 
 interface IProps {
   data: ICertificate;
@@ -145,6 +146,13 @@ const CertificateInfo = (props: IProps) => {
             </TableContainer>
           </Grid>
         </Grid>
+        {data.vaccinate.length === 1 && (
+          <Stack direction="row" justifyContent="center" pt={2}>
+            <StyledButton variant="contained">
+              Đăng ký tiêm mũi tiếp theo
+            </StyledButton>
+          </Stack>
+        )}
       </Box>
       {data.vaccinate.length && (
         <Stack
