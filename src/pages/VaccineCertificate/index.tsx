@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CachedIcon from '@mui/icons-material/Cached';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   Box,
   colors,
@@ -221,13 +222,13 @@ const VaccineCertificate = () => {
             <Stack direction="row" justifyContent="center" spacing={2} mt={3}>
               <StyledButton
                 variant="outlined"
-                startIcon={<ArrowBackIcon />}
+                startIcon={<CachedIcon />}
                 type="reset">
                 Nhập lại
               </StyledButton>
               <StyledButton
                 variant="contained"
-                startIcon={<ArrowBackIcon />}
+                startIcon={<SearchIcon />}
                 type="submit">
                 Tra cứu
               </StyledButton>
