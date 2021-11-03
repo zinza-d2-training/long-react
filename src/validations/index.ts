@@ -42,3 +42,17 @@ export const certificationSchema = yup.object().shape({
   citizenId: yup.string(),
   healthInsuranceCardNumber: yup.string()
 });
+
+export const injectionRegistrationSchema = yup.object().shape({
+  citizenId: yup
+    .string()
+    .required('Số CMND/CCCD không được bỏ trống')
+    .matches(/^\d{9}$|^\d{12}$/g, 'Số CMND/CCCD không hợp lệ'),
+  phone: yup
+    .string()
+    .required('Số điện thoại không được bỏ trống')
+    .matches(
+      /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im,
+      'Số điện thoại không hợp lệ'
+    )
+});

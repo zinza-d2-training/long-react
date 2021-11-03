@@ -139,7 +139,7 @@ const Header = () => {
                             onClick={handleCloseMenu}
                             variant="body2"
                             sx={menuItemStyle}
-                            to={RoutePaths.home}>
+                            to={RoutePaths.injectionRegistration}>
                             Tra cứu kết quả đăng ký
                           </Typography>
                         </MenuItem>
