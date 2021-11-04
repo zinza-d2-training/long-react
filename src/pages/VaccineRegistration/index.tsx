@@ -14,40 +14,9 @@ const steps = [
 ];
 
 const VaccineRegistration = () => {
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(0);
   const [personalInfo, setPersonalInfo] = useState<IVaccineRegistration | null>(
-    {
-      injectionTime: 0,
-      registrantInfo: {
-        fullName: 'Bùi Đức Long',
-        dob: new Date('11/05/2000'),
-        gender: 1,
-        phone: '0911448457',
-        email: 'buiduclong0511@gmail.com',
-        citizenId: '123456789',
-        healthInsuranceCardNumber: '987654321',
-        job: 'Sinh viên',
-        workUnit: 'Đại học Công nghiệp Hà Nội',
-        currentAddress: 'Ngõ 80, Xuân Phương, Nam Từ Liêm, Hà Nội',
-        provinceId: 2,
-        districtId: 1,
-        wardId: 1,
-        ethnic: 'Kinh',
-        nationality: null,
-        priorityGroup: 1
-      },
-      vaccinationRegistrationInfo: {
-        injectionDate: null,
-        injectionTime: -1
-      },
-      historyOfFirstInjection: {
-        vaccineId: -1,
-        injectionDate: null,
-        shipmentNumber: '',
-        vaccinePlace: '',
-        postVaccinationReaction: ''
-      }
-    }
+    null
   );
   const [medicalHistoryReport, setMedicalHistoryReport] = useState<
     IMedicalHistory[]
