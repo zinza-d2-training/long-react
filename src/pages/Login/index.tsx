@@ -34,7 +34,9 @@ export const Login = () => {
     try {
       await dispatch(login(data));
       await dispatch(getUserInfo());
-    } catch {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

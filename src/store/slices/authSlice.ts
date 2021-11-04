@@ -28,7 +28,9 @@ export const getUserInfo = createAsyncThunk(
     try {
       const res = await authApi.getUserInfo();
       return res;
-    } catch {}
+    } catch (err) {
+      return rejectWithValue(err);
+    }
   }
 );
 
