@@ -1,22 +1,22 @@
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
+  Box,
   Checkbox,
+  Stack,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
   TextField,
-  Typography,
-  Box,
-  Stack
+  Typography
 } from '@mui/material';
 import StyledButton from 'components/Button';
 import { Answer, IMedicalHistory } from 'models';
 import React, { useEffect, useState } from 'react';
 import { styleInputMedium } from 'theme';
 import { medicalHistoryTemplate } from 'utils/vaccineRegistration';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const tags = ['Tiền sử', 'Triệu chứng', 'Có', 'Không', 'Không rõ'];
 
