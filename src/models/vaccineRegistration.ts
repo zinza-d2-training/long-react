@@ -43,7 +43,7 @@ export interface IMedicalHistory {
   id: number;
   question: string;
   diseaseSymptoms?: string;
-  answer: Answer | null;
+  answer: Answer;
 }
 
 export enum Answer {

@@ -14,7 +14,7 @@ const steps = [
 ];
 
 const VaccineRegistration = () => {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const [personalInfo, setPersonalInfo] = useState<IVaccineRegistration | null>(
     null
   );
