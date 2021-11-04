@@ -198,7 +198,7 @@ const Step1 = (props: IProps) => {
                 sx={styleInputMedium}
                 fullWidth
                 select>
-                <MenuItem value={0} disabled>
+                <MenuItem value={0} disabled sx={{ display: 'none' }}>
                   Đăng ký mũi tiêm thứ
                 </MenuItem>
                 <MenuItem value={1}>Mũi thứ 1</MenuItem>
@@ -268,7 +268,7 @@ const Step1 = (props: IProps) => {
                 sx={styleInputMedium}
                 fullWidth
                 select>
-                <MenuItem value={-1} disabled>
+                <MenuItem value={-1} disabled sx={{ display: 'none' }}>
                   Giới tính
                 </MenuItem>
                 <MenuItem value={1}>Nam</MenuItem>
@@ -564,7 +564,7 @@ const Step1 = (props: IProps) => {
                 defaultValue={-1}
                 fullWidth
                 select>
-                <MenuItem value={-1} disabled>
+                <MenuItem value={-1} disabled sx={{ display: 'none' }}>
                   Nhóm ưu tiên
                 </MenuItem>
                 <MenuItem value={1}>Nhóm 1</MenuItem>
@@ -609,7 +609,7 @@ const Step1 = (props: IProps) => {
                 fullWidth
                 defaultValue={-1}
                 select>
-                <MenuItem value={-1} disabled>
+                <MenuItem value={-1} disabled sx={{ display: 'none' }}>
                   Chọn buổi tiêm mong muốn
                 </MenuItem>
                 <MenuItem value={1}>Buổi sáng</MenuItem>
@@ -641,7 +641,7 @@ const Step1 = (props: IProps) => {
                 fullWidth
                 type="date"
                 select>
-                <MenuItem value={-1} disabled>
+                <MenuItem value={-1} disabled sx={{ display: 'none' }}>
                   Chọn tên vaccine
                 </MenuItem>
                 {vaccineData.map(({ id, label }) => (
