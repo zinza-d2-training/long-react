@@ -9,8 +9,7 @@ import {
   Typography
 } from '@mui/material';
 import { SxProps } from '@mui/system';
-import SearchTable from 'components/SearchTable';
-import StatisticTable from 'components/StatisticTable';
+import { SearchTable, StatisticTable } from 'components';
 import {
   IInjectedByDay,
   IInjectedByTotalSupplied,
@@ -23,18 +22,14 @@ import { AppLayout } from 'theme/layout';
 import {
   fakeInjectedByDay,
   fakeInjectedByTotalSupplied,
-  fakeStatisticVaccinationByArea,
-  fakeStatisticVaccinationByLocal
-} from 'utils/fakeDataDashboard';
-import {
   fakeLoadMoreStatisticVaccinationByArea,
-  fakeLoadMoreStatisticVaccinationByLocal
-} from 'utils/fakeLoadMoreData';
-import {
+  fakeLoadMoreStatisticVaccinationByLocal,
+  fakeStatisticVaccinationByArea,
+  fakeStatisticVaccinationByLocal,
   getHighestInjectionRate,
   getLowestInjectionRate,
   getProvince
-} from 'utils/filterData';
+} from 'utils';
 
 const boxInfoStyle: SxProps<Theme> = {
   flex: 1,
@@ -66,7 +61,7 @@ const boxStyle: SxProps<Theme> = {
   borderRadius: '10px'
 };
 
-const Home = () => {
+export const Home = () => {
   const [injectedByDay] = useState<IInjectedByDay[]>(fakeInjectedByDay);
   const [injectedByTotalSupplied] = useState<IInjectedByTotalSupplied[]>(
     fakeInjectedByTotalSupplied
@@ -366,5 +361,3 @@ const Home = () => {
     </AppLayout>
   );
 };
-
-export default Home;

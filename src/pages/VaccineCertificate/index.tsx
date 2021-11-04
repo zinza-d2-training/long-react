@@ -11,16 +11,13 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import StyledButton from 'components/Button';
-import Label from 'components/Label';
-import OtpDialog from 'components/OtpDialog';
-import PageTitle from 'components/PageTitle';
+import { Label, OtpDialog, PageTitle, StyledButton } from 'components';
 import { ICertificateSearch } from 'models';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { styleInputMedium } from 'theme';
 import { AppLayout } from 'theme/layout';
-import { certificateData } from 'utils/fakeDataCertificate';
+import { certificateData } from 'utils';
 import { certificationSchema } from 'validations';
 import CertificateInfo from './CertificateInfo';
 
@@ -33,7 +30,7 @@ const defaultValues: ICertificateSearch = {
   healthInsuranceCardNumber: ''
 };
 
-const VaccineCertificate = () => {
+export const VaccineCertificate = () => {
   const [searched, setSearched] = useState<boolean>(false);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { control, handleSubmit, reset } = useForm<ICertificateSearch>({
@@ -237,5 +234,3 @@ const VaccineCertificate = () => {
     </AppLayout>
   );
 };
-
-export default VaccineCertificate;

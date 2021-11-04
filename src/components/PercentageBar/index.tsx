@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 
-const PercentageBar = (props: { number: number; color: string }) => {
+export const PercentageBar = (props: { number: number; color: string }) => {
   const { number, color } = props;
   return (
     <Box component={Stack} direction="column" alignItems="start">
@@ -24,5 +24,3 @@ const PercentageBar = (props: { number: number; color: string }) => {
     </Box>
   );
 };
-
-export default PercentageBar;

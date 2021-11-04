@@ -1,8 +1,8 @@
-import FilePicker from 'components/FilePicker';
+import { FilePicker } from 'components';
 import { IFile, IRegisterForm } from 'models/register';
 import { useFormContext } from 'react-hook-form';
 
-const FileInput = () => {
+export const FileInput = () => {
   const { register, watch, setValue, clearErrors, setError } =
     useFormContext<IRegisterForm>();
 
@@ -37,5 +37,3 @@ const FileInput = () => {
     />
   );
 };
-
-export default FileInput;

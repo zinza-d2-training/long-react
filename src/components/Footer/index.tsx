@@ -1,7 +1,7 @@
 import { Box, Container, Stack, Typography } from '@mui/material';
-import StyledButton from 'components/Button';
+import { StyledButton } from 'components';
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <Box
       sx={{
@@ -56,5 +56,3 @@ const Footer = () => {
     </Box>
   );
 };
-
-export default Footer;

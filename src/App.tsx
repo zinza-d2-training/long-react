@@ -2,7 +2,7 @@ import { CssBaseline } from '@mui/material';
 import { RouteType } from 'models';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import routes from 'routes';
-import Layout, { PrivateRoute, AuthRoute } from 'theme/layout';
+import { PrivateRoute, AuthRoute, Layout } from 'theme/layout';
 
 function App() {
   return (

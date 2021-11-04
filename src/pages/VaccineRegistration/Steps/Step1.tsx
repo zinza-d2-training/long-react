@@ -11,16 +11,13 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import StyledButton from 'components/Button';
-import Label from 'components/Label';
+import { Label, StyledButton } from 'components';
 import { IDistrict, IProvince, IVaccineRegistration, IWard } from 'models';
 import { ICountry } from 'models/country';
 import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { styleInputMedium } from 'theme';
-import { addressData } from 'utils/addressData';
-import { countriesData } from 'utils/countries';
-import { vaccineData } from 'utils/vaccine';
+import { addressData, countriesData, vaccineData } from 'utils';
 import { vaccineRegistrationSchema } from 'validations';
 
 const defaultValues: IVaccineRegistration = {
@@ -61,7 +58,7 @@ interface IProps {
   onChangePersonalInfo: (info: IVaccineRegistration) => void;
 }
 
-const Step1 = (props: IProps) => {
+export const Step1 = (props: IProps) => {
   const { onNextStep, onChangePersonalInfo } = props;
   const { control, handleSubmit, setValue, setFocus, watch, clearErrors } =
     useForm<IVaccineRegistration>({
@@ -772,5 +769,3 @@ const Step1 = (props: IProps) => {
     </Box>
   );
 };
-
-export default Step1;

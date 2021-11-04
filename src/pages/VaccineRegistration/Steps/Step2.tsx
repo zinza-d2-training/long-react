@@ -12,11 +12,11 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import StyledButton from 'components/Button';
+import { StyledButton } from 'components';
 import { Answer, IMedicalHistory } from 'models';
 import React, { useEffect, useState } from 'react';
 import { styleInputMedium } from 'theme';
-import { medicalHistoryTemplate } from 'utils/vaccineRegistration';
+import { medicalHistoryTemplate } from 'utils';
 
 const tags = ['Tiền sử', 'Triệu chứng', 'Có', 'Không', 'Không rõ'];
 
@@ -26,7 +26,7 @@ interface IProps {
   onChangeMedicalHistory: (report: IMedicalHistory[]) => void;
 }
 
-const Step2 = (props: IProps) => {
+export const Step2 = (props: IProps) => {
   const [medicalHistoryReport, setMedicalHistoryReport] = useState<
     IMedicalHistory[]
   >(medicalHistoryTemplate);
@@ -156,5 +156,3 @@ const Step2 = (props: IProps) => {
     </Box>
   );
 };
-
-export default Step2;

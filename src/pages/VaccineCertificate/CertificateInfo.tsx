@@ -1,3 +1,6 @@
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import FeaturedVideoIcon from '@mui/icons-material/FeaturedVideo';
+import PersonIcon from '@mui/icons-material/Person';
 import {
   Box,
   colors,
@@ -11,13 +14,10 @@ import {
   TableRow,
   Typography
 } from '@mui/material';
+import { StyledButton } from 'components';
 import { ICertificate } from 'models';
-import { getDistrict, getProvince, getWard } from 'utils/filterData';
 import QRCode from 'react-qr-code';
-import PersonIcon from '@mui/icons-material/Person';
-import DateRangeIcon from '@mui/icons-material/DateRange';
-import FeaturedVideoIcon from '@mui/icons-material/FeaturedVideo';
-import StyledButton from 'components/Button';
+import { getDistrict, getProvince, getWard } from 'utils';
 
 interface IProps {
   data: ICertificate;

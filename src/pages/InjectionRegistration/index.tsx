@@ -15,9 +15,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import StyledButton from 'components/Button';
-import Label from 'components/Label';
-import PageTitle from 'components/PageTitle';
+import { Label, PageTitle, StyledButton } from 'components';
 import {
   IInjectionRegistration,
   IInjectionRegistrationForm,
@@ -27,7 +25,7 @@ import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { styleInputMedium } from 'theme';
 import { AppLayout } from 'theme/layout';
-import { fakeInjectionRegistration } from 'utils/fakeDataInjectionRegistration';
+import { fakeInjectionRegistration } from 'utils';
 import { injectionRegistrationSchema } from 'validations';
 
 const defaultValues: IInjectionRegistrationForm = {
@@ -35,7 +33,7 @@ const defaultValues: IInjectionRegistrationForm = {
   phone: ''
 };
 
-const InjectionRegistration = () => {
+export const InjectionRegistration = () => {
   const { control, handleSubmit, reset } = useForm<IInjectionRegistrationForm>({
     defaultValues,
     mode: 'onTouched',
@@ -177,5 +175,3 @@ const InjectionRegistration = () => {
     </AppLayout>
   );
 };
-
-export default InjectionRegistration;

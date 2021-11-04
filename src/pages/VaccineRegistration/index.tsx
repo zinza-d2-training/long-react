@@ -1,6 +1,6 @@
 import { Container, Step, StepLabel, Stepper } from '@mui/material';
 import { Box } from '@mui/system';
-import PageTitle from 'components/PageTitle';
+import { PageTitle } from 'components';
 import { IMedicalHistory, IVaccineRegistration } from 'models';
 import { Step1, Step2, Step3, Step4 } from 'pages/VaccineRegistration/Steps';
 import { useState } from 'react';
@@ -13,7 +13,7 @@ const steps = [
   'Hoàn thành'
 ];
 
-const VaccineRegistration = () => {
+export const VaccineRegistration = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [personalInfo, setPersonalInfo] = useState<IVaccineRegistration | null>(
     null
@@ -80,5 +80,3 @@ const VaccineRegistration = () => {
     </AppLayout>
   );
 };
-
-export default VaccineRegistration;

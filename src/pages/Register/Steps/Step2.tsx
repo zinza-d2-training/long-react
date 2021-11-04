@@ -1,7 +1,7 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Box, Button, MenuItem, Stack, TextField } from '@mui/material';
-import Label from 'components/Label';
+import { Label } from 'components';
 import { IRegisterForm } from 'models/register';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
@@ -11,7 +11,7 @@ interface IProps {
   onNextStep: () => void;
 }
 
-const Step2 = (props: IProps) => {
+export const Step2 = (props: IProps) => {
   const { onBackStep, onNextStep } = props;
   const {
     control,
@@ -130,5 +130,3 @@ const Step2 = (props: IProps) => {
     </Stack>
   );
 };
-
-export default Step2;

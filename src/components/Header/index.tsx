@@ -14,7 +14,7 @@ import {
   MenuList
 } from '@mui/material';
 import { SxProps } from '@mui/system';
-import StyledButton from 'components/Button';
+import { StyledButton } from 'components';
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RoutePaths } from 'routes';
@@ -29,7 +29,7 @@ const menuItemStyle: SxProps<Theme> = {
   }
 };
 
-const Header = () => {
+export const Header = () => {
   const useInfo = useAppSelector(authSelector).userInfo;
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
@@ -184,5 +184,3 @@ const Header = () => {
     </Box>
   );
 };
-
-export default Header;

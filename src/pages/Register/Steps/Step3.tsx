@@ -8,19 +8,19 @@ import {
   Stack,
   TextField
 } from '@mui/material';
-import Label from 'components/Label';
+import { Label } from 'components';
 import { IDistrict, IProvince, IWard } from 'models';
 import { IRegisterForm } from 'models/register';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
-import { addressData } from 'utils/addressData';
+import { addressData } from 'utils';
 
 interface IProps {
   onBackStep: () => void;
 }
 
-const Step3 = (props: IProps) => {
+export const Step3 = (props: IProps) => {
   const { onBackStep } = props;
   const {
     watch,
@@ -280,5 +280,3 @@ const Step3 = (props: IProps) => {
     </Stack>
   );
 };
-
-export default Step3;

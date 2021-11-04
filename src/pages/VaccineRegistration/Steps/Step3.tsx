@@ -1,8 +1,7 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Box, Checkbox, Divider, Stack, Typography } from '@mui/material';
-import StyledButton from 'components/Button';
-import OtpDialog from 'components/OtpDialog';
+import { OtpDialog, StyledButton } from 'components';
 import { useState } from 'react';
 
 interface IProps {
@@ -10,7 +9,7 @@ interface IProps {
   onBackStep: () => void;
 }
 
-const Step3 = (props: IProps) => {
+export const Step3 = (props: IProps) => {
   const [acceptInjection, setAcceptInjection] = useState(false);
   const [openOtp, setOpenOtp] = useState(false);
 
@@ -108,5 +107,3 @@ const Step3 = (props: IProps) => {
     </Box>
   );
 };
-
-export default Step3;

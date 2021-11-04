@@ -8,7 +8,7 @@ import {
   TableRow
 } from '@mui/material';
 import { Box } from '@mui/system';
-import PercentageBar from 'components/PercentageBar';
+import { PercentageBar } from 'components';
 import { IOptionsTable, ITableData } from 'models';
 import { Waypoint } from 'react-waypoint';
 
@@ -18,7 +18,7 @@ interface IProps {
   onLoadMoreData?: () => void;
 }
 
-const StatisticTable = (props: IProps) => {
+export const StatisticTable = (props: IProps) => {
   const {
     data: { heading, dataSet },
     options = {},
@@ -115,5 +115,3 @@ const StatisticTable = (props: IProps) => {
     </Box>
   );
 };
-
-export default StatisticTable;

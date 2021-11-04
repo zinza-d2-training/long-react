@@ -1,6 +1,6 @@
 import { DialogTitle, DialogTitleProps } from '@mui/material';
 
-const StyledDialogTitle = (props: DialogTitleProps) => {
+export const StyledDialogTitle = (props: DialogTitleProps) => {
   return (
     <DialogTitle
       {...props}
@@ -14,5 +14,3 @@ const StyledDialogTitle = (props: DialogTitleProps) => {
     />
   );
 };
-
-export default StyledDialogTitle;

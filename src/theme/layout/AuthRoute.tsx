@@ -3,7 +3,7 @@ import { RoutePaths } from 'routes';
 import { useAppSelector } from 'store';
 import { authSelector } from 'store/slices/authSlice';
 
-const AuthRoute = (props: RouteProps) => {
+export const AuthRoute = (props: RouteProps) => {
   const auth = useAppSelector(authSelector);
   const token = auth.token;
   const useInfo = auth.userInfo;
@@ -14,5 +14,3 @@ const AuthRoute = (props: RouteProps) => {
     return <Route {...props} />;
   }
 };
-
-export default AuthRoute;

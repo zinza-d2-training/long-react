@@ -11,7 +11,7 @@ import {
   Typography
 } from '@mui/material';
 import { SxProps } from '@mui/system';
-import StyledDialogTitle from 'components/DialogTitle';
+import { StyledDialogTitle } from 'components';
 import { IFile } from 'models/register';
 import React, { InputHTMLAttributes, useState } from 'react';
 
@@ -52,7 +52,7 @@ interface IProps {
   onRemoveImage: (imageIndex: number) => void;
 }
 
-const FilePicker = (props: IProps) => {
+export const FilePicker = (props: IProps) => {
   const { max = 10000, inputProps, onRemoveImage, onAddImage } = props;
 
   const [files, setFiles] = useState<IFile[]>([]);
@@ -196,5 +196,3 @@ const FilePicker = (props: IProps) => {
     </Box>
   );
 };
-
-export default FilePicker;

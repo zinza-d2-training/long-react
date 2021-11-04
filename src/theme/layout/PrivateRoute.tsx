@@ -3,7 +3,7 @@ import { RoutePaths } from 'routes';
 import { useAppSelector } from 'store';
 import { authSelector } from 'store/slices/authSlice';
 
-const PrivateRoute = (props: RouteProps) => {
+export const PrivateRoute = (props: RouteProps) => {
   const auth = useAppSelector(authSelector);
   const token = auth.token;
   const useInfo = auth.userInfo;
@@ -19,5 +19,3 @@ const PrivateRoute = (props: RouteProps) => {
     return <Redirect to={RoutePaths.login} />;
   }
 };
-
-export default PrivateRoute;

@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Step, StepLabel, Stepper, Typography } from '@mui/material';
-import OtpDialog from 'components/OtpDialog';
+import { OtpDialog } from 'components';
 import { IRegisterForm } from 'models/register';
 import { useEffect, useState } from 'react';
 import {
@@ -30,7 +30,7 @@ const defaultValues: DefaultValues<IRegisterForm> = {
   wardId: -1
 };
 
-const Register = () => {
+export const Register = () => {
   const formMethod = useForm<IRegisterForm>({
     resolver: yupResolver(registerSchema) as Resolver<IRegisterForm>,
     mode: 'onChange',
@@ -147,5 +147,3 @@ const Register = () => {
     </Box>
   );
 };
-
-export default Register;

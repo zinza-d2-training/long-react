@@ -1,5 +1,5 @@
 import { ILogin, IResponseLogin, IUserInfo } from 'models';
-import { fakeAccountData, fakeUserInfoData } from 'utils/fakeData';
+import { fakeAccountData, fakeUserInfoData } from 'utils';
 
 export const authApi = {
   login(body: ILogin): Promise<IResponseLogin> {

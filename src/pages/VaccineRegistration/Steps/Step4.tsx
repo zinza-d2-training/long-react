@@ -1,11 +1,11 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Box, colors, Link, Stack, Typography } from '@mui/material';
-import StyledButton from 'components/Button';
+import { StyledButton } from 'components';
+import { jsPDF } from 'jspdf';
 import { IMedicalHistory, IVaccineRegistration } from 'models';
 import { useMemo } from 'react';
-import { getDistrict, getProvince, getWard } from 'utils/filterData';
-import { jsPDF } from 'jspdf';
+import { getDistrict, getProvince, getWard } from 'utils';
 const html2canvas = require('html2canvas');
 
 interface IProps {
@@ -15,7 +15,7 @@ interface IProps {
   onBackStep: () => void;
 }
 
-const Step4 = (props: IProps) => {
+export const Step4 = (props: IProps) => {
   const { personalInfo, onBackStep } = props;
 
   const dob = useMemo(
@@ -179,5 +179,3 @@ const Step4 = (props: IProps) => {
     </Stack>
   );
 };
-
-export default Step4;
