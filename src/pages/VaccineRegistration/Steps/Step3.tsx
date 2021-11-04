@@ -2,6 +2,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Box, Checkbox, Divider, Stack, Typography } from '@mui/material';
 import StyledButton from 'components/Button';
+import OtpDialog from 'components/OtpDialog';
 import { useState } from 'react';
 
 interface IProps {
@@ -11,9 +12,23 @@ interface IProps {
 
 const Step3 = (props: IProps) => {
   const [acceptInjection, setAcceptInjection] = useState(false);
+  const [openOtp, setOpenOtp] = useState(false);
 
   const handleChangeAcceptInjection = () => {
     setAcceptInjection(!acceptInjection);
+  };
+
+  const handleConfirm = () => {
+    handleCloseOtp();
+    props.onNextStep();
+  };
+
+  const handleOpenOtp = () => {
+    setOpenOtp(true);
+  };
+
+  const handleCloseOtp = () => {
+    setOpenOtp(false);
   };
   return (
     <Box>
@@ -81,10 +96,15 @@ const Step3 = (props: IProps) => {
           disabled={!acceptInjection}
           variant="contained"
           endIcon={<ArrowForwardIcon />}
-          onClick={props.onNextStep}>
+          onClick={handleOpenOtp}>
           Tiếp tục
         </StyledButton>
       </Stack>
+      <OtpDialog
+        open={openOtp}
+        onClose={handleCloseOtp}
+        onConfirm={handleConfirm}
+      />
     </Box>
   );
 };

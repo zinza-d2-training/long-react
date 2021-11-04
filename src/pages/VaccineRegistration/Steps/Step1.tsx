@@ -554,9 +554,11 @@ const Step1 = (props: IProps) => {
           <Controller
             control={control}
             name="registrantInfo.priorityGroup"
-            render={({ field }) => (
+            render={({ field, fieldState: { invalid, error } }) => (
               <TextField
                 {...field}
+                error={invalid}
+                helperText={error?.message}
                 placeholder="Nhóm ưu tiên"
                 sx={styleInputMedium}
                 defaultValue={-1}
