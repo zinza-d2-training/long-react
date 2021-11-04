@@ -94,12 +94,12 @@ const Step2 = (props: IProps) => {
             <TableRow
               key={'' + item.id + item.question}
               sx={{ backgroundColor: 'rgba(238, 238, 238, 0.4)' }}>
-              <TableCell align="center" sx={{ maxWidth: '108px' }}>
+              <TableCell align="center" sx={{ maxWidth: '300px', py: 1 }}>
                 <Typography variant="body2">
                   {item.id}. {item.question}
                 </Typography>
               </TableCell>
-              <TableCell align="center" sx={{ maxWidth: '108px' }}>
+              <TableCell align="center" sx={{ maxWidth: '450px', py: 1 }}>
                 {item.diseaseSymptoms !== undefined && (
                   <TextField
                     placeholder="Nếu có, ghi rõ loại tác nhân dị ứng"
@@ -110,7 +110,7 @@ const Step2 = (props: IProps) => {
                   />
                 )}
               </TableCell>
-              <TableCell align="center">
+              <TableCell sx={{ py: 1 }} align="center">
                 <Checkbox
                   name={item.question}
                   value={Answer.YES}
@@ -118,7 +118,7 @@ const Step2 = (props: IProps) => {
                   onChange={handleChangeAnswer}
                 />
               </TableCell>
-              <TableCell align="center">
+              <TableCell sx={{ py: 1 }} align="center">
                 <Checkbox
                   name={item.question}
                   value={Answer.NO}
@@ -126,7 +126,7 @@ const Step2 = (props: IProps) => {
                   onChange={handleChangeAnswer}
                 />
               </TableCell>
-              <TableCell align="center">
+              <TableCell sx={{ py: 1 }} align="center">
                 <Checkbox
                   name={item.question}
                   value={Answer.NOT_SURE}
