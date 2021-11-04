@@ -56,3 +56,79 @@ export const injectionRegistrationSchema = yup.object().shape({
       'Số điện thoại không hợp lệ'
     )
 });
+
+export const vaccineRegistrationSchema = yup.object().shape({
+  injectionTime: yup
+    .number()
+    .required('Trường này không được bỏ trống')
+    .test('test', 'Trường này không được bỏ trống', (value) => value !== 0),
+  registrantInfo: yup.object().shape({
+    fullName: yup.string().required('Trường này không được bỏ trống'),
+    dob: yup.date().nullable().required('Trường này không được bỏ trống'),
+    gender: yup
+      .number()
+      .required('Trường này không được bỏ trống')
+      .test('test', 'Trường này không được bỏ trống', (value) => value !== -1),
+    phone: yup
+      .string()
+      .required('Trường này không được bỏ trống')
+      .matches(
+        /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im,
+        'Số điện thoại không hợp lệ'
+      ),
+    email: yup.string().email('Email không hợp lệ'),
+    citizenId: yup
+      .string()
+      .required('Trường này không được bỏ trống')
+      .matches(/^\d{9}$|^\d{12}$/g, 'Số CMND/CCCD không hợp lệ'),
+    healthInsuranceCardNumber: yup.string(),
+    provinceId: yup
+      .number()
+      .required('Trường này không được bỏ trống')
+      .test('test', 'Trường này không được bỏ trống', (value) => value !== -1),
+    districtId: yup
+      .number()
+      .required('Trường này không được bỏ trống')
+      .test('test', 'Trường này không được bỏ trống', (value) => value !== -1),
+    wardId: yup
+      .number()
+      .required('Trường này không được bỏ trống')
+      .test('test', 'Trường này không được bỏ trống', (value) => value !== -1),
+    ethnic: yup.string(),
+    priorityGroup: yup
+      .number()
+      .required('Trường này không được bỏ trống')
+      .test('test', 'Trường này không được bỏ trống', (value) => value !== -1)
+  }),
+  vaccinationRegistrationInfo: yup.object().shape({
+    injectionDate: yup.date().nullable(),
+    injectionTime: yup.number()
+  }),
+  historyOfFirstInjection: yup.object().shape({
+    vaccineId: yup
+      .number()
+      .required('Trường này không được bỏ trống')
+      .test(
+        'test',
+        'Trường này không được bỏ trống',
+        (value, originalValue: any) =>
+          originalValue.from[1].value.injectionTime === 1 ||
+          originalValue.from[1].value.injectionTime === 0 ||
+          value !== -1
+      ),
+    injectionDate: yup
+      .date()
+      .nullable()
+      .test(
+        'test',
+        'Trường này không được bỏ trống',
+        (value, originalValue: any) =>
+          originalValue.from[1].value.injectionTime === 1 ||
+          originalValue.from[1].value.injectionTime === 0 ||
+          value !== null
+      ),
+    shipmentNumber: yup.string(),
+    vaccinePlace: yup.string(),
+    postVaccinationReaction: yup.string()
+  })
+});

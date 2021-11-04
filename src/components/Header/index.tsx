@@ -81,7 +81,7 @@ const Header = () => {
               sx={{ textDecoration: 'none' }}
               component={Link}
               variant="body1"
-              to={RoutePaths.home}>
+              to={RoutePaths.vaccineRegistration}>
               Đăng ký tiêm
             </Typography>
             <Box component="div" onMouseLeave={handleCloseMenu}>
