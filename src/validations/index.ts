@@ -108,11 +108,25 @@ export const vaccineRegistrationSchema = yup.object().shape({
     vaccineId: yup
       .number()
       .required('Trường này không được bỏ trống')
-      .test('test', 'Trường này không được bỏ trống', (value) => value !== -1),
+      .test(
+        'test',
+        'Trường này không được bỏ trống',
+        (value, originalValue: any) =>
+          originalValue.from[1].value.injectionTime === 1 ||
+          originalValue.from[1].value.injectionTime === 0 ||
+          value !== -1
+      ),
     injectionDate: yup
       .date()
       .nullable()
-      .required('Trường này không được bỏ trống'),
+      .test(
+        'test',
+        'Trường này không được bỏ trống',
+        (value, originalValue: any) =>
+          originalValue.from[1].value.injectionTime === 1 ||
+          originalValue.from[1].value.injectionTime === 0 ||
+          value !== null
+      ),
     shipmentNumber: yup.string(),
     vaccinePlace: yup.string(),
     postVaccinationReaction: yup.string()

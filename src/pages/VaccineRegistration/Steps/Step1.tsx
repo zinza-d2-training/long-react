@@ -69,6 +69,7 @@ const Step1 = (props: IProps) => {
       mode: 'onChange',
       resolver: yupResolver(vaccineRegistrationSchema)
     });
+  const injectionTime = watch('injectionTime');
   const provinceId = watch('registrantInfo.provinceId');
   const districtId = watch('registrantInfo.districtId');
   const wardId = watch('registrantInfo.wardId');
@@ -78,6 +79,15 @@ const Step1 = (props: IProps) => {
   const [inputProvince, setInputProvince] = useState('');
   const [inputDistrict, setInputDistrict] = useState('');
   const [inputWard, setInputWard] = useState('');
+
+  useEffect(() => {
+    if (injectionTime !== 2) {
+      setValue('historyOfFirstInjection.vaccineId', -1);
+      setValue('historyOfFirstInjection.injectionDate', null);
+      setValue('historyOfFirstInjection.shipmentNumber', '');
+      setValue('historyOfFirstInjection.vaccinePlace', '');
+    }
+  }, [injectionTime, setValue]);
 
   useEffect(() => {
     if (provinceId !== -1) {
@@ -620,108 +630,112 @@ const Step1 = (props: IProps) => {
           />
         </Grid>
       </Grid>
-      <Typography variant="body1" my={2} fontWeight="500">
-        3. Lịch sử tiêm mũi thứ 1
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }} required>
-            Tên Vaccine
-          </Label>
-          <Controller
-            control={control}
-            name="historyOfFirstInjection.vaccineId"
-            render={({ field, fieldState: { invalid, error } }) => (
-              <TextField
-                {...field}
-                error={invalid}
-                helperText={error?.message}
-                placeholder="Tên Vaccine"
-                sx={styleInputMedium}
-                fullWidth
-                type="date"
-                select>
-                <MenuItem value={-1} disabled sx={{ display: 'none' }}>
-                  Chọn tên vaccine
-                </MenuItem>
-                {vaccineData.map(({ id, label }) => (
-                  <MenuItem key={id} value={id}>
-                    {label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }} required>
-            Ngày tiêm
-          </Label>
-          <Controller
-            control={control}
-            name="historyOfFirstInjection.injectionDate"
-            render={({ field, fieldState: { invalid, error } }) => (
-              <TextField
-                {...field}
-                error={invalid}
-                helperText={error?.message}
-                placeholder="Ngày tiêm"
-                sx={styleInputMedium}
-                fullWidth
-                type="date"
+      {injectionTime === 2 && (
+        <>
+          <Typography variant="body1" my={2} fontWeight="500">
+            3. Lịch sử tiêm mũi thứ 1
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={3}>
+              <Label sx={{ display: 'block', mb: 1 }} required>
+                Tên Vaccine
+              </Label>
+              <Controller
+                control={control}
+                name="historyOfFirstInjection.vaccineId"
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <TextField
+                    {...field}
+                    error={invalid}
+                    helperText={error?.message}
+                    placeholder="Tên Vaccine"
+                    sx={styleInputMedium}
+                    fullWidth
+                    type="date"
+                    select>
+                    <MenuItem value={-1} disabled sx={{ display: 'none' }}>
+                      Chọn tên vaccine
+                    </MenuItem>
+                    {vaccineData.map(({ id, label }) => (
+                      <MenuItem key={id} value={id}>
+                        {label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
               />
-            )}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }}>Số lô</Label>
-          <Controller
-            control={control}
-            name="historyOfFirstInjection.shipmentNumber"
-            render={({ field }) => (
-              <TextField
-                {...field}
-                placeholder="Số lô"
-                sx={styleInputMedium}
-                fullWidth
+            </Grid>
+            <Grid item xs={3}>
+              <Label sx={{ display: 'block', mb: 1 }} required>
+                Ngày tiêm
+              </Label>
+              <Controller
+                control={control}
+                name="historyOfFirstInjection.injectionDate"
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <TextField
+                    {...field}
+                    error={invalid}
+                    helperText={error?.message}
+                    placeholder="Ngày tiêm"
+                    sx={styleInputMedium}
+                    fullWidth
+                    type="date"
+                  />
+                )}
               />
-            )}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }}>Địa điểm tiêm</Label>
-          <Controller
-            control={control}
-            name="historyOfFirstInjection.vaccinePlace"
-            render={({ field }) => (
-              <TextField
-                {...field}
-                placeholder="Địa điểm tiêm"
-                sx={styleInputMedium}
-                fullWidth
+            </Grid>
+            <Grid item xs={3}>
+              <Label sx={{ display: 'block', mb: 1 }}>Số lô</Label>
+              <Controller
+                control={control}
+                name="historyOfFirstInjection.shipmentNumber"
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    placeholder="Số lô"
+                    sx={styleInputMedium}
+                    fullWidth
+                  />
+                )}
               />
-            )}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Label sx={{ display: 'block', mb: 1 }}>
-            Phản ứng sau tiêm chủng
-          </Label>
-          <Controller
-            control={control}
-            name="historyOfFirstInjection.postVaccinationReaction"
-            render={({ field }) => (
-              <TextField
-                {...field}
-                placeholder="Phản ứng sau tiêm chủng"
-                fullWidth
-                multiline
-                maxRows={5}
+            </Grid>
+            <Grid item xs={3}>
+              <Label sx={{ display: 'block', mb: 1 }}>Địa điểm tiêm</Label>
+              <Controller
+                control={control}
+                name="historyOfFirstInjection.vaccinePlace"
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    placeholder="Địa điểm tiêm"
+                    sx={styleInputMedium}
+                    fullWidth
+                  />
+                )}
               />
-            )}
-          />
-        </Grid>
-      </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Label sx={{ display: 'block', mb: 1 }}>
+                Phản ứng sau tiêm chủng
+              </Label>
+              <Controller
+                control={control}
+                name="historyOfFirstInjection.postVaccinationReaction"
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    placeholder="Phản ứng sau tiêm chủng"
+                    fullWidth
+                    multiline
+                    maxRows={5}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+        </>
+      )}
       <Box mt={2} sx={{ color: colors.red[700] }}>
         <Typography variant="body1" fontWeight="bold">
           Lưu ý:
