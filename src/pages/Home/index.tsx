@@ -13,10 +13,11 @@ import { SearchTable, StatisticTable } from 'components';
 import {
   IInjectedByDay,
   IInjectedByTotalSupplied,
+  IOptionsTable,
   IStatisticVaccinationByArea,
   IStatisticVaccinationByLocal
 } from 'models';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import { AppLayout } from 'theme/layout';
 import {
@@ -72,15 +73,100 @@ export const Home = () => {
   const [statisticVaccinationByLocal, setStatisticVaccinationByLocal] =
     useState<IStatisticVaccinationByLocal[]>(fakeStatisticVaccinationByLocal);
 
-  const highestInjectionRate = getHighestInjectionRate(
-    injectedByTotalSupplied,
-    10
+  const highestInjectionRate = useMemo(
+    () => getHighestInjectionRate(injectedByTotalSupplied, 10),
+    [injectedByTotalSupplied]
   );
 
-  const lowestInjectionRate = getLowestInjectionRate(
-    injectedByTotalSupplied,
-    10
+  const lowestInjectionRate = useMemo(
+    () => getLowestInjectionRate(injectedByTotalSupplied, 10),
+    [injectedByTotalSupplied]
   );
+
+  const lowestInjectionRateData = useMemo(
+    () => ({
+      labels: lowestInjectionRate.map((item) => item.province),
+      datasets: [
+        {
+          label: 'Tổng tiêm / tổng phân bố (%)',
+          data: lowestInjectionRate.map((item) => item.percent),
+          backgroundColor: [colors.blue[500]],
+          borderWidth: 0,
+          maxBarThickness: 20
+        }
+      ]
+    }),
+    [lowestInjectionRate]
+  );
+
+  const highestInjectionRateData = useMemo(
+    () => ({
+      labels: highestInjectionRate.map((item) => item.province),
+      datasets: [
+        {
+          label: 'Tổng tiêm / tổng phân bố (%)',
+          data: highestInjectionRate.map((item) => item.percent),
+          backgroundColor: [colors.indigo[700]],
+          borderWidth: 0,
+          maxBarThickness: 20
+        }
+      ]
+    }),
+    [highestInjectionRate]
+  );
+
+  const statisticVaccinationByLocalData = useMemo(
+    () => ({
+      heading: [
+        'STT',
+        'Tỉnh/Thành phố',
+        'Dự kiến KH phân bổ',
+        'Phân bổ thực tế',
+        'Dân số >= 18 tuổi',
+        'Số liều đã tiêm',
+        'Tỷ lệ dự kiến phân bổ theo kế hoạch/ dân số (>= 18 tuổi)',
+        'Tỷ lệ đã phân bổ/ dân số (>= 18 tuổi)',
+        'Tỷ lệ đã tiêm ít nhất 1 mũi/ dân số (>= 18 tuổi)',
+        'Tỷ lệ tiêm chủng/ Vắc xin phân bổ thực tế',
+        'Tỷ lệ phân bổ vắc xin/Tổng số phân bổ cả nước'
+      ],
+      dataSet: statisticVaccinationByLocal.map((record, index) => {
+        const { provinceId, ...otherValues } = record;
+        return [
+          index + 1,
+          getProvince(provinceId)?.label,
+          ...Object.values(otherValues)
+        ];
+      })
+    }),
+    [statisticVaccinationByLocal]
+  );
+
+  const statisticTableOptions: IOptionsTable = {
+    maxHeight: '850px',
+    percentColumns: [
+      {
+        number: 6,
+        color: '#C65312'
+      },
+      {
+        number: 7,
+        color: '#3D94CF'
+      },
+      {
+        number: 8,
+        color: '#4E8A4F'
+      },
+      {
+        number: 9,
+        color: '#AF8612'
+      },
+      {
+        number: 10,
+        color: 'rgb(45, 33, 136)'
+      }
+    ]
+  };
 
   const handleLoadMoreVaccinationByLocal = () => {
     const newData: IStatisticVaccinationByLocal[] =
@@ -91,11 +177,11 @@ export const Home = () => {
     ]);
   };
 
-  const handleLoadMoreVaccinationByArea = () => {
+  const handleLoadMoreVaccinationByArea = useCallback(() => {
     const newData: IStatisticVaccinationByArea[] =
       fakeLoadMoreStatisticVaccinationByArea;
     setStatisticVaccinationByArea([...statisticVaccinationByArea, ...newData]);
-  };
+  }, [statisticVaccinationByArea]);
 
   return (
     <AppLayout>
@@ -200,18 +286,7 @@ export const Home = () => {
                       }
                     }
                   }}
-                  data={{
-                    labels: highestInjectionRate.map((item) => item.province),
-                    datasets: [
-                      {
-                        label: 'Tổng tiêm / tổng phân bố (%)',
-                        data: highestInjectionRate.map((item) => item.percent),
-                        backgroundColor: [colors.indigo[700]],
-                        borderWidth: 0,
-                        maxBarThickness: 20
-                      }
-                    ]
-                  }}
+                  data={highestInjectionRateData}
                   height={310}
                 />
               </Box>
@@ -257,18 +332,7 @@ export const Home = () => {
                       }
                     }
                   }}
-                  data={{
-                    labels: lowestInjectionRate.map((item) => item.province),
-                    datasets: [
-                      {
-                        label: 'Tổng tiêm / tổng phân bố (%)',
-                        data: lowestInjectionRate.map((item) => item.percent),
-                        backgroundColor: [colors.blue[500]],
-                        borderWidth: 0,
-                        maxBarThickness: 20
-                      }
-                    ]
-                  }}
+                  data={lowestInjectionRateData}
                   height={310}
                 />
               </Box>
@@ -284,54 +348,8 @@ export const Home = () => {
             </Typography>
             <Divider />
             <StatisticTable
-              data={{
-                heading: [
-                  'STT',
-                  'Tỉnh/Thành phố',
-                  'Dự kiến KH phân bổ',
-                  'Phân bổ thực tế',
-                  'Dân số >= 18 tuổi',
-                  'Số liều đã tiêm',
-                  'Tỷ lệ dự kiến phân bổ theo kế hoạch/ dân số (>= 18 tuổi)',
-                  'Tỷ lệ đã phân bổ/ dân số (>= 18 tuổi)',
-                  'Tỷ lệ đã tiêm ít nhất 1 mũi/ dân số (>= 18 tuổi)',
-                  'Tỷ lệ tiêm chủng/ Vắc xin phân bổ thực tế',
-                  'Tỷ lệ phân bổ vắc xin/Tổng số phân bổ cả nước'
-                ],
-                dataSet: statisticVaccinationByLocal.map((record, index) => {
-                  const { provinceId, ...otherValues } = record;
-                  return [
-                    index + 1,
-                    getProvince(provinceId)?.label,
-                    ...Object.values(otherValues)
-                  ];
-                })
-              }}
-              options={{
-                maxHeight: '850px',
-                percentColumns: [
-                  {
-                    number: 6,
-                    color: '#C65312'
-                  },
-                  {
-                    number: 7,
-                    color: '#3D94CF'
-                  },
-                  {
-                    number: 8,
-                    color: '#4E8A4F'
-                  },
-                  {
-                    number: 9,
-                    color: '#AF8612'
-                  },
-                  {
-                    number: 10,
-                    color: 'rgb(45, 33, 136)'
-                  }
-                ]
-              }}
+              data={statisticVaccinationByLocalData}
+              options={statisticTableOptions}
             />
             <Stack direction="row" justifyContent="center" py={3}>
               <Box

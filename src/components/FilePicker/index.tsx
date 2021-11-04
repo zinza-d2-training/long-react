@@ -13,7 +13,7 @@ import {
 import { SxProps } from '@mui/system';
 import { StyledDialogTitle } from 'components';
 import { IFile } from 'models/register';
-import React, { InputHTMLAttributes, useState } from 'react';
+import React, { InputHTMLAttributes, useMemo, useState } from 'react';
 
 const stylePreview: SxProps<Theme> = {
   width: '104px',
@@ -67,27 +67,31 @@ export const FilePicker = (props: IProps) => {
     setSelectedImage({ name, blob });
   };
 
-  const id = inputProps?.id;
+  const id = useMemo(() => inputProps?.id, [inputProps?.id]);
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const listFiles = Object.values(e.target.files);
+      const newImages = [
+        ...files,
+        ...listFiles.map((file) => ({
+          file,
+          preview: URL.createObjectURL(file)
+        }))
+      ];
+      const newValue = newImages.splice(0, max);
+      setFiles(newValue);
+      e.target.value = '';
+      onAddImage(newValue);
+    }
+  };
+
+  const handleClosePreview = () => setIsOpenPreview(false);
   return (
     <Box>
       <input
         {...inputProps}
-        onChange={(e) => {
-          if (e.target.files) {
-            const listFiles = Object.values(e.target.files);
-            const newImages = [
-              ...files,
-              ...listFiles.map((file) => ({
-                file,
-                preview: URL.createObjectURL(file)
-              }))
-            ];
-            const newValue = newImages.splice(0, max);
-            setFiles(newValue);
-            e.target.value = '';
-            onAddImage(newValue);
-          }
-        }}
+        onChange={handleChangeInput}
         style={{ display: 'none' }}
         type="file"
         id={id ? id : 'file_picker_id'}
@@ -181,7 +185,7 @@ export const FilePicker = (props: IProps) => {
             sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {selectedImage?.name}
           </Typography>
-          <IconButton onClick={() => setIsOpenPreview(false)}>
+          <IconButton onClick={handleClosePreview}>
             <ClearIcon />
           </IconButton>
         </StyledDialogTitle>

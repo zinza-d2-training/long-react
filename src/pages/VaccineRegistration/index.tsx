@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import { PageTitle } from 'components';
 import { IMedicalHistory, IVaccineRegistration } from 'models';
 import { Step1, Step2, Step3, Step4 } from 'pages/VaccineRegistration/Steps';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { AppLayout } from 'theme/layout';
 
 const steps = [
@@ -22,23 +22,24 @@ export const VaccineRegistration = () => {
     IMedicalHistory[]
   >([]);
 
-  const handleNextStep = () => {
+  const handleNextStep = useCallback(() => {
     setCurrentStep(currentStep + 1);
-  };
+  }, [currentStep]);
 
-  const handleBackStep = () => {
+  const handleBackStep = useCallback(() => {
     setCurrentStep(currentStep - 1);
-  };
+  }, [currentStep]);
 
-  const handleChangePersonalInfo = (info: IVaccineRegistration) => {
+  const handleChangePersonalInfo = useCallback((info: IVaccineRegistration) => {
     setPersonalInfo(info);
-  };
+  }, []);
 
-  const handleChangeMedicalHistory = (report: IMedicalHistory[]) => {
-    setMedicalHistoryReport(report);
-  };
-
-  const handleConfirm = () => {};
+  const handleChangeMedicalHistory = useCallback(
+    (report: IMedicalHistory[]) => {
+      setMedicalHistoryReport(report);
+    },
+    []
+  );
   return (
     <AppLayout>
       <PageTitle>Đăng ký tiêm</PageTitle>
@@ -69,7 +70,6 @@ export const VaccineRegistration = () => {
           </Box>
           <Box sx={{ display: currentStep === 3 ? 'block' : 'none' }}>
             <Step4
-              onConfirm={handleConfirm}
               onBackStep={handleBackStep}
               personalInfo={personalInfo}
               medicalHistoryReport={medicalHistoryReport}

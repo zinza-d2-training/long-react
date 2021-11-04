@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { OtpDialog } from 'components';
 import { IRegisterForm } from 'models/register';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   DefaultValues,
   FormProvider,
@@ -51,13 +51,13 @@ export const Register = () => {
     };
   }, [getValues]);
 
-  const handleNextStep = () => {
+  const handleNextStep = useCallback(() => {
     setCurrentStep(currentStep + 1);
-  };
+  }, [currentStep]);
 
-  const handleBackStep = () => {
+  const handleBackStep = useCallback(() => {
     setCurrentStep(currentStep - 1);
-  };
+  }, [currentStep]);
 
   const handleOpenModal = () => {
     setIsOpenModal(true);

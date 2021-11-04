@@ -21,7 +21,7 @@ import {
   IInjectionRegistrationForm,
   InjectionRegistrationStatus
 } from 'models';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { styleInputMedium } from 'theme';
 import { AppLayout } from 'theme/layout';
@@ -52,6 +52,11 @@ export const InjectionRegistration = () => {
     reset();
     setInjectionRegistration([]);
   };
+
+  const dobs = useMemo(
+    () => injectionRegistration.map((item) => item.dob.toLocaleDateString()),
+    [injectionRegistration]
+  );
   return (
     <AppLayout>
       <PageTitle>Tra cứu đăng ký tiêm</PageTitle>
@@ -141,9 +146,7 @@ export const InjectionRegistration = () => {
                   <TableRow key={record.id}>
                     <TableCell align="center">{index + 1}</TableCell>
                     <TableCell align="center">{record.fullName}</TableCell>
-                    <TableCell align="center">
-                      {record.dob.toLocaleDateString()}
-                    </TableCell>
+                    <TableCell align="center">{dobs[index]}</TableCell>
                     <TableCell align="center">
                       {record.gender === 1 ? 'Nam' : 'Nữ'}
                     </TableCell>

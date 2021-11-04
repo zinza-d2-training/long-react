@@ -70,8 +70,7 @@ export const StatisticTable = (props: IProps) => {
                               <div
                                 style={{
                                   width: '3px',
-                                  height: '3px',
-                                  backgroundColor: '#f00'
+                                  height: '3px'
                                 }}></div>
                             </Waypoint>
                           )}

@@ -186,6 +186,8 @@ export const Step1 = (props: IProps) => {
   ) => {
     setInputWard(value);
   };
+
+  const getOptionLabelCountry = (option: ICountry) => option.name;
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={2}>
@@ -540,7 +542,7 @@ export const Step1 = (props: IProps) => {
                 {...field}
                 value={watch('registrantInfo.nationality')}
                 onChange={handleChangeNationality}
-                getOptionLabel={(option: ICountry) => option.name}
+                getOptionLabel={getOptionLabelCountry}
                 options={countriesData}
                 renderInput={(params) => (
                   <TextField

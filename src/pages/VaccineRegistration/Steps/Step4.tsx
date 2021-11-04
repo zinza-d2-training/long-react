@@ -11,7 +11,6 @@ const html2canvas = require('html2canvas');
 interface IProps {
   personalInfo: IVaccineRegistration | null;
   medicalHistoryReport: IMedicalHistory[];
-  onConfirm: () => void;
   onBackStep: () => void;
 }
 
@@ -64,7 +63,7 @@ export const Step4 = (props: IProps) => {
       (canvas: HTMLCanvasElement) => {
         const doc = new jsPDF();
         doc.addImage(canvas, 'JPEG', 5, 20, 200, 52);
-        doc.save('two-by-four.pdf');
+        doc.save('download.pdf');
       }
     );
   };

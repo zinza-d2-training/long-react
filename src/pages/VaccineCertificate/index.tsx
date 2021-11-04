@@ -50,10 +50,13 @@ export const VaccineCertificate = () => {
   const handleCloseModal = () => {
     setIsOpenModal(false);
   };
+
   const handleConfirm = () => {
     setSearched(true);
     handleCloseModal();
   };
+
+  const handleResetForm = () => reset();
   return (
     <AppLayout>
       <PageTitle>Tra cứu chứng nhận tiêm</PageTitle>
@@ -62,7 +65,7 @@ export const VaccineCertificate = () => {
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
-            onReset={() => reset()}>
+            onReset={handleResetForm}>
             <Stack direction="row" spacing={2}>
               <Box sx={{ flex: 1 }}>
                 <Label required htmlFor="fullName">
