@@ -1,7 +1,7 @@
 import { Container, Step, StepLabel, Stepper } from '@mui/material';
 import { Box } from '@mui/system';
 import PageTitle from 'components/PageTitle';
-import { IVaccineRegistration } from 'models';
+import { IMedicalHistory, IVaccineRegistration } from 'models';
 import { Step1, Step2, Step3, Step4 } from 'pages/VaccineRegistration/Steps';
 import { useState } from 'react';
 import { AppLayout } from 'theme/layout';
@@ -14,10 +14,13 @@ const steps = [
 ];
 
 const VaccineRegistration = () => {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const [personalInfo, setPersonalInfo] = useState<IVaccineRegistration | null>(
     null
   );
+  const [medicalHistoryReport, setMedicalHistoryReport] = useState<
+    IMedicalHistory[]
+  >([]);
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
@@ -29,6 +32,10 @@ const VaccineRegistration = () => {
 
   const handleChangePersonalInfo = (info: IVaccineRegistration) => {
     setPersonalInfo(info);
+  };
+
+  const handleChangeMedicalHistory = (report: IMedicalHistory[]) => {
+    setMedicalHistoryReport(report);
   };
 
   const handleConfirm = () => {};
@@ -51,7 +58,11 @@ const VaccineRegistration = () => {
             />
           </Box>
           <Box sx={{ display: currentStep === 1 ? 'block' : 'none' }}>
-            <Step2 onNextStep={handleNextStep} onBackStep={handleBackStep} />
+            <Step2
+              onNextStep={handleNextStep}
+              onBackStep={handleBackStep}
+              onChangeMedicalHistory={handleChangeMedicalHistory}
+            />
           </Box>
           <Box sx={{ display: currentStep === 2 ? 'block' : 'none' }}>
             <Step3 onNextStep={handleNextStep} onBackStep={handleBackStep} />
@@ -61,6 +72,7 @@ const VaccineRegistration = () => {
               onConfirm={handleConfirm}
               onBackStep={handleBackStep}
               personalInfo={personalInfo}
+              medicalHistoryReport={medicalHistoryReport}
             />
           </Box>
         </Box>

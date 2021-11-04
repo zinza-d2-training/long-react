@@ -38,3 +38,16 @@ export interface IVaccineRegistration {
   vaccinationRegistrationInfo: IVaccinationRegistrationInfo;
   historyOfFirstInjection?: IHistoryOfFirstInjection;
 }
+
+export interface IMedicalHistory {
+  id: number;
+  question: string;
+  diseaseSymptoms?: string;
+  answer: Answer | null;
+}
+
+export enum Answer {
+  YES = 'YES',
+  NO = 'NO',
+  NOT_SURE = 'NOT_SURE'
+}

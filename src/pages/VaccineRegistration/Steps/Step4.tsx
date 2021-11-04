@@ -1,8 +1,9 @@
 import { Box } from '@mui/material';
-import { IVaccineRegistration } from 'models';
+import { IMedicalHistory, IVaccineRegistration } from 'models';
 
 interface IProps {
   personalInfo: IVaccineRegistration | null;
+  medicalHistoryReport: IMedicalHistory[];
   onConfirm: () => void;
   onBackStep: () => void;
 }
