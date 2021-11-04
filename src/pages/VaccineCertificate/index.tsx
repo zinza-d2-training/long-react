@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { Label, OtpDialog, PageTitle, StyledButton } from 'components';
 import { ICertificateSearch } from 'models';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { styleInputMedium } from 'theme';
 import { AppLayout } from 'theme/layout';
@@ -47,14 +47,14 @@ export const VaccineCertificate = () => {
     setIsOpenModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setIsOpenModal(false);
-  };
+  }, []);
 
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     setSearched(true);
     handleCloseModal();
-  };
+  }, [handleCloseModal]);
 
   const handleResetForm = () => reset();
   return (

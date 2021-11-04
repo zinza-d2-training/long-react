@@ -142,40 +142,43 @@ export const Home = () => {
     [statisticVaccinationByLocal]
   );
 
-  const statisticTableOptions: IOptionsTable = {
-    maxHeight: '850px',
-    percentColumns: [
-      {
-        number: 6,
-        color: '#C65312'
-      },
-      {
-        number: 7,
-        color: '#3D94CF'
-      },
-      {
-        number: 8,
-        color: '#4E8A4F'
-      },
-      {
-        number: 9,
-        color: '#AF8612'
-      },
-      {
-        number: 10,
-        color: 'rgb(45, 33, 136)'
-      }
-    ]
-  };
+  const statisticTableOptions: IOptionsTable = useMemo(
+    () => ({
+      maxHeight: '850px',
+      percentColumns: [
+        {
+          number: 6,
+          color: '#C65312'
+        },
+        {
+          number: 7,
+          color: '#3D94CF'
+        },
+        {
+          number: 8,
+          color: '#4E8A4F'
+        },
+        {
+          number: 9,
+          color: '#AF8612'
+        },
+        {
+          number: 10,
+          color: 'rgb(45, 33, 136)'
+        }
+      ]
+    }),
+    []
+  );
 
-  const handleLoadMoreVaccinationByLocal = () => {
+  const handleLoadMoreVaccinationByLocal = useCallback(() => {
     const newData: IStatisticVaccinationByLocal[] =
       fakeLoadMoreStatisticVaccinationByLocal;
     setStatisticVaccinationByLocal([
       ...statisticVaccinationByLocal,
       ...newData
     ]);
-  };
+  }, [statisticVaccinationByLocal]);
 
   const handleLoadMoreVaccinationByArea = useCallback(() => {
     const newData: IStatisticVaccinationByArea[] =

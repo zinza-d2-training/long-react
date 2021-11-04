@@ -11,7 +11,7 @@ import {
 import { Label } from 'components';
 import { IDistrict, IProvince, IWard } from 'models';
 import { IRegisterForm } from 'models/register';
-import React, { SyntheticEvent, useEffect, useState } from 'react';
+import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
 import { addressData } from 'utils';
@@ -129,41 +129,54 @@ export const Step3 = (props: IProps) => {
     }
   }, [districtOptions, selectedDistrict, setValue]);
 
-  const handleChangeProvince = (
-    event: SyntheticEvent<Element, Event>,
-    value: IProvince | null,
-    reason: AutocompleteChangeReason
-  ) => {
-    setValue('provinceId', value ? value.id : -1);
-    setFocus('provinceId');
-  };
+  const handleChangeProvince = useCallback(
+    (
+      event: SyntheticEvent<Element, Event>,
+      value: IProvince | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setValue('provinceId', value ? value.id : -1);
+      setFocus('provinceId');
+    },
+    [setFocus, setValue]
+  );
 
-  const handleChangeDistrict = (
-    event: SyntheticEvent<Element, Event>,
-    value: IDistrict | null,
-    reason: AutocompleteChangeReason
-  ) => {
-    setValue('districtId', value ? value.id : -1);
-    setFocus('districtId');
-  };
+  const handleChangeDistrict = useCallback(
+    (
+      event: SyntheticEvent<Element, Event>,
+      value: IDistrict | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setValue('districtId', value ? value.id : -1);
+      setFocus('districtId');
+    },
+    [setFocus, setValue]
+  );
 
-  const handleChangeWard = (
-    event: SyntheticEvent<Element, Event>,
-    value: IWard | null,
-    reason: AutocompleteChangeReason
-  ) => {
-    setValue('wardId', value ? value.id : -1);
-    setFocus('wardId');
-  };
+  const handleChangeWard = useCallback(
+    (
+      event: SyntheticEvent<Element, Event>,
+      value: IWard | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setValue('wardId', value ? value.id : -1);
+      setFocus('wardId');
+    },
+    [setFocus, setValue]
+  );
 
-  const handleChangeInputWard = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setWardInputValue(e.target.value);
+  const handleChangeInputWard = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      setWardInputValue(e.target.value),
+    []
+  );
 
-  const handleChangeInputDistrict = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDistrictInputValue(e.target.value);
-  };
+  const handleChangeInputDistrict = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setDistrictInputValue(e.target.value);
+    },
+    []
+  );
   return (
     <Stack spacing={2}>
       <Box>

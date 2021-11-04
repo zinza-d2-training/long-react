@@ -13,7 +13,12 @@ import {
 import { SxProps } from '@mui/system';
 import { StyledDialogTitle } from 'components';
 import { IFile } from 'models/register';
-import React, { InputHTMLAttributes, useMemo, useState } from 'react';
+import React, {
+  InputHTMLAttributes,
+  useCallback,
+  useMemo,
+  useState
+} from 'react';
 
 const stylePreview: SxProps<Theme> = {
   width: '104px',
@@ -69,22 +74,25 @@ export const FilePicker = (props: IProps) => {
 
   const id = useMemo(() => inputProps?.id, [inputProps?.id]);
 
-  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const listFiles = Object.values(e.target.files);
-      const newImages = [
-        ...files,
-        ...listFiles.map((file) => ({
-          file,
-          preview: URL.createObjectURL(file)
-        }))
-      ];
-      const newValue = newImages.splice(0, max);
-      setFiles(newValue);
-      e.target.value = '';
-      onAddImage(newValue);
-    }
-  };
+  const handleChangeInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        const listFiles = Object.values(e.target.files);
+        const newImages = [
+          ...files,
+          ...listFiles.map((file) => ({
+            file,
+            preview: URL.createObjectURL(file)
+          }))
+        ];
+        const newValue = newImages.splice(0, max);
+        setFiles(newValue);
+        e.target.value = '';
+        onAddImage(newValue);
+      }
+    },
+    [files, max, onAddImage]
+  );
 
   const handleClosePreview = () => setIsOpenPreview(false);
   return (
