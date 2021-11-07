@@ -2,7 +2,7 @@ import { colors, Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { FC } from 'react';
 
-const PageTitle: FC = (props) => {
+export const PageTitle: FC = (props) => {
   return (
     <Box
       mt={4}
@@ -20,5 +20,3 @@ const PageTitle: FC = (props) => {
     </Box>
   );
 };
-
-export default PageTitle;

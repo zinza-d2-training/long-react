@@ -7,7 +7,7 @@ interface IProps extends TypographyProps {
   htmlFor?: string;
 }
 
-const Label: FC<IProps> = (props) => {
+export const Label: FC<IProps> = (props) => {
   const { required, ...typoProps } = props;
   return (
     <Typography component="label" variant="label" {...typoProps}>
@@ -20,5 +20,3 @@ const Label: FC<IProps> = (props) => {
     </Typography>
   );
 };
-
-export default Label;

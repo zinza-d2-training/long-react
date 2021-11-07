@@ -11,16 +11,13 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import StyledButton from 'components/Button';
-import Label from 'components/Label';
-import OtpDialog from 'components/OtpDialog';
-import PageTitle from 'components/PageTitle';
+import { Label, OtpDialog, PageTitle, StyledButton } from 'components';
 import { ICertificateSearch } from 'models';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { styleInputMedium } from 'theme';
 import { AppLayout } from 'theme/layout';
-import { certificateData } from 'utils/fakeDataCertificate';
+import { certificateData } from 'utils';
 import { certificationSchema } from 'validations';
 import CertificateInfo from './CertificateInfo';
 
@@ -33,7 +30,7 @@ const defaultValues: ICertificateSearch = {
   healthInsuranceCardNumber: ''
 };
 
-const VaccineCertificate = () => {
+export const VaccineCertificate = () => {
   const [searched, setSearched] = useState<boolean>(false);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { control, handleSubmit, reset } = useForm<ICertificateSearch>({
@@ -50,13 +47,16 @@ const VaccineCertificate = () => {
     setIsOpenModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setIsOpenModal(false);
-  };
-  const handleConfirm = () => {
+  }, []);
+
+  const handleConfirm = useCallback(() => {
     setSearched(true);
     handleCloseModal();
-  };
+  }, [handleCloseModal]);
+
+  const handleResetForm = () => reset();
   return (
     <AppLayout>
       <PageTitle>Tra cứu chứng nhận tiêm</PageTitle>
@@ -65,7 +65,7 @@ const VaccineCertificate = () => {
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
-            onReset={() => reset()}>
+            onReset={handleResetForm}>
             <Stack direction="row" spacing={2}>
               <Box sx={{ flex: 1 }}>
                 <Label required htmlFor="fullName">
@@ -237,5 +237,3 @@ const VaccineCertificate = () => {
     </AppLayout>
   );
 };
-
-export default VaccineCertificate;

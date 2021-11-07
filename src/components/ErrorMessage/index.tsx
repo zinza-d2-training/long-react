@@ -2,7 +2,7 @@ import { colors, Typography, TypographyProps } from '@mui/material';
 
 interface IProps extends TypographyProps {}
 
-const ErrorMessage = (props: IProps) => {
+export const ErrorMessage = (props: IProps) => {
   return (
     <Typography
       {...props}
@@ -12,5 +12,3 @@ const ErrorMessage = (props: IProps) => {
     />
   );
 };
-
-export default ErrorMessage;

@@ -1,9 +1,9 @@
 import { Container, Step, StepLabel, Stepper } from '@mui/material';
 import { Box } from '@mui/system';
-import PageTitle from 'components/PageTitle';
+import { PageTitle } from 'components';
 import { IMedicalHistory, IVaccineRegistration } from 'models';
 import { Step1, Step2, Step3, Step4 } from 'pages/VaccineRegistration/Steps';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { AppLayout } from 'theme/layout';
 
 const steps = [
@@ -13,7 +13,7 @@ const steps = [
   'Hoàn thành'
 ];
 
-const VaccineRegistration = () => {
+export const VaccineRegistration = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [personalInfo, setPersonalInfo] = useState<IVaccineRegistration | null>(
     null
@@ -22,23 +22,24 @@ const VaccineRegistration = () => {
     IMedicalHistory[]
   >([]);
 
-  const handleNextStep = () => {
+  const handleNextStep = useCallback(() => {
     setCurrentStep(currentStep + 1);
-  };
+  }, [currentStep]);
 
-  const handleBackStep = () => {
+  const handleBackStep = useCallback(() => {
     setCurrentStep(currentStep - 1);
-  };
+  }, [currentStep]);
 
-  const handleChangePersonalInfo = (info: IVaccineRegistration) => {
+  const handleChangePersonalInfo = useCallback((info: IVaccineRegistration) => {
     setPersonalInfo(info);
-  };
+  }, []);
 
-  const handleChangeMedicalHistory = (report: IMedicalHistory[]) => {
-    setMedicalHistoryReport(report);
-  };
-
-  const handleConfirm = () => {};
+  const handleChangeMedicalHistory = useCallback(
+    (report: IMedicalHistory[]) => {
+      setMedicalHistoryReport(report);
+    },
+    []
+  );
   return (
     <AppLayout>
       <PageTitle>Đăng ký tiêm</PageTitle>
@@ -69,7 +70,6 @@ const VaccineRegistration = () => {
           </Box>
           <Box sx={{ display: currentStep === 3 ? 'block' : 'none' }}>
             <Step4
-              onConfirm={handleConfirm}
               onBackStep={handleBackStep}
               personalInfo={personalInfo}
               medicalHistoryReport={medicalHistoryReport}
@@ -80,5 +80,3 @@ const VaccineRegistration = () => {
     </AppLayout>
   );
 };
-
-export default VaccineRegistration;

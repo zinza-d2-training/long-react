@@ -1,8 +1,6 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Box, Button, Stack, TextField } from '@mui/material';
-import ErrorMessage from 'components/ErrorMessage';
-import FileInput from 'components/FileInput';
-import Label from 'components/Label';
+import { ErrorMessage, FileInput, Label } from 'components';
 import { IRegisterForm } from 'models/register';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -12,7 +10,7 @@ interface IProps {
   onNextStep: () => void;
 }
 
-const Step1 = (props: IProps) => {
+export const Step1 = (props: IProps) => {
   const { onNextStep } = props;
   const {
     control,
@@ -74,5 +72,3 @@ const Step1 = (props: IProps) => {
     </Stack>
   );
 };
-
-export default Step1;

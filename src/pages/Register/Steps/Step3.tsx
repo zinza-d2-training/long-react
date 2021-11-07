@@ -8,19 +8,19 @@ import {
   Stack,
   TextField
 } from '@mui/material';
-import Label from 'components/Label';
+import { Label } from 'components';
 import { IDistrict, IProvince, IWard } from 'models';
 import { IRegisterForm } from 'models/register';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
-import { addressData } from 'utils/addressData';
+import { addressData } from 'utils';
 
 interface IProps {
   onBackStep: () => void;
 }
 
-const Step3 = (props: IProps) => {
+export const Step3 = (props: IProps) => {
   const { onBackStep } = props;
   const {
     watch,
@@ -128,6 +128,55 @@ const Step3 = (props: IProps) => {
       setWardOptions([]);
     }
   }, [districtOptions, selectedDistrict, setValue]);
+
+  const handleChangeProvince = useCallback(
+    (
+      event: SyntheticEvent<Element, Event>,
+      value: IProvince | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setValue('provinceId', value ? value.id : -1);
+      setFocus('provinceId');
+    },
+    [setFocus, setValue]
+  );
+
+  const handleChangeDistrict = useCallback(
+    (
+      event: SyntheticEvent<Element, Event>,
+      value: IDistrict | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setValue('districtId', value ? value.id : -1);
+      setFocus('districtId');
+    },
+    [setFocus, setValue]
+  );
+
+  const handleChangeWard = useCallback(
+    (
+      event: SyntheticEvent<Element, Event>,
+      value: IWard | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setValue('wardId', value ? value.id : -1);
+      setFocus('wardId');
+    },
+    [setFocus, setValue]
+  );
+
+  const handleChangeInputWard = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      setWardInputValue(e.target.value),
+    []
+  );
+
+  const handleChangeInputDistrict = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setDistrictInputValue(e.target.value);
+    },
+    []
+  );
   return (
     <Stack spacing={2}>
       <Box>
@@ -144,14 +193,7 @@ const Step3 = (props: IProps) => {
                 options={provinceOptions}
                 {...field}
                 value={valueAutocomplete}
-                onChange={(
-                  event: SyntheticEvent<Element, Event>,
-                  value: IProvince | null,
-                  reason: AutocompleteChangeReason
-                ) => {
-                  setValue('provinceId', value ? value.id : -1);
-                  setFocus('provinceId');
-                }}
+                onChange={handleChangeProvince}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -182,23 +224,14 @@ const Step3 = (props: IProps) => {
                 options={districtOptions}
                 {...field}
                 value={valueAutocomplete}
-                onChange={(
-                  event: SyntheticEvent<Element, Event>,
-                  value: IDistrict | null,
-                  reason: AutocompleteChangeReason
-                ) => {
-                  setValue('districtId', value ? value.id : -1);
-                  setFocus('districtId');
-                }}
+                onChange={handleChangeDistrict}
                 disabled={selectedProvince === -1}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     placeholder="Quận/Huyện"
                     sx={styleInputLarge}
-                    onChange={(e) => {
-                      setDistrictInputValue(e.target.value);
-                    }}
+                    onChange={handleChangeInputDistrict}
                     inputProps={{
                       ...params.inputProps,
                       value: districtInputValue
@@ -229,20 +262,13 @@ const Step3 = (props: IProps) => {
                 {...field}
                 value={valueAutocomplete}
                 disabled={selectedDistrict === -1}
-                onChange={(
-                  event: SyntheticEvent<Element, Event>,
-                  value: IWard | null,
-                  reason: AutocompleteChangeReason
-                ) => {
-                  setValue('wardId', value ? value.id : -1);
-                  setFocus('wardId');
-                }}
+                onChange={handleChangeWard}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    placeholder="Quận/Huyện"
+                    placeholder="Xã/Phường"
                     sx={styleInputLarge}
-                    onChange={(e) => setWardInputValue(e.target.value)}
+                    onChange={handleChangeInputWard}
                     inputProps={{ ...params.inputProps, value: wardInputValue }}
                     error={invalid && touchedFields.wardId}
                     helperText={
@@ -280,5 +306,3 @@ const Step3 = (props: IProps) => {
     </Stack>
   );
 };
-
-export default Step3;

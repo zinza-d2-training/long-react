@@ -1,3 +1,6 @@
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import FeaturedVideoIcon from '@mui/icons-material/FeaturedVideo';
+import PersonIcon from '@mui/icons-material/Person';
 import {
   Box,
   colors,
@@ -11,13 +14,11 @@ import {
   TableRow,
   Typography
 } from '@mui/material';
+import { StyledButton } from 'components';
 import { ICertificate } from 'models';
-import { getDistrict, getProvince, getWard } from 'utils/filterData';
+import { useMemo } from 'react';
 import QRCode from 'react-qr-code';
-import PersonIcon from '@mui/icons-material/Person';
-import DateRangeIcon from '@mui/icons-material/DateRange';
-import FeaturedVideoIcon from '@mui/icons-material/FeaturedVideo';
-import StyledButton from 'components/Button';
+import { getDistrict, getProvince, getWard } from 'utils';
 
 interface IProps {
   data: ICertificate;
@@ -25,6 +26,28 @@ interface IProps {
 
 const CertificateInfo = (props: IProps) => {
   const { data } = props;
+  const dob = useMemo(() => data.dob.toLocaleDateString(), [data.dob]);
+  const wardName = useMemo(
+    () => getWard(data.provinceId, data.districtId, data.wardId)?.label,
+    [data.districtId, data.provinceId, data.wardId]
+  );
+  const districtName = useMemo(
+    () => getDistrict(data.provinceId, data.districtId)?.label,
+    [data.districtId, data.provinceId]
+  );
+  const provinceName = useMemo(
+    () => getProvince(data.provinceId)?.label,
+    [data.provinceId]
+  );
+
+  const vaccineDateTimes = useMemo(
+    () =>
+      data.vaccinate.map(
+        (item) =>
+          `${item.time.toLocaleDateString()} - ${item.time.toLocaleTimeString()}`
+      ),
+    [data.vaccinate]
+  );
   return (
     <Stack direction="row" spacing={2}>
       <Box sx={{ flex: 1 }}>
@@ -54,7 +77,7 @@ const CertificateInfo = (props: IProps) => {
           <Grid item xs={4}>
             <Typography variant="body1">Ngày sinh</Typography>
             <Typography variant="body1" fontWeight="500">
-              {data.dob.toLocaleDateString()}
+              {dob}
             </Typography>
           </Grid>
           <Grid item xs={4}>
@@ -78,11 +101,7 @@ const CertificateInfo = (props: IProps) => {
           <Grid item xs={12}>
             <Typography variant="body1">Địa chỉ</Typography>
             <Typography variant="body1" fontWeight="500">
-              {`${
-                getWard(data.provinceId, data.districtId, data.wardId)?.label
-              } - ${getDistrict(data.provinceId, data.districtId)?.label} - ${
-                getProvince(data.provinceId)?.label
-              }`}
+              {`${wardName} - ${districtName} - ${provinceName}`}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -126,10 +145,10 @@ const CertificateInfo = (props: IProps) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {data.vaccinate.map((item) => (
+                  {data.vaccinate.map((item, index) => (
                     <TableRow>
                       <TableCell align="center">{item.number}</TableCell>
-                      <TableCell align="center">{`${item.time.toLocaleDateString()} - ${item.time.toLocaleTimeString()}`}</TableCell>
+                      <TableCell align="center">{`${vaccineDateTimes[index]}`}</TableCell>
                       <TableCell align="center">
                         {item.vaccinationName}
                       </TableCell>
@@ -202,7 +221,7 @@ const CertificateInfo = (props: IProps) => {
               <Stack direction="column">
                 <Typography variant="body1">Ngày sinh</Typography>
                 <Typography variant="body1" fontWeight="500">
-                  {data.dob.toLocaleDateString()}
+                  {dob}
                 </Typography>
               </Stack>
             </Stack>

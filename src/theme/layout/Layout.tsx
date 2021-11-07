@@ -1,7 +1,6 @@
 import { Box, Theme } from '@mui/material';
 import { SxProps } from '@mui/system';
-import Footer from 'components/Footer';
-import Header from 'components/Header';
+import { Footer, Header } from 'components';
 import { FC } from 'react';
 
 const appStyle: SxProps<Theme> = {
@@ -10,7 +9,7 @@ const appStyle: SxProps<Theme> = {
   flexDirection: 'column'
 };
 
-const Layout: FC = (props) => {
+export const Layout: FC = (props) => {
   return (
     <Box sx={appStyle} className="App">
       <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -38,5 +37,3 @@ export const AppLayout: FC = (props) => {
     </Box>
   );
 };
-
-export default Layout;

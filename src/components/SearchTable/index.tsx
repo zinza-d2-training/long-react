@@ -1,8 +1,7 @@
 import { AutocompleteChangeReason } from '@mui/core';
 import SearchIcon from '@mui/icons-material/Search';
 import { Autocomplete, Box, Divider, Stack, TextField } from '@mui/material';
-import StyledButton from 'components/Button';
-import StatisticTable from 'components/StatisticTable';
+import { StatisticTable, StyledButton } from 'components';
 import * as _ from 'lodash';
 import {
   IDistrict,
@@ -13,8 +12,7 @@ import {
 } from 'models';
 import { useEffect, useState } from 'react';
 import { styleInputMedium } from 'theme';
-import { addressData } from 'utils/addressData';
-import { getDistrict, getProvince, getWard } from 'utils/filterData';
+import { addressData, getDistrict, getProvince, getWard } from 'utils';
 
 const convertData = (input: IStatisticVaccinationByArea[]): ITableData => {
   return {
@@ -77,7 +75,7 @@ const search = (
   });
 };
 
-const SearchTable = (props: IProps) => {
+export const SearchTable = (props: IProps) => {
   const { data, onLoadMoreData } = props;
   const [tableData, setTableData] = useState<ITableData>(convertData(data));
   const [provinceOptions] = useState<IProvince[]>(addressData);
@@ -264,5 +262,3 @@ const SearchTable = (props: IProps) => {
     </Box>
   );
 };
-
-export default SearchTable;

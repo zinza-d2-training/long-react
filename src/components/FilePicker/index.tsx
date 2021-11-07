@@ -11,9 +11,14 @@ import {
   Typography
 } from '@mui/material';
 import { SxProps } from '@mui/system';
-import StyledDialogTitle from 'components/DialogTitle';
+import { StyledDialogTitle } from 'components';
 import { IFile } from 'models/register';
-import React, { InputHTMLAttributes, useState } from 'react';
+import React, {
+  InputHTMLAttributes,
+  useCallback,
+  useMemo,
+  useState
+} from 'react';
 
 const stylePreview: SxProps<Theme> = {
   width: '104px',
@@ -52,7 +57,7 @@ interface IProps {
   onRemoveImage: (imageIndex: number) => void;
 }
 
-const FilePicker = (props: IProps) => {
+export const FilePicker = (props: IProps) => {
   const { max = 10000, inputProps, onRemoveImage, onAddImage } = props;
 
   const [files, setFiles] = useState<IFile[]>([]);
@@ -67,27 +72,34 @@ const FilePicker = (props: IProps) => {
     setSelectedImage({ name, blob });
   };
 
-  const id = inputProps?.id;
+  const id = useMemo(() => inputProps?.id, [inputProps?.id]);
+
+  const handleChangeInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        const listFiles = Object.values(e.target.files);
+        const newImages = [
+          ...files,
+          ...listFiles.map((file) => ({
+            file,
+            preview: URL.createObjectURL(file)
+          }))
+        ];
+        const newValue = newImages.splice(0, max);
+        setFiles(newValue);
+        e.target.value = '';
+        onAddImage(newValue);
+      }
+    },
+    [files, max, onAddImage]
+  );
+
+  const handleClosePreview = () => setIsOpenPreview(false);
   return (
     <Box>
       <input
         {...inputProps}
-        onChange={(e) => {
-          if (e.target.files) {
-            const listFiles = Object.values(e.target.files);
-            const newImages = [
-              ...files,
-              ...listFiles.map((file) => ({
-                file,
-                preview: URL.createObjectURL(file)
-              }))
-            ];
-            const newValue = newImages.splice(0, max);
-            setFiles(newValue);
-            e.target.value = '';
-            onAddImage(newValue);
-          }
-        }}
+        onChange={handleChangeInput}
         style={{ display: 'none' }}
         type="file"
         id={id ? id : 'file_picker_id'}
@@ -181,7 +193,7 @@ const FilePicker = (props: IProps) => {
             sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {selectedImage?.name}
           </Typography>
-          <IconButton onClick={() => setIsOpenPreview(false)}>
+          <IconButton onClick={handleClosePreview}>
             <ClearIcon />
           </IconButton>
         </StyledDialogTitle>
@@ -196,5 +208,3 @@ const FilePicker = (props: IProps) => {
     </Box>
   );
 };
-
-export default FilePicker;

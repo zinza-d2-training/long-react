@@ -1,11 +1,13 @@
 import { IRoute, RouteType } from 'models';
-import ForgotPassword from 'pages/ForgotPassword';
-import Home from 'pages/Home';
-import InjectionRegistration from 'pages/InjectionRegistration';
-import Login from 'pages/Login';
-import Register from 'pages/Register';
-import VaccineCertificate from 'pages/VaccineCertificate';
-import VaccineRegistration from 'pages/VaccineRegistration';
+import {
+  ForgotPassword,
+  Home,
+  InjectionRegistration,
+  Login,
+  Register,
+  VaccineCertificate,
+  VaccineRegistration
+} from 'pages';
 
 export const RoutePaths = {
   login: '/login',

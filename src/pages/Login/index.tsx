@@ -8,7 +8,7 @@ import {
   Typography
 } from '@mui/material';
 import { Box } from '@mui/system';
-import Label from 'components/Label';
+import { Label } from 'components';
 import { ILogin } from 'models';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Link, Link as RouterLink } from 'react-router-dom';
@@ -18,7 +18,7 @@ import { authSelector, getUserInfo, login } from 'store/slices/authSlice';
 import { styleInputLarge } from 'theme';
 import { loginSchema } from 'validations';
 
-const Login = () => {
+export const Login = () => {
   const {
     control,
     handleSubmit,
@@ -34,7 +34,9 @@ const Login = () => {
     try {
       await dispatch(login(data));
       await dispatch(getUserInfo());
-    } catch {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -175,5 +177,3 @@ const Login = () => {
     </Box>
   );
 };
-
-export default Login;

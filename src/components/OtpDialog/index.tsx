@@ -8,12 +8,11 @@ import {
   IconButton,
   Typography
 } from '@mui/material';
-import StyledButton from 'components/Button';
-import StyledDialogTitle from 'components/DialogTitle';
+import { StyledButton, StyledDialogTitle } from 'components';
 import { useClock } from 'hooks';
 import { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
-import { isNumberOrNull } from 'utils/validate';
+import { isNumberOrNull } from 'utils';
 
 const START_TIME = { hours: 0, minutes: 0, seconds: 0 };
 interface IProps {
@@ -22,7 +21,7 @@ interface IProps {
   onConfirm: () => void;
 }
 
-const OtpDialog = (props: IProps) => {
+export const OtpDialog = (props: IProps) => {
   const { open, onClose, onConfirm } = props;
   const [otp, setOtp] = useState<string>('');
   const [isShowReSendOtp, setIsShowReSendOtp] = useState<boolean>(false);
@@ -140,5 +139,3 @@ const OtpDialog = (props: IProps) => {
     </Dialog>
   );
 };
-
-export default OtpDialog;

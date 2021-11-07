@@ -1,13 +1,12 @@
 import { Box, TextField, Typography } from '@mui/material';
-import StyledButton from 'components/Button';
-import OtpDialog from 'components/OtpDialog';
+import { OtpDialog, StyledButton } from 'components';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { RoutePaths } from 'routes';
 import { styleInputLarge } from 'theme';
-import { isNumberOrNull } from 'utils/validate';
+import { isNumberOrNull } from 'utils';
 
-const ForgotPassword = () => {
+export const ForgotPassword = () => {
   const [citizenId, setCitizenId] = useState<string>('');
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
@@ -96,5 +95,3 @@ const ForgotPassword = () => {
     </Box>
   );
 };
-
-export default ForgotPassword;
