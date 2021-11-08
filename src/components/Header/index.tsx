@@ -165,7 +165,7 @@ export const Header = () => {
               sx={{ textDecoration: 'none' }}
               component={Link}
               variant="body1"
-              to={RoutePaths.home}>
+              to={RoutePaths.document}>
               Tài liệu
             </Typography>
 

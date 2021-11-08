@@ -1,5 +1,6 @@
 import { IRoute, RouteType } from 'models';
 import {
+  Document,
   ForgotPassword,
   Home,
   InjectionRegistration,
@@ -16,6 +17,7 @@ export const RoutePaths = {
   vaccineCertificate: '/vaccine-certificate',
   injectionRegistration: '/injection-registration',
   vaccineRegistration: '/vaccine-registration',
+  document: '/document',
   home: '/'
 };
 
@@ -59,6 +61,13 @@ const routes: IRoute[] = [
     key: 'route_vaccine_registration',
     path: RoutePaths.vaccineRegistration,
     component: VaccineRegistration,
+    exact: true,
+    routeType: RouteType.PUBLIC_ROUTE
+  },
+  {
+    key: 'route_document',
+    path: RoutePaths.document,
+    component: Document,
     exact: true,
     routeType: RouteType.PUBLIC_ROUTE
   },
