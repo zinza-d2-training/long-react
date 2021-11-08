@@ -40,7 +40,6 @@ export const User = () => {
     newPassword: '',
     confirmPassword: ''
   });
-  console.log('~ userInfo', userInfo);
 
   const [currentTab, setCurrentTab] = useState(0);
 
