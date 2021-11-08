@@ -24,7 +24,7 @@ interface IProps {
   data: ICertificate;
 }
 
-const CertificateInfo = (props: IProps) => {
+export const CertificateInfo = (props: IProps) => {
   const { data } = props;
   const dob = useMemo(() => data.dob.toLocaleDateString(), [data.dob]);
   const wardName = useMemo(
@@ -249,5 +249,3 @@ const CertificateInfo = (props: IProps) => {
     </Stack>
   );
 };
-
-export default CertificateInfo;

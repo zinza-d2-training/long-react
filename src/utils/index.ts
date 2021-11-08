@@ -1,6 +1,6 @@
 export * from './addressData';
 export * from './countries';
-export * from './fakeData';
+export * from './fakeDataAccount';
 export * from './fakeDataCertificate';
 export * from './fakeDataDashboard';
 export * from './fakeDataInjectionRegistration';
