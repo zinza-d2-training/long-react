@@ -94,7 +94,7 @@ export const Step2 = (props: IProps) => {
             <TableRow
               key={'' + item.id + item.question}
               sx={{ backgroundColor: 'rgba(238, 238, 238, 0.4)' }}>
-              <TableCell align="center" sx={{ maxWidth: '300px', py: 1 }}>
+              <TableCell sx={{ maxWidth: '300px', py: 1 }}>
                 <Typography variant="body2">
                   {item.id}. {item.question}
                 </Typography>
@@ -103,7 +103,11 @@ export const Step2 = (props: IProps) => {
                 {item.diseaseSymptoms !== undefined && (
                   <TextField
                     placeholder="Nếu có, ghi rõ loại tác nhân dị ứng"
-                    sx={{ ...styleInputMedium, width: '273px' }}
+                    sx={{
+                      ...styleInputMedium,
+                      width: '372px',
+                      'input::placeholder': { textAlign: 'center' }
+                    }}
                     name={item.question}
                     value={item.diseaseSymptoms}
                     onChange={handleChangeDiseaseSymptoms}
