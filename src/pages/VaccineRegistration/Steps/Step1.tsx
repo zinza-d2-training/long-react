@@ -431,7 +431,13 @@ export const Step1 = (props: IProps) => {
                       error={invalid}
                       helperText={error?.message}
                       placeholder="Tỉnh/Thành phố"
-                      sx={styleInputMedium}
+                      sx={{
+                        ...styleInputMedium,
+                        '.MuiInputBase-root .MuiAutocomplete-input': {
+                          py: '4.5px !important',
+                          pl: '14px !important'
+                        }
+                      }}
                       fullWidth
                     />
                   )}
@@ -469,7 +475,13 @@ export const Step1 = (props: IProps) => {
                       error={invalid}
                       helperText={error?.message}
                       placeholder="Quận/Huyện"
-                      sx={styleInputMedium}
+                      sx={{
+                        ...styleInputMedium,
+                        '.MuiInputBase-root .MuiAutocomplete-input': {
+                          py: '4.5px !important',
+                          pl: '14px !important'
+                        }
+                      }}
                       fullWidth
                     />
                   )}
@@ -507,7 +519,13 @@ export const Step1 = (props: IProps) => {
                       error={invalid}
                       helperText={error?.message}
                       placeholder="Xã/Phường"
-                      sx={styleInputMedium}
+                      sx={{
+                        ...styleInputMedium,
+                        '.MuiInputBase-root .MuiAutocomplete-input': {
+                          py: '4.5px !important',
+                          pl: '14px !important'
+                        }
+                      }}
                       fullWidth
                     />
                   )}
@@ -548,7 +566,14 @@ export const Step1 = (props: IProps) => {
                   <TextField
                     {...params}
                     placeholder="Quốc tịch"
-                    sx={styleInputMedium}
+                    sx={{
+                      ...styleInputMedium,
+                      '.MuiInputBase-root .MuiAutocomplete-input': {
+                        paddingTop: '4.5px !important',
+                        paddingBottom: '4.5px !important',
+                        pl: '14px !important'
+                      }
+                    }}
                     fullWidth
                   />
                 )}
