@@ -31,7 +31,7 @@ const defaultValues: ICertificateSearch = {
 };
 
 export const VaccineCertificate = () => {
-  const [searched, setSearched] = useState<boolean>(false);
+  const [searched, setSearched] = useState<boolean>(true);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { control, handleSubmit, reset } = useForm<ICertificateSearch>({
     defaultValues,
@@ -201,7 +201,8 @@ export const VaccineCertificate = () => {
                 sx={{
                   color: colors.red[600],
                   cursor: 'pointer',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
+                  textDecorationColor: colors.red[600]
                 }}>
                 tại đây
               </Link>

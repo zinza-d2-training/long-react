@@ -64,7 +64,8 @@ const CertificateInfo = (props: IProps) => {
           align="center"
           sx={{ textTransform: 'uppercase' }}
           variant="h5"
-          py={3}>
+          py={3}
+          fontWeight="500">
           Chứng nhận tiêm chủng covid-19
         </Typography>
         <Grid container rowSpacing={2}>
@@ -146,7 +147,12 @@ const CertificateInfo = (props: IProps) => {
                 </TableHead>
                 <TableBody>
                   {data.vaccinate.map((item, index) => (
-                    <TableRow>
+                    <TableRow
+                      sx={
+                        index % 2 !== 0
+                          ? { backgroundColor: colors.grey[100] }
+                          : {}
+                      }>
                       <TableCell align="center">{item.number}</TableCell>
                       <TableCell align="center">{`${vaccineDateTimes[index]}`}</TableCell>
                       <TableCell align="center">
@@ -177,7 +183,10 @@ const CertificateInfo = (props: IProps) => {
         <Stack
           width="340px"
           sx={{
-            backgroundColor: colors.amber[200],
+            backgroundColor:
+              data.vaccinate.length === 1
+                ? colors.amber[200]
+                : colors.green[600],
             boxShadow: '0px 16px 48px rgba(0, 0, 0, 0.175)',
             borderRadius: '8px',
             p: 3
