@@ -24,6 +24,7 @@ import { authSelector } from 'store/slices/authSlice';
 const menuItemStyle: SxProps<Theme> = {
   color: (theme) => theme.palette.text.primary,
   height: '100%',
+  px: 2,
   display: 'inline-block',
   py: 1,
   textDecoration: 'none',
@@ -132,9 +133,8 @@ export const Header = () => {
                       <MenuList
                         autoFocusItem={open}
                         id="composition-menu"
-                        aria-labelledby="composition-button"
-                        sx={{ p: 0 }}>
-                        <MenuItem sx={{ py: 0 }}>
+                        aria-labelledby="composition-button">
+                        <MenuItem sx={{ p: 0, width: '100%' }}>
                           <Typography
                             component={Link}
                             onClick={handleCloseMenu}
@@ -144,7 +144,7 @@ export const Header = () => {
                             Tra cứu chứng nhận tiêm
                           </Typography>
                         </MenuItem>
-                        <MenuItem sx={{ py: 0 }}>
+                        <MenuItem sx={{ p: 0, width: '100%' }}>
                           <Typography
                             component={Link}
                             onClick={handleCloseMenu}

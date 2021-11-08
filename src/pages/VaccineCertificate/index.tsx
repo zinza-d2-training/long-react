@@ -31,7 +31,7 @@ const defaultValues: ICertificateSearch = {
 };
 
 export const VaccineCertificate = () => {
-  const [searched, setSearched] = useState<boolean>(true);
+  const [searched, setSearched] = useState<boolean>(false);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { control, handleSubmit, reset } = useForm<ICertificateSearch>({
     defaultValues,
