@@ -189,6 +189,18 @@ export const SearchTable = (props: IProps) => {
     );
   }, [data, selectedDistrict?.id, selectedProvince?.id, selectedWard?.id]);
 
+  const handleChangeProvinceInput = useCallback((e, newValue) => {
+    setInputProvince(newValue);
+  }, []);
+
+  const handleChangeDistrictInput = useCallback((e, newValue) => {
+    setInputDistrict(newValue);
+  }, []);
+
+  const handleChangeWardInput = useCallback((e, newValue) => {
+    setInputWard(newValue);
+  }, []);
+
   return (
     <Box px={2}>
       <Stack direction="row" spacing={2} px={2} pb={2}>
@@ -196,9 +208,7 @@ export const SearchTable = (props: IProps) => {
           options={provinceOptions}
           value={selectedProvince}
           onChange={handleChangeProvince}
-          onInputChange={(e, newValue) => {
-            setInputProvince(newValue);
-          }}
+          onInputChange={handleChangeProvinceInput}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -216,9 +226,7 @@ export const SearchTable = (props: IProps) => {
           value={selectedDistrict}
           disabled={!selectedProvince}
           onChange={handleChangeDistrict}
-          onInputChange={(e, newValue) => {
-            setInputDistrict(newValue);
-          }}
+          onInputChange={handleChangeDistrictInput}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -235,9 +243,7 @@ export const SearchTable = (props: IProps) => {
           value={selectedWard}
           options={wardOptions}
           disabled={!selectedDistrict}
-          onInputChange={(e, newValue) => {
-            setInputWard(newValue);
-          }}
+          onInputChange={handleChangeWardInput}
           onChange={handleChangeWard}
           renderInput={(params) => (
             <TextField

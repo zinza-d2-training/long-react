@@ -121,6 +121,19 @@ export const FormUserInfo = (props: IProps) => {
     userInfo.wardId
   ]);
 
+  const handleTogglePasswordEditable = useCallback(() => {
+    if (editable.password) {
+      setValue('newPassword', '');
+      clearErrors('newPassword');
+      setValue('confirmPassword', '');
+      clearErrors('confirmPassword');
+    }
+    setEditable({
+      ...editable,
+      password: !editable.password
+    });
+  }, [clearErrors, editable, setValue]);
+
   const handleConfirmPhoneNumberBlock = useCallback(() => {
     setEditable({
       ...editable,
@@ -156,6 +169,13 @@ export const FormUserInfo = (props: IProps) => {
     });
     onConfirm(watch());
   }, [editable, onConfirm, watch]);
+
+  const handleConfirmPasswordBlock = useCallback(() => {
+    setEditable({
+      ...editable,
+      password: !editable.password
+    });
+  }, [editable]);
 
   const handleRemoveImage = useCallback(
     (imageIndex: number) => {
@@ -322,7 +342,7 @@ export const FormUserInfo = (props: IProps) => {
               />
             </Box>
             <Box>
-              <Label sx={{ display: 'block' }}>Họ và tên</Label>
+              <Label sx={{ display: 'block' }}>Giới tính</Label>
               <Controller
                 control={control}
                 name="gender"
@@ -359,6 +379,67 @@ export const FormUserInfo = (props: IProps) => {
                   !!formErrors.districtId ||
                   !!formErrors.wardId
                 }>
+                Lưu
+              </StyledButton>
+            </Stack>
+          )}
+        </Box>
+        <Box mt={3}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Typography variant="body1" fontWeight="500">
+              Mật khẩu
+            </Typography>
+            <IconButton onClick={handleTogglePasswordEditable}>
+              <EditIcon />
+            </IconButton>
+          </Stack>
+          <Box>
+            <Label sx={{ display: 'block' }}>Mật khẩu mới</Label>
+            <Controller
+              control={control}
+              name="newPassword"
+              render={({ field, fieldState: { invalid, error } }) => (
+                <TextField
+                  {...field}
+                  placeholder="Mật khẩu mới"
+                  disabled={!editable.password}
+                  error={invalid}
+                  helperText={error?.message}
+                  sx={{ ...styleInputMedium, width: '322px' }}
+                  type="password"
+                />
+              )}
+            />
+          </Box>
+          <Box mt={2}>
+            <Label sx={{ display: 'block' }}>Nhập lại mật khẩu</Label>
+            <Controller
+              control={control}
+              name="confirmPassword"
+              render={({ field, fieldState: { invalid, error } }) => (
+                <TextField
+                  {...field}
+                  placeholder="Nhập lại mật khẩu"
+                  disabled={!editable.password}
+                  error={invalid}
+                  helperText={error?.message}
+                  sx={{ ...styleInputMedium, width: '322px' }}
+                  type="password"
+                />
+              )}
+            />
+          </Box>
+          {editable.password && (
+            <Stack direction="row" mt={2} spacing={2}>
+              <StyledButton
+                variant="outlined"
+                onClick={handleTogglePasswordEditable}>
+                Hủy bỏ
+              </StyledButton>
+              <StyledButton
+                variant="contained"
+                onClick={handleConfirmPasswordBlock}
+                disabled={!!errors.newPassword || !!errors.confirmPassword}>
                 Lưu
               </StyledButton>
             </Stack>
