@@ -148,6 +148,7 @@ export const CertificateInfo = (props: IProps) => {
                 <TableBody>
                   {data.vaccinate.map((item, index) => (
                     <TableRow
+                      key={item.id}
                       sx={
                         index % 2 !== 0
                           ? { backgroundColor: colors.grey[100] }

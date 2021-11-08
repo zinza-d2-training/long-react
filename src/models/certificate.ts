@@ -8,6 +8,7 @@ export interface ICertificateSearch {
 }
 
 export interface IVaccinate {
+  id: string;
   number: number;
   time: Date;
   vaccinationName: string;

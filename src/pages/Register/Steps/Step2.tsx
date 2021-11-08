@@ -55,7 +55,6 @@ export const Step2 = (props: IProps) => {
         <Controller
           name="dob"
           control={control}
-          defaultValue={new Date()}
           render={({ field, fieldState: { invalid, error } }) => (
             <TextField
               placeholder="Ngày/Tháng/Năm"

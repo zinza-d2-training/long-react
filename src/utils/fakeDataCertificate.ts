@@ -11,6 +11,7 @@ export const certificateData: ICertificate = {
   wardId: 1,
   vaccinate: [
     {
+      id: 'vaccine-sfsaf',
       number: 1,
       time: new Date('09/11/2021 14:00'),
       vaccinationName: 'COVID-19 Vaccine AstraZeneca',
@@ -18,6 +19,7 @@ export const certificateData: ICertificate = {
       vaccinationSite: 'TYT Dịch Vọng Hậu'
     },
     {
+      id: 'vaccine-fghfgh',
       number: 2,
       time: new Date('10/11/2021 14:00'),
       vaccinationName: 'COVID-19 Vaccine AstraZeneca',

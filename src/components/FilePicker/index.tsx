@@ -14,6 +14,7 @@ import { IFile } from 'models/register';
 import React, {
   InputHTMLAttributes,
   useCallback,
+  useEffect,
   useMemo,
   useState
 } from 'react';
@@ -48,22 +49,37 @@ const styleOverlay: SxProps<Theme> = {
 };
 
 interface IProps {
+  defaultValue?: IFile[];
   max?: number;
   min?: number;
+  editable?: boolean;
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   onAddImage: (file: IFile[]) => void;
   onRemoveImage: (imageIndex: number) => void;
 }
 
 export const FilePicker = (props: IProps) => {
-  const { max = 10000, inputProps, onRemoveImage, onAddImage } = props;
+  const {
+    max = 10000,
+    inputProps,
+    onRemoveImage,
+    onAddImage,
+    defaultValue,
+    editable
+  } = props;
 
-  const [files, setFiles] = useState<IFile[]>([]);
+  const [files, setFiles] = useState<IFile[]>(defaultValue ? defaultValue : []);
   const [selectedImage, setSelectedImage] = useState<{
     name: string;
     blob: string;
   } | null>(null);
   const [isOpenPreview, setIsOpenPreview] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (defaultValue) {
+      setFiles(defaultValue);
+    }
+  }, [defaultValue]);
 
   const handleChangeSelectedImage = useCallback(
     (name: string, blob: string) => {
@@ -108,7 +124,7 @@ export const FilePicker = (props: IProps) => {
       <Box
         sx={{
           display: 'flex',
-          p: 2,
+          p: 1,
           border: `1px solid ${colors.grey[100]}`,
           width: '100%',
           flexWrap: 'wrap'
@@ -149,22 +165,26 @@ export const FilePicker = (props: IProps) => {
               <IconButton
                 size="small"
                 sx={{ color: '#fff' }}
-                onClick={() => handleChangeSelectedImage(file.name, preview)}>
+                onClick={() =>
+                  handleChangeSelectedImage(file ? file.name : '', preview)
+                }>
                 <VisibilityIcon />
               </IconButton>
-              <IconButton
-                size="small"
-                sx={{ color: '#fff' }}
-                onClick={() => {
-                  setFiles((prevState) => {
-                    return prevState.filter(
-                      (file, fileIndex) => fileIndex !== index
-                    );
-                  });
-                  onRemoveImage(index);
-                }}>
-                <DeleteOutlinedIcon />
-              </IconButton>
+              {editable && (
+                <IconButton
+                  size="small"
+                  sx={{ color: '#fff' }}
+                  onClick={() => {
+                    setFiles((prevState) => {
+                      return prevState.filter(
+                        (file, fileIndex) => fileIndex !== index
+                      );
+                    });
+                    onRemoveImage(index);
+                  }}>
+                  <DeleteOutlinedIcon />
+                </IconButton>
+              )}
             </Box>
             <img src={preview} style={{ borderRadius: '4px' }} alt="" />
           </Box>
