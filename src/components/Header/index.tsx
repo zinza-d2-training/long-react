@@ -64,12 +64,19 @@ export const Header = () => {
             alignItems: 'center',
             height: '80px'
           }}>
-          <Stack direction="row" alignItems="center">
-            <img src="images/logo_white.png" alt="" />
-            <Typography variant="h6" ml={2} color="#fff">
-              CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
-            </Typography>
-          </Stack>
+          <Typography
+            component={Link}
+            to={RoutePaths.home}
+            variant="h6"
+            color="#fff"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              textDecoration: 'none'
+            }}>
+            <Box component="img" src="images/logo_white.png" alt="" mr={2} />
+            CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
+          </Typography>
           <Stack direction="row" alignItems="center" spacing={3}>
             <Typography
               color="#fff"
