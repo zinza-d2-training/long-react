@@ -11,7 +11,13 @@ import {
 import { Label } from 'components';
 import { IDistrict, IProvince, IWard } from 'models';
 import { IRegisterForm } from 'models/register';
-import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react';
+import React, {
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
 import { addressData } from 'utils';
@@ -41,13 +47,16 @@ export const Step3 = (props: IProps) => {
   const [districtInputValue, setDistrictInputValue] = useState<string>('');
   const [wardInputValue, setWardInputValue] = useState<string>('');
 
-  const disableButton =
-    !!errors.provinceId ||
-    !!errors.districtId ||
-    !!errors.wardId ||
-    watch('provinceId') === -1 ||
-    watch('districtId') === -1 ||
-    watch('wardId') === -1;
+  const disableButton = useMemo(
+    () =>
+      !!errors.provinceId ||
+      !!errors.districtId ||
+      !!errors.wardId ||
+      watch('provinceId') === -1 ||
+      watch('districtId') === -1 ||
+      watch('wardId') === -1,
+    [errors.districtId, errors.provinceId, errors.wardId, watch]
+  );
 
   useEffect(() => {
     if (selectedProvince === -1) {

@@ -4,18 +4,18 @@ import {
   Button,
   colors,
   Container,
-  Popper,
+  Grow,
   MenuItem,
+  MenuList,
+  Paper,
+  Popper,
   Stack,
   Theme,
-  Typography,
-  Paper,
-  Grow,
-  MenuList
+  Typography
 } from '@mui/material';
 import { SxProps } from '@mui/system';
 import { StyledButton } from 'components';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RoutePaths } from 'routes';
 import { useAppSelector } from 'store';
@@ -37,13 +37,13 @@ export const Header = () => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
 
-  const handleOpenMenu = () => {
+  const handleOpenMenu = useCallback(() => {
     setOpen(true);
-  };
+  }, []);
 
-  const handleCloseMenu = (event: Event | React.SyntheticEvent) => {
+  const handleCloseMenu = useCallback((event: Event | React.SyntheticEvent) => {
     setOpen(false);
-  };
+  }, []);
 
   return (
     <Box

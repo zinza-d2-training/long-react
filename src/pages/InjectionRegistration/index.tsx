@@ -159,14 +159,17 @@ export const InjectionRegistration = () => {
     useState<IInjectionRegistration | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const onSubmit: SubmitHandler<IInjectionRegistrationForm> = (data) => {
-    setInjectionRegistration(fakeInjectionRegistration);
-  };
+  const onSubmit: SubmitHandler<IInjectionRegistrationForm> = useCallback(
+    (data) => {
+      setInjectionRegistration(fakeInjectionRegistration);
+    },
+    []
+  );
 
-  const handleResetForm = () => {
+  const handleResetForm = useCallback(() => {
     reset();
     setInjectionRegistration([]);
-  };
+  }, [reset]);
 
   const handleChangeSelectedInfo = useCallback(
     (data: IInjectionRegistration) => {

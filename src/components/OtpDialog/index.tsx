@@ -38,24 +38,24 @@ export const OtpDialog = (props: IProps) => {
     }
   }, [time]);
 
-  const handleChangeOtp = (otp: string) => {
+  const handleChangeOtp = useCallback((otp: string) => {
     if (isNumberOrNull(otp)) {
       setOtp(otp);
     }
-  };
-  const handleReSendOtp = () => {
+  }, []);
+  const handleReSendOtp = useCallback(() => {
     setTime({ hours: 0, minutes: 2, seconds: 0 });
-  };
+  }, [setTime]);
 
   const handleClose = useCallback(() => {
     setOtp('');
     onClose();
   }, [onClose]);
 
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     setOtp('');
     onConfirm();
-  };
+  }, [onConfirm]);
 
   return (
     <Dialog open={open} hideBackdrop sx={{ '.container': { width: '500px' } }}>

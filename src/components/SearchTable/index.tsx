@@ -10,7 +10,7 @@ import {
   ITableData,
   IWard
 } from 'models';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { styleInputMedium } from 'theme';
 import { addressData, getDistrict, getProvince, getWard } from 'utils';
 
@@ -143,31 +143,40 @@ export const SearchTable = (props: IProps) => {
     setTableData(convertData(data));
   }, [data]);
 
-  const handleChangeProvince = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: IProvince | null,
-    reason: AutocompleteChangeReason
-  ) => {
-    setSelectedProvince(value);
-  };
+  const handleChangeProvince = useCallback(
+    (
+      event: React.SyntheticEvent<Element, Event>,
+      value: IProvince | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setSelectedProvince(value);
+    },
+    []
+  );
 
-  const handleChangeDistrict = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: IDistrict | null,
-    reason: AutocompleteChangeReason
-  ) => {
-    setSelectedDistrict(value);
-  };
+  const handleChangeDistrict = useCallback(
+    (
+      event: React.SyntheticEvent<Element, Event>,
+      value: IDistrict | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setSelectedDistrict(value);
+    },
+    []
+  );
 
-  const handleChangeWard = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: IWard | null,
-    reason: AutocompleteChangeReason
-  ) => {
-    setSelectedWard(value);
-  };
+  const handleChangeWard = useCallback(
+    (
+      event: React.SyntheticEvent<Element, Event>,
+      value: IWard | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setSelectedWard(value);
+    },
+    []
+  );
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     setHasLoadMore(false);
     setTableData(
       convertData(
@@ -178,7 +187,7 @@ export const SearchTable = (props: IProps) => {
         })
       )
     );
-  };
+  }, [data, selectedDistrict?.id, selectedProvince?.id, selectedWard?.id]);
 
   return (
     <Box px={2}>

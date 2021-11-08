@@ -4,7 +4,7 @@ import { Box, colors, Link, Stack, Typography } from '@mui/material';
 import { StyledButton } from 'components';
 import { jsPDF } from 'jspdf';
 import { IMedicalHistory, IVaccineRegistration } from 'models';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { getDistrict, getProvince, getWard } from 'utils';
 const html2canvas = require('html2canvas');
 
@@ -58,7 +58,7 @@ export const Step4 = (props: IProps) => {
     ]
   );
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     html2canvas(document.getElementById('export')).then(
       (canvas: HTMLCanvasElement) => {
         const doc = new jsPDF();
@@ -66,7 +66,7 @@ export const Step4 = (props: IProps) => {
         doc.save('download.pdf');
       }
     );
-  };
+  }, []);
 
   return (
     <Stack direction="column" alignItems="center" id="export-to-pdf">

@@ -65,10 +65,13 @@ export const FilePicker = (props: IProps) => {
   } | null>(null);
   const [isOpenPreview, setIsOpenPreview] = useState<boolean>(false);
 
-  const handleChangeSelectedImage = (name: string, blob: string) => {
-    setIsOpenPreview(true);
-    setSelectedImage({ name, blob });
-  };
+  const handleChangeSelectedImage = useCallback(
+    (name: string, blob: string) => {
+      setIsOpenPreview(true);
+      setSelectedImage({ name, blob });
+    },
+    []
+  );
 
   const id = useMemo(() => inputProps?.id, [inputProps?.id]);
 

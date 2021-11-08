@@ -1,6 +1,6 @@
 import { Box, TextField, Typography } from '@mui/material';
 import { OtpDialog, StyledButton } from 'components';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
 import { RoutePaths } from 'routes';
 import { styleInputLarge } from 'theme';
@@ -12,30 +12,33 @@ export const ForgotPassword = () => {
 
   const history = useHistory();
 
-  const handleChangeCitizenId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim();
-    if (isNumberOrNull(value)) {
-      setCitizenId(value);
-    }
-  };
+  const handleChangeCitizenId = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value.trim();
+      if (isNumberOrNull(value)) {
+        setCitizenId(value);
+      }
+    },
+    []
+  );
 
-  const handleOpenModal = () => {
+  const handleOpenModal = useCallback(() => {
     if (citizenId.trim()) {
       setIsOpenModal(true);
     }
-  };
+  }, [citizenId]);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setIsOpenModal(false);
-  };
+  }, []);
 
-  const backToLoginPage = () => {
+  const backToLoginPage = useCallback(() => {
     history.push(RoutePaths.login);
-  };
+  }, [history]);
 
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     handleCloseModal();
-  };
+  }, [handleCloseModal]);
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'stretch', flex: 1 }}>

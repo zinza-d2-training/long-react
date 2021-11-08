@@ -3,6 +3,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Box, Button, MenuItem, Stack, TextField } from '@mui/material';
 import { Label } from 'components';
 import { IRegisterForm } from 'models/register';
+import { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styleInputLarge } from 'theme';
 
@@ -18,14 +19,17 @@ export const Step2 = (props: IProps) => {
     watch,
     formState: { errors }
   } = useFormContext<IRegisterForm>();
-  const disableButton =
-    !!errors.fullName ||
-    !!errors.dob ||
-    !!errors.gender ||
-    !!errors.phoneNumber ||
-    !watch('fullName') ||
-    !watch('dob') ||
-    !watch('phoneNumber');
+  const disableButton = useMemo(
+    () =>
+      !!errors.fullName ||
+      !!errors.dob ||
+      !!errors.gender ||
+      !!errors.phoneNumber ||
+      !watch('fullName') ||
+      !watch('dob') ||
+      !watch('phoneNumber'),
+    [errors.dob, errors.fullName, errors.gender, errors.phoneNumber, watch]
+  );
   return (
     <Stack spacing={2}>
       <Box>
