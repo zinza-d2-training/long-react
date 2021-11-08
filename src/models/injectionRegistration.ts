@@ -11,10 +11,15 @@ export interface IInjectionRegistration {
   phone: string;
   citizenId: string;
   status: InjectionRegistrationStatus;
-  operation: string;
+  process: number;
 }
 
 export enum InjectionRegistrationStatus {
   SUCCESS,
   FAILURE
+}
+
+export interface IInjectionRegistrationProcess {
+  id: number;
+  label: string;
 }

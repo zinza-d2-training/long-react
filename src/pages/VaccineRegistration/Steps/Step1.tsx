@@ -14,7 +14,7 @@ import {
 import { Label, StyledButton } from 'components';
 import { IDistrict, IProvince, IVaccineRegistration, IWard } from 'models';
 import { ICountry } from 'models/country';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { styleInputMedium } from 'theme';
 import { addressData, countriesData, vaccineData } from 'utils';
@@ -126,68 +126,86 @@ export const Step1 = (props: IProps) => {
     }
   }, [clearErrors, wardId]);
 
-  const onSubmit: SubmitHandler<IVaccineRegistration> = (data) => {
-    onChangePersonalInfo(data);
-    onNextStep();
-  };
+  const onSubmit: SubmitHandler<IVaccineRegistration> = useCallback(
+    (data) => {
+      onChangePersonalInfo(data);
+      onNextStep();
+    },
+    [onChangePersonalInfo, onNextStep]
+  );
 
-  const handleChangeProvinceId = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: IProvince | null,
-    reason: AutocompleteChangeReason
-  ) => {
-    setValue('registrantInfo.provinceId', value ? value.id : -1);
-    setFocus('registrantInfo.provinceId');
-  };
+  const handleChangeProvinceId = useCallback(
+    (
+      event: React.SyntheticEvent<Element, Event>,
+      value: IProvince | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setValue('registrantInfo.provinceId', value ? value.id : -1);
+      setFocus('registrantInfo.provinceId');
+    },
+    [setFocus, setValue]
+  );
 
-  const handleChangeDistrictId = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: IDistrict | null,
-    reason: AutocompleteChangeReason
-  ) => {
-    setValue('registrantInfo.districtId', value ? value.id : -1);
-    setFocus('registrantInfo.districtId');
-  };
+  const handleChangeDistrictId = useCallback(
+    (
+      event: React.SyntheticEvent<Element, Event>,
+      value: IDistrict | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setValue('registrantInfo.districtId', value ? value.id : -1);
+      setFocus('registrantInfo.districtId');
+    },
+    [setFocus, setValue]
+  );
 
-  const handleChangeWardId = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: IWard | null,
-    reason: AutocompleteChangeReason
-  ) => {
-    setValue('registrantInfo.wardId', value ? value.id : -1);
-    setFocus('registrantInfo.wardId');
-  };
+  const handleChangeWardId = useCallback(
+    (
+      event: React.SyntheticEvent<Element, Event>,
+      value: IWard | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setValue('registrantInfo.wardId', value ? value.id : -1);
+      setFocus('registrantInfo.wardId');
+    },
+    [setFocus, setValue]
+  );
 
-  const handleChangeNationality = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: ICountry | null,
-    reason: AutocompleteChangeReason
-  ) => {
-    setValue('registrantInfo.nationality', value);
-  };
+  const handleChangeNationality = useCallback(
+    (
+      event: React.SyntheticEvent<Element, Event>,
+      value: ICountry | null,
+      reason: AutocompleteChangeReason
+    ) => {
+      setValue('registrantInfo.nationality', value);
+    },
+    [setValue]
+  );
 
-  const handleChangeInputProvince = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: string
-  ) => {
-    setInputProvince(value);
-  };
+  const handleChangeInputProvince = useCallback(
+    (event: React.SyntheticEvent<Element, Event>, value: string) => {
+      setInputProvince(value);
+    },
+    []
+  );
 
-  const handleChangeInputDistrict = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: string
-  ) => {
-    setInputDistrict(value);
-  };
+  const handleChangeInputDistrict = useCallback(
+    (event: React.SyntheticEvent<Element, Event>, value: string) => {
+      setInputDistrict(value);
+    },
+    []
+  );
 
-  const handleChangeInputWard = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: string
-  ) => {
-    setInputWard(value);
-  };
+  const handleChangeInputWard = useCallback(
+    (event: React.SyntheticEvent<Element, Event>, value: string) => {
+      setInputWard(value);
+    },
+    []
+  );
 
-  const getOptionLabelCountry = (option: ICountry) => option.name;
+  const getOptionLabelCountry = useCallback(
+    (option: ICountry) => option.name,
+    []
+  );
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={2}>
@@ -431,7 +449,13 @@ export const Step1 = (props: IProps) => {
                       error={invalid}
                       helperText={error?.message}
                       placeholder="Tỉnh/Thành phố"
-                      sx={styleInputMedium}
+                      sx={{
+                        ...styleInputMedium,
+                        '.MuiInputBase-root .MuiAutocomplete-input': {
+                          py: '4.5px !important',
+                          pl: '14px !important'
+                        }
+                      }}
                       fullWidth
                     />
                   )}
@@ -469,7 +493,13 @@ export const Step1 = (props: IProps) => {
                       error={invalid}
                       helperText={error?.message}
                       placeholder="Quận/Huyện"
-                      sx={styleInputMedium}
+                      sx={{
+                        ...styleInputMedium,
+                        '.MuiInputBase-root .MuiAutocomplete-input': {
+                          py: '4.5px !important',
+                          pl: '14px !important'
+                        }
+                      }}
                       fullWidth
                     />
                   )}
@@ -507,7 +537,13 @@ export const Step1 = (props: IProps) => {
                       error={invalid}
                       helperText={error?.message}
                       placeholder="Xã/Phường"
-                      sx={styleInputMedium}
+                      sx={{
+                        ...styleInputMedium,
+                        '.MuiInputBase-root .MuiAutocomplete-input': {
+                          py: '4.5px !important',
+                          pl: '14px !important'
+                        }
+                      }}
                       fullWidth
                     />
                   )}
@@ -548,7 +584,14 @@ export const Step1 = (props: IProps) => {
                   <TextField
                     {...params}
                     placeholder="Quốc tịch"
-                    sx={styleInputMedium}
+                    sx={{
+                      ...styleInputMedium,
+                      '.MuiInputBase-root .MuiAutocomplete-input': {
+                        paddingTop: '4.5px !important',
+                        paddingBottom: '4.5px !important',
+                        pl: '14px !important'
+                      }
+                    }}
                     fullWidth
                   />
                 )}

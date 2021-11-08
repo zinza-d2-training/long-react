@@ -51,7 +51,7 @@ const titleStyle: SxProps<Theme> = {
 const amountStyle: SxProps<Theme> = {
   mt: 1,
   fontWeight: 500,
-  fontSize: '13px',
+  fontSize: '25px',
   lineHeight: '15.23px'
 };
 
@@ -199,7 +199,10 @@ export const Home = () => {
                     Đối tượng đăng ký tiêm
                   </Typography>
                   <Typography sx={amountStyle}>
-                    11,203,873 <Box component="i">(lượt)</Box>
+                    11,203,873{' '}
+                    <Box component="i" fontSize="14px">
+                      (lượt)
+                    </Box>
                   </Typography>
                 </Box>
               </Box>
@@ -209,7 +212,10 @@ export const Home = () => {
                 <Box ml={2}>
                   <Typography sx={titleStyle}>Số mũi tiêm hôm qua</Typography>
                   <Typography sx={amountStyle}>
-                    11,203,873 <Box component="i">(mũi)</Box>
+                    11,203,873{' '}
+                    <Box component="i" fontSize="14px">
+                      (mũi)
+                    </Box>
                   </Typography>
                 </Box>
               </Box>
@@ -219,7 +225,10 @@ export const Home = () => {
                 <Box ml={2}>
                   <Typography sx={titleStyle}>Số mũi tiêm toàn quốc</Typography>
                   <Typography sx={amountStyle}>
-                    11,203,873 <Box component="i">(mũi)</Box>
+                    11,203,873{' '}
+                    <Box component="i" fontSize="14px">
+                      (mũi)
+                    </Box>
                   </Typography>
                 </Box>
               </Box>

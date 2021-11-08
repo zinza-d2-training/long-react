@@ -1,16 +1,14 @@
-import ClearIcon from '@mui/icons-material/Clear';
 import {
   Box,
   colors,
   Dialog,
   DialogContent,
   Divider,
-  IconButton,
   Typography
 } from '@mui/material';
 import { StyledButton, StyledDialogTitle } from 'components';
 import { useClock } from 'hooks';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 import { isNumberOrNull } from 'utils';
 
@@ -40,35 +38,28 @@ export const OtpDialog = (props: IProps) => {
     }
   }, [time]);
 
-  const handleChangeOtp = (otp: string) => {
+  const handleChangeOtp = useCallback((otp: string) => {
     if (isNumberOrNull(otp)) {
       setOtp(otp);
     }
-  };
-  const handleReSendOtp = () => {
+  }, []);
+  const handleReSendOtp = useCallback(() => {
     setTime({ hours: 0, minutes: 2, seconds: 0 });
-  };
+  }, [setTime]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOtp('');
     onClose();
-  };
+  }, [onClose]);
 
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     setOtp('');
     onConfirm();
-  };
+  }, [onConfirm]);
 
   return (
     <Dialog open={open} hideBackdrop sx={{ '.container': { width: '500px' } }}>
-      <StyledDialogTitle>
-        <Typography component="p" variant="h6">
-          Xác thực OTP
-        </Typography>
-        <IconButton onClick={handleClose}>
-          <ClearIcon />
-        </IconButton>
-      </StyledDialogTitle>
+      <StyledDialogTitle title="Xác thực OTP" onClose={handleClose} />
       <Divider />
       <DialogContent
         sx={{

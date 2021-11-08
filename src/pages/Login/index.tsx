@@ -10,6 +10,7 @@ import {
 import { Box } from '@mui/system';
 import { Label } from 'components';
 import { ILogin } from 'models';
+import { useCallback } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Link, Link as RouterLink } from 'react-router-dom';
 import { RoutePaths } from 'routes';
@@ -30,14 +31,17 @@ export const Login = () => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector(authSelector);
 
-  const onSubmit: SubmitHandler<ILogin> = async (data) => {
-    try {
-      await dispatch(login(data));
-      await dispatch(getUserInfo());
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const onSubmit: SubmitHandler<ILogin> = useCallback(
+    async (data) => {
+      try {
+        await dispatch(login(data));
+        await dispatch(getUserInfo());
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [dispatch]
+  );
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'stretch', flex: 1 }}>

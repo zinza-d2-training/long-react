@@ -4,18 +4,18 @@ import {
   Button,
   colors,
   Container,
-  Popper,
+  Grow,
   MenuItem,
+  MenuList,
+  Paper,
+  Popper,
   Stack,
   Theme,
-  Typography,
-  Paper,
-  Grow,
-  MenuList
+  Typography
 } from '@mui/material';
 import { SxProps } from '@mui/system';
 import { StyledButton } from 'components';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RoutePaths } from 'routes';
 import { useAppSelector } from 'store';
@@ -23,6 +23,10 @@ import { authSelector } from 'store/slices/authSlice';
 
 const menuItemStyle: SxProps<Theme> = {
   color: (theme) => theme.palette.text.primary,
+  height: '100%',
+  px: 2,
+  display: 'inline-block',
+  py: 1,
   textDecoration: 'none',
   '&:hover': {
     color: '#281BA4'
@@ -34,13 +38,13 @@ export const Header = () => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
 
-  const handleOpenMenu = () => {
+  const handleOpenMenu = useCallback(() => {
     setOpen(true);
-  };
+  }, []);
 
-  const handleCloseMenu = (event: Event | React.SyntheticEvent) => {
+  const handleCloseMenu = useCallback((event: Event | React.SyntheticEvent) => {
     setOpen(false);
-  };
+  }, []);
 
   return (
     <Box
@@ -61,12 +65,19 @@ export const Header = () => {
             alignItems: 'center',
             height: '80px'
           }}>
-          <Stack direction="row" alignItems="center">
-            <img src="images/logo_white.png" alt="" />
-            <Typography variant="h6" ml={2} color="#fff">
-              CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
-            </Typography>
-          </Stack>
+          <Typography
+            component={Link}
+            to={RoutePaths.home}
+            variant="h6"
+            color="#fff"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              textDecoration: 'none'
+            }}>
+            <Box component="img" src="images/logo_white.png" alt="" mr={2} />
+            CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
+          </Typography>
           <Stack direction="row" alignItems="center" spacing={3}>
             <Typography
               color="#fff"
@@ -123,7 +134,7 @@ export const Header = () => {
                         autoFocusItem={open}
                         id="composition-menu"
                         aria-labelledby="composition-button">
-                        <MenuItem>
+                        <MenuItem sx={{ p: 0, width: '100%' }}>
                           <Typography
                             component={Link}
                             onClick={handleCloseMenu}
@@ -133,7 +144,7 @@ export const Header = () => {
                             Tra cứu chứng nhận tiêm
                           </Typography>
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem sx={{ p: 0, width: '100%' }}>
                           <Typography
                             component={Link}
                             onClick={handleCloseMenu}

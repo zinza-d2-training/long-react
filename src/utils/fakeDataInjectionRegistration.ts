@@ -1,4 +1,8 @@
-import { IInjectionRegistration, InjectionRegistrationStatus } from 'models';
+import {
+  IInjectionRegistration,
+  IInjectionRegistrationProcess,
+  InjectionRegistrationStatus
+} from 'models';
 
 export const fakeInjectionRegistration: IInjectionRegistration[] = [
   {
@@ -9,7 +13,7 @@ export const fakeInjectionRegistration: IInjectionRegistration[] = [
     phone: '0911448457',
     citizenId: '123456789',
     status: InjectionRegistrationStatus.SUCCESS,
-    operation: '0123456789'
+    process: 0
   },
   {
     id: 'id-dghd',
@@ -19,7 +23,7 @@ export const fakeInjectionRegistration: IInjectionRegistration[] = [
     phone: '0911448457',
     citizenId: '123456789',
     status: InjectionRegistrationStatus.SUCCESS,
-    operation: '0123456789'
+    process: 1
   },
   {
     id: 'id-gjgh',
@@ -29,6 +33,21 @@ export const fakeInjectionRegistration: IInjectionRegistration[] = [
     phone: '0911448457',
     citizenId: '123456789',
     status: InjectionRegistrationStatus.FAILURE,
-    operation: '0123456789'
+    process: 2
+  }
+];
+
+export const injectionRegistrationProcess: IInjectionRegistrationProcess[] = [
+  {
+    id: 0,
+    label: 'Đăng ký thành công'
+  },
+  {
+    id: 1,
+    label: 'Chuyển cơ sở tiêm'
+  },
+  {
+    id: 2,
+    label: 'Đã tiêm'
   }
 ];

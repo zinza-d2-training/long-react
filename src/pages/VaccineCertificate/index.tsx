@@ -39,13 +39,16 @@ export const VaccineCertificate = () => {
     mode: 'onTouched'
   });
 
-  const onSubmit: SubmitHandler<ICertificateSearch> = (data) => {
-    handleOpenModal();
-  };
-
-  const handleOpenModal = () => {
+  const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
-  };
+  }, []);
+
+  const onSubmit: SubmitHandler<ICertificateSearch> = useCallback(
+    (data) => {
+      handleOpenModal();
+    },
+    [handleOpenModal]
+  );
 
   const handleCloseModal = useCallback(() => {
     setIsOpenModal(false);
@@ -56,7 +59,7 @@ export const VaccineCertificate = () => {
     handleCloseModal();
   }, [handleCloseModal]);
 
-  const handleResetForm = () => reset();
+  const handleResetForm = useCallback(() => reset(), [reset]);
   return (
     <AppLayout>
       <PageTitle>Tra cứu chứng nhận tiêm</PageTitle>
@@ -201,7 +204,8 @@ export const VaccineCertificate = () => {
                 sx={{
                   color: colors.red[600],
                   cursor: 'pointer',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
+                  textDecorationColor: colors.red[600]
                 }}>
                 tại đây
               </Link>

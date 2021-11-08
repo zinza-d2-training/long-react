@@ -1,4 +1,3 @@
-import ClearIcon from '@mui/icons-material/Clear';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {
@@ -7,8 +6,7 @@ import {
   Dialog,
   DialogContent,
   IconButton,
-  Theme,
-  Typography
+  Theme
 } from '@mui/material';
 import { SxProps } from '@mui/system';
 import { StyledDialogTitle } from 'components';
@@ -67,10 +65,13 @@ export const FilePicker = (props: IProps) => {
   } | null>(null);
   const [isOpenPreview, setIsOpenPreview] = useState<boolean>(false);
 
-  const handleChangeSelectedImage = (name: string, blob: string) => {
-    setIsOpenPreview(true);
-    setSelectedImage({ name, blob });
-  };
+  const handleChangeSelectedImage = useCallback(
+    (name: string, blob: string) => {
+      setIsOpenPreview(true);
+      setSelectedImage({ name, blob });
+    },
+    []
+  );
 
   const id = useMemo(() => inputProps?.id, [inputProps?.id]);
 
@@ -94,7 +95,7 @@ export const FilePicker = (props: IProps) => {
     [files, max, onAddImage]
   );
 
-  const handleClosePreview = () => setIsOpenPreview(false);
+  const handleClosePreview = useCallback(() => setIsOpenPreview(false), []);
   return (
     <Box>
       <input
@@ -185,18 +186,10 @@ export const FilePicker = (props: IProps) => {
         open={isOpenPreview}
         hideBackdrop
         sx={{ '& > div': { width: '490px', m: '0 auto' } }}>
-        <StyledDialogTitle>
-          <Typography
-            mr={1}
-            component="p"
-            variant="h6"
-            sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {selectedImage?.name}
-          </Typography>
-          <IconButton onClick={handleClosePreview}>
-            <ClearIcon />
-          </IconButton>
-        </StyledDialogTitle>
+        <StyledDialogTitle
+          title={selectedImage ? selectedImage.name : ''}
+          onClose={handleClosePreview}
+        />
         <DialogContent>
           <img
             src={selectedImage?.blob}

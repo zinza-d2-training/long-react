@@ -1,10 +1,10 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { Box, colors, Link, Stack, Typography } from '@mui/material';
 import { StyledButton } from 'components';
 import { jsPDF } from 'jspdf';
 import { IMedicalHistory, IVaccineRegistration } from 'models';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { getDistrict, getProvince, getWard } from 'utils';
 const html2canvas = require('html2canvas');
 
@@ -58,7 +58,7 @@ export const Step4 = (props: IProps) => {
     ]
   );
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     html2canvas(document.getElementById('export')).then(
       (canvas: HTMLCanvasElement) => {
         const doc = new jsPDF();
@@ -66,12 +66,12 @@ export const Step4 = (props: IProps) => {
         doc.save('download.pdf');
       }
     );
-  };
+  }, []);
 
   return (
     <Stack direction="column" alignItems="center" id="export-to-pdf">
       <Box id="export" width="100%">
-        <Typography variant="h6" mb={2}>
+        <Typography variant="h6" mb={2} align="center">
           Đăng ký tiêm chủng COVID-19 thành công. Mã đặt tiêm của bạn là{' '}
           <Box component="span" sx={{ color: colors.red[700] }}>
             0120211103501237
@@ -90,7 +90,7 @@ export const Step4 = (props: IProps) => {
           </Box>{' '}
           khi có kế hoạch tiêm trong thời gian sớm nhất.
         </Typography>
-        <Typography variant="body1" mb={2}>
+        <Typography variant="body1" mb={2} align="center">
           Mời bạn tải ứng dụng "SỔ SỨC KHỎE ĐIỆN TỬ" tại{' '}
           <Link href="https://hssk.kcb.vn/#/sskdt" target="_blank">
             https://hssk.kcb.vn/#/sskdt
@@ -170,7 +170,7 @@ export const Step4 = (props: IProps) => {
         </StyledButton>
         <StyledButton
           variant="contained"
-          endIcon={<ArrowForwardIcon />}
+          endIcon={<FileDownloadOutlinedIcon />}
           onClick={handleClick}>
           Xuất thông tin
         </StyledButton>

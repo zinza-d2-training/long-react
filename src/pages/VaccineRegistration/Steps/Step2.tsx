@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { StyledButton } from 'components';
 import { Answer, IMedicalHistory } from 'models';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { styleInputMedium } from 'theme';
 import { medicalHistoryTemplate } from 'utils';
 
@@ -39,42 +39,46 @@ export const Step2 = (props: IProps) => {
     });
   }, [medicalHistoryReport]);
 
-  const handleChangeDiseaseSymptoms = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const question = e.target.name;
-    const recordIndex = medicalHistoryReport.findIndex(
-      (item) => item.question === question
-    );
-    if (recordIndex > -1) {
-      setMedicalHistoryReport((prevState) => {
-        const newState = [...prevState];
-        if (newState[recordIndex].diseaseSymptoms !== undefined) {
-          newState[recordIndex].diseaseSymptoms = e.target.value;
-        }
-        return newState;
-      });
-    }
-  };
+  const handleChangeDiseaseSymptoms = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const question = e.target.name;
+      const recordIndex = medicalHistoryReport.findIndex(
+        (item) => item.question === question
+      );
+      if (recordIndex > -1) {
+        setMedicalHistoryReport((prevState) => {
+          const newState = [...prevState];
+          if (newState[recordIndex].diseaseSymptoms !== undefined) {
+            newState[recordIndex].diseaseSymptoms = e.target.value;
+          }
+          return newState;
+        });
+      }
+    },
+    [medicalHistoryReport]
+  );
 
-  const handleChangeAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const question = e.target.name;
-    const recordIndex = medicalHistoryReport.findIndex(
-      (item) => item.question === question
-    );
-    if (recordIndex > -1) {
-      setMedicalHistoryReport((prevState) => {
-        const newState = [...prevState];
-        newState[recordIndex].answer = e.target.value as Answer;
-        return newState;
-      });
-    }
-  };
+  const handleChangeAnswer = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const question = e.target.name;
+      const recordIndex = medicalHistoryReport.findIndex(
+        (item) => item.question === question
+      );
+      if (recordIndex > -1) {
+        setMedicalHistoryReport((prevState) => {
+          const newState = [...prevState];
+          newState[recordIndex].answer = e.target.value as Answer;
+          return newState;
+        });
+      }
+    },
+    [medicalHistoryReport]
+  );
 
-  const handleNextStep = () => {
+  const handleNextStep = useCallback(() => {
     props.onChangeMedicalHistory(medicalHistoryReport);
     props.onNextStep();
-  };
+  }, [medicalHistoryReport, props]);
   return (
     <Box>
       <Table>
@@ -94,7 +98,7 @@ export const Step2 = (props: IProps) => {
             <TableRow
               key={'' + item.id + item.question}
               sx={{ backgroundColor: 'rgba(238, 238, 238, 0.4)' }}>
-              <TableCell align="center" sx={{ maxWidth: '300px', py: 1 }}>
+              <TableCell sx={{ maxWidth: '300px', py: 1 }}>
                 <Typography variant="body2">
                   {item.id}. {item.question}
                 </Typography>
@@ -103,7 +107,11 @@ export const Step2 = (props: IProps) => {
                 {item.diseaseSymptoms !== undefined && (
                   <TextField
                     placeholder="Nếu có, ghi rõ loại tác nhân dị ứng"
-                    sx={{ ...styleInputMedium, width: '273px' }}
+                    sx={{
+                      ...styleInputMedium,
+                      width: '372px',
+                      'input::placeholder': { textAlign: 'center' }
+                    }}
                     name={item.question}
                     value={item.diseaseSymptoms}
                     onChange={handleChangeDiseaseSymptoms}

@@ -59,22 +59,25 @@ export const Register = () => {
     setCurrentStep(currentStep - 1);
   }, [currentStep]);
 
-  const handleOpenModal = () => {
+  const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
-  };
+  }, []);
 
-  const onSubmit: SubmitHandler<IRegisterForm> = (data) => {
-    handleOpenModal();
-  };
+  const onSubmit: SubmitHandler<IRegisterForm> = useCallback(
+    (data) => {
+      handleOpenModal();
+    },
+    [handleOpenModal]
+  );
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setIsOpenModal(false);
-  };
+  }, []);
 
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     handleCloseModal();
     history.push(RoutePaths.login);
-  };
+  }, [handleCloseModal, history]);
   return (
     <Box sx={{ display: 'flex', alignItems: 'stretch', flex: 1 }}>
       <Box
