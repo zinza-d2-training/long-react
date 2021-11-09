@@ -37,7 +37,7 @@ export const Login = () => {
       try {
         await dispatch(login(data));
         await dispatch(getUserInfo());
-        history.push(RoutePaths.user);
+        history.push(RoutePaths.user.root);
       } catch (err) {
         console.log(err);
       }

@@ -19,7 +19,12 @@ export const RoutePaths = {
   injectionRegistration: '/injection-registration',
   vaccineRegistration: '/vaccine-registration',
   document: '/document',
-  user: '/user',
+  user: {
+    root: '/user',
+    certificate: '/user',
+    injectionRegistration: '/user/registration',
+    info: '/user/info'
+  },
   home: '/'
 };
 
@@ -75,9 +80,9 @@ const routes: IRoute[] = [
   },
   {
     key: 'route_user',
-    path: RoutePaths.user,
+    path: RoutePaths.user.root,
     component: User,
-    exact: true,
+    exact: false,
     routeType: RouteType.PRIVATE_ROUTE
   },
   {
