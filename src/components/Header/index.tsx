@@ -204,7 +204,7 @@ export const Header = () => {
                   variant="button"
                   component={Link}
                   to={RoutePaths.login}>
-                  Đăng nhập
+                  {t('Đăng nhập')}
                 </Typography>
               </StyledButton>
             )}

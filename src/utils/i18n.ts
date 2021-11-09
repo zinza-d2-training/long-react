@@ -224,7 +224,8 @@ const translationEn = {
     'Instructions for Covid-19 vaccine registration for individual',
   'Quy trình ứng dụng nền tảng quản lý điều hành tiêm chủng Covid-19':
     'Instructions for using “The e-health” application during Covid-19 vaccination',
-  'Tên tài liệu': 'Document name'
+  'Tên tài liệu': 'Document name',
+  'Tải xuống': 'Download'
 };
 
 i18n.use(initReactI18next).init({

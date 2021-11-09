@@ -132,7 +132,7 @@ export const Document = () => {
                     href={document.linkDocument}
                     target="_blank"
                     startIcon={<FileDownloadOutlinedIcon />}>
-                    Download
+                    {t('Tải xuống')}
                   </Button>
                 </TableCell>
               </TableRow>
