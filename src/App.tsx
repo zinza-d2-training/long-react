@@ -1,6 +1,6 @@
 import { CssBaseline } from '@mui/material';
 import { RouteType } from 'models';
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import routes from 'routes';
 import { useAppSelector } from 'store';
@@ -15,7 +15,7 @@ function App() {
     i18n.changeLanguage(languageMode);
   }, [languageMode]);
   return (
-    <Suspense fallback="Loading...">
+    <>
       <CssBaseline />
       <Layout>
         <Router>
@@ -32,7 +32,7 @@ function App() {
           </Switch>
         </Router>
       </Layout>
-    </Suspense>
+    </>
   );
 }
 
