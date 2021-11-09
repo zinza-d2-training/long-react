@@ -53,6 +53,7 @@ interface IProps {
   max?: number;
   min?: number;
   editable?: boolean;
+  width?: string;
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   onAddImage: (file: IFile[]) => void;
   onRemoveImage: (imageIndex: number) => void;
@@ -65,7 +66,8 @@ export const FilePicker = (props: IProps) => {
     onRemoveImage,
     onAddImage,
     defaultValue,
-    editable
+    editable,
+    width
   } = props;
 
   const [files, setFiles] = useState<IFile[]>(defaultValue ? defaultValue : []);
@@ -126,7 +128,7 @@ export const FilePicker = (props: IProps) => {
           display: 'flex',
           p: 1,
           border: `1px solid ${colors.grey[100]}`,
-          width: '100%',
+          width: width || '100%',
           flexWrap: 'wrap'
         }}>
         {files.map(({ preview, file }, index) => (

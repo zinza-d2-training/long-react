@@ -195,12 +195,18 @@ export const FormUserInfo = (props: IProps) => {
   return (
     <FormProvider {...formMethod}>
       <Box component="form">
-        <Box>
+        <Box
+          sx={{
+            '&:hover': { '.edit-button': { opacity: 1, visibility: 'visible' } }
+          }}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="body1" fontWeight="500">
               Mã số định danh
             </Typography>
-            <IconButton onClick={handleToggleCitizenIdEditable}>
+            <IconButton
+              onClick={handleToggleCitizenIdEditable}
+              className="edit-button"
+              sx={{ opacity: 0, visibility: 'hidden' }}>
               <EditIcon />
             </IconButton>
           </Stack>
@@ -222,14 +228,17 @@ export const FormUserInfo = (props: IProps) => {
               />
             </Box>
             <Box mt={2}>
-              <FilePicker
-                defaultValue={watch().citizenImages}
-                max={2}
-                inputProps={{ ...register('imageName'), multiple: true }}
-                onRemoveImage={handleRemoveImage}
-                onAddImage={handleAddImage}
-                editable={editable.citizenId}
-              />
+              <Box display={editable.citizenId ? 'block' : 'none'}>
+                <FilePicker
+                  defaultValue={watch().citizenImages}
+                  max={2}
+                  inputProps={{ ...register('imageName'), multiple: true }}
+                  onRemoveImage={handleRemoveImage}
+                  onAddImage={handleAddImage}
+                  editable={editable.citizenId}
+                  width="344px"
+                />
+              </Box>
               {errors.citizenImages && (
                 <ErrorMessage>{errors.citizenImages.message}</ErrorMessage>
               )}
@@ -253,12 +262,19 @@ export const FormUserInfo = (props: IProps) => {
             )}
           </Box>
         </Box>
-        <Box mt={3}>
+        <Box
+          mt={3}
+          sx={{
+            '&:hover': { '.edit-button': { opacity: 1, visibility: 'visible' } }
+          }}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="body1" fontWeight="500">
               Số điện thoại
             </Typography>
-            <IconButton onClick={handleTogglePhoneNumberEditable}>
+            <IconButton
+              onClick={handleTogglePhoneNumberEditable}
+              className="edit-button"
+              sx={{ opacity: 0, visibility: 'hidden' }}>
               <EditIcon />
             </IconButton>
           </Stack>
@@ -296,72 +312,81 @@ export const FormUserInfo = (props: IProps) => {
             )}
           </Box>
         </Box>
-        <Box mt={3}>
+        <Box
+          mt={3}
+          sx={{
+            '&:hover': { '.edit-button': { opacity: 1, visibility: 'visible' } }
+          }}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="body1" fontWeight="500">
               Thông tin cá nhân
             </Typography>
-            <IconButton onClick={handleTogglePersonalInfoEditable}>
+            <IconButton
+              onClick={handleTogglePersonalInfoEditable}
+              className="edit-button"
+              sx={{ opacity: 0, visibility: 'hidden' }}>
               <EditIcon />
             </IconButton>
           </Stack>
-          <Stack direction="row" spacing={2}>
-            <Box>
-              <Label sx={{ display: 'block' }}>Họ và tên</Label>
-              <Controller
-                control={control}
-                name="fullName"
-                render={({ field, fieldState: { invalid, error } }) => (
-                  <TextField
-                    {...field}
-                    error={invalid}
-                    helperText={error?.message}
-                    sx={{ ...styleInputMedium, width: '322px' }}
-                    disabled={!editable.personalInfo}
-                  />
-                )}
-              />
-            </Box>
-            <Box>
-              <Label sx={{ display: 'block' }}>Ngày sinh</Label>
-              <Controller
-                control={control}
-                name="dob"
-                render={({ field, fieldState: { invalid, error } }) => {
-                  return (
+          <Box px={2}>
+            <Stack direction="row" spacing={2}>
+              <Box>
+                <Label sx={{ display: 'block' }}>Họ và tên</Label>
+                <Controller
+                  control={control}
+                  name="fullName"
+                  render={({ field, fieldState: { invalid, error } }) => (
                     <TextField
                       {...field}
-                      type="date"
                       error={invalid}
                       helperText={error?.message}
                       sx={{ ...styleInputMedium, width: '322px' }}
                       disabled={!editable.personalInfo}
                     />
-                  );
-                }}
-              />
-            </Box>
-            <Box>
-              <Label sx={{ display: 'block' }}>Giới tính</Label>
-              <Controller
-                control={control}
-                name="gender"
-                render={({ field, fieldState: { invalid, error } }) => (
-                  <TextField
-                    {...field}
-                    error={invalid}
-                    helperText={error?.message}
-                    sx={{ ...styleInputMedium, width: '322px' }}
-                    disabled={!editable.personalInfo}
-                    select>
-                    <MenuItem value={1}>Nam</MenuItem>
-                    <MenuItem value={0}>Nữ</MenuItem>
-                  </TextField>
-                )}
-              />
-            </Box>
-          </Stack>
-          <AddressInput editable={editable.personalInfo} />
+                  )}
+                />
+              </Box>
+              <Box>
+                <Label sx={{ display: 'block' }}>Ngày sinh</Label>
+                <Controller
+                  control={control}
+                  name="dob"
+                  render={({ field, fieldState: { invalid, error } }) => {
+                    return (
+                      <TextField
+                        {...field}
+                        type="date"
+                        error={invalid}
+                        helperText={error?.message}
+                        sx={{ ...styleInputMedium, width: '322px' }}
+                        disabled={!editable.personalInfo}
+                      />
+                    );
+                  }}
+                />
+              </Box>
+              <Box>
+                <Label sx={{ display: 'block' }}>Giới tính</Label>
+                <Controller
+                  control={control}
+                  name="gender"
+                  render={({ field, fieldState: { invalid, error } }) => (
+                    <TextField
+                      {...field}
+                      error={invalid}
+                      helperText={error?.message}
+                      sx={{ ...styleInputMedium, width: '322px' }}
+                      disabled={!editable.personalInfo}
+                      select>
+                      <MenuItem value={1}>Nam</MenuItem>
+                      <MenuItem value={0}>Nữ</MenuItem>
+                    </TextField>
+                  )}
+                />
+              </Box>
+            </Stack>
+            <AddressInput editable={editable.personalInfo} />
+          </Box>
           {editable.personalInfo && (
             <Stack direction="row" mt={2} spacing={2}>
               <StyledButton
@@ -384,16 +409,23 @@ export const FormUserInfo = (props: IProps) => {
             </Stack>
           )}
         </Box>
-        <Box mt={3}>
+        <Box
+          mt={3}
+          sx={{
+            '&:hover': { '.edit-button': { opacity: 1, visibility: 'visible' } }
+          }}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="body1" fontWeight="500">
               Mật khẩu
             </Typography>
-            <IconButton onClick={handleTogglePasswordEditable}>
+            <IconButton
+              onClick={handleTogglePasswordEditable}
+              className="edit-button"
+              sx={{ opacity: 0, visibility: 'hidden' }}>
               <EditIcon />
             </IconButton>
           </Stack>
-          <Box>
+          <Box px={2}>
             <Label sx={{ display: 'block' }}>Mật khẩu mới</Label>
             <Controller
               control={control}
@@ -411,7 +443,7 @@ export const FormUserInfo = (props: IProps) => {
               )}
             />
           </Box>
-          <Box mt={2}>
+          <Box mt={2} px={2}>
             <Label sx={{ display: 'block' }}>Nhập lại mật khẩu</Label>
             <Controller
               control={control}
