@@ -13,7 +13,8 @@ import { FormUserInfo } from './FormUserInfo';
 const styleTab: SxProps<Theme> = {
   textTransform: 'unset',
   color: '#000 !important',
-  px: 1
+  px: 1,
+  height: '64px'
 };
 
 export const User = () => {
@@ -63,13 +64,18 @@ export const User = () => {
   };
   return (
     <AppLayout>
-      <Box sx={{ borderBottom: '1px solid #eee' }}>
+      <Box
+        sx={{
+          borderBottom: '1px solid #eee',
+          boxShadow: '0px 1px 8px rgba(0, 0, 0, 0.1)'
+        }}>
         <Container maxWidth="xl">
           <Tabs
             value={currentTab}
             onChange={handleChangeTab}
             aria-label="basic tabs example"
             sx={{
+              height: '64px',
               '.MuiTabs-indicator': {
                 backgroundColor: '#000 !important'
               }
@@ -104,21 +110,23 @@ export const User = () => {
           </Tabs>
         </Container>
       </Box>
-      <Container maxWidth="xl">
-        <Box pt={6}>
-          <Switch>
-            <PrivateRoute path={RoutePaths.user.root} exact>
-              <CertificateInfo data={certificateData} />
-            </PrivateRoute>
-            <PrivateRoute path={RoutePaths.user.injectionRegistration}>
-              <InjectionInfoTable data={fakeUserRegistrationData} />
-            </PrivateRoute>
-            <PrivateRoute path={RoutePaths.user.info}>
-              <FormUserInfo userInfo={userInfo} onConfirm={handleConfirm} />
-            </PrivateRoute>
-          </Switch>
-        </Box>
-      </Container>
+      <Box pt={6}>
+        <Container maxWidth="xl">
+          <Box px={1}>
+            <Switch>
+              <PrivateRoute path={RoutePaths.user.root} exact>
+                <CertificateInfo data={certificateData} />
+              </PrivateRoute>
+              <PrivateRoute path={RoutePaths.user.injectionRegistration}>
+                <InjectionInfoTable data={fakeUserRegistrationData} />
+              </PrivateRoute>
+              <PrivateRoute path={RoutePaths.user.info}>
+                <FormUserInfo userInfo={userInfo} onConfirm={handleConfirm} />
+              </PrivateRoute>
+            </Switch>
+          </Box>
+        </Container>
+      </Box>
     </AppLayout>
   );
 };

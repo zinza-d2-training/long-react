@@ -49,7 +49,7 @@ export const CertificateInfo = (props: IProps) => {
     [data.vaccinate]
   );
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction="row" spacing={2} justifyContent="space-between">
       <Box sx={{ flex: 1 }}>
         <Typography
           align="center"
