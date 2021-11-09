@@ -11,3 +11,5 @@ export * from './PageTitle';
 export * from './PercentageBar';
 export * from './SearchTable';
 export * from './StatisticTable';
+export * from './CertificateInfo';
+export * from './InjectionInfoTable';

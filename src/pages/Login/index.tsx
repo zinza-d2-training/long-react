@@ -12,7 +12,7 @@ import { Label } from 'components';
 import { ILogin } from 'models';
 import { useCallback } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Link, Link as RouterLink } from 'react-router-dom';
+import { Link, Link as RouterLink, useHistory } from 'react-router-dom';
 import { RoutePaths } from 'routes';
 import { useAppDispatch, useAppSelector } from 'store';
 import { authSelector, getUserInfo, login } from 'store/slices/authSlice';
@@ -28,6 +28,7 @@ export const Login = () => {
     resolver: yupResolver(loginSchema),
     mode: 'onTouched'
   });
+  const history = useHistory();
   const dispatch = useAppDispatch();
   const auth = useAppSelector(authSelector);
 
@@ -36,11 +37,12 @@ export const Login = () => {
       try {
         await dispatch(login(data));
         await dispatch(getUserInfo());
+        history.push(RoutePaths.user.root);
       } catch (err) {
         console.log(err);
       }
     },
-    [dispatch]
+    [dispatch, history]
   );
 
   return (

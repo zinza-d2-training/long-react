@@ -28,7 +28,7 @@ export const OtpDialog = (props: IProps) => {
 
   useEffect(() => {
     setTime({ hours: 0, minutes: 2, seconds: 0 });
-  }, [setTime]);
+  }, [setTime, open]);
 
   useEffect(() => {
     if (time === '00:00:00') {

@@ -8,13 +8,7 @@ export const PrivateRoute = (props: RouteProps) => {
   const token = auth.token;
   const useInfo = auth.userInfo;
   if (token && useInfo) {
-    return (
-      <Route
-        path={props.path}
-        component={props.component}
-        exact={props.exact}
-      />
-    );
+    return <Route {...props} />;
   } else {
     return <Redirect to={RoutePaths.login} />;
   }

@@ -6,6 +6,7 @@ import {
   InjectionRegistration,
   Login,
   Register,
+  User,
   VaccineCertificate,
   VaccineRegistration
 } from 'pages';
@@ -18,6 +19,12 @@ export const RoutePaths = {
   injectionRegistration: '/injection-registration',
   vaccineRegistration: '/vaccine-registration',
   document: '/document',
+  user: {
+    root: '/user',
+    certificate: '/user',
+    injectionRegistration: '/user/registration',
+    info: '/user/info'
+  },
   home: '/'
 };
 
@@ -70,6 +77,13 @@ const routes: IRoute[] = [
     component: Document,
     exact: true,
     routeType: RouteType.PUBLIC_ROUTE
+  },
+  {
+    key: 'route_user',
+    path: RoutePaths.user.root,
+    component: User,
+    exact: false,
+    routeType: RouteType.PRIVATE_ROUTE
   },
   {
     key: 'route_home',

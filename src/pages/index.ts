@@ -6,3 +6,4 @@ export * from './Register';
 export * from './VaccineCertificate';
 export * from './VaccineRegistration';
 export * from './Document';
+export * from './User';

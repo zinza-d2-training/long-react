@@ -24,7 +24,7 @@ interface IProps {
   data: ICertificate;
 }
 
-const CertificateInfo = (props: IProps) => {
+export const CertificateInfo = (props: IProps) => {
   const { data } = props;
   const dob = useMemo(() => data.dob.toLocaleDateString(), [data.dob]);
   const wardName = useMemo(
@@ -49,7 +49,7 @@ const CertificateInfo = (props: IProps) => {
     [data.vaccinate]
   );
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction="row" spacing={2} justifyContent="space-between">
       <Box sx={{ flex: 1 }}>
         <Typography
           align="center"
@@ -148,6 +148,7 @@ const CertificateInfo = (props: IProps) => {
                 <TableBody>
                   {data.vaccinate.map((item, index) => (
                     <TableRow
+                      key={item.id}
                       sx={
                         index % 2 !== 0
                           ? { backgroundColor: colors.grey[100] }
@@ -249,5 +250,3 @@ const CertificateInfo = (props: IProps) => {
     </Stack>
   );
 };
-
-export default CertificateInfo;

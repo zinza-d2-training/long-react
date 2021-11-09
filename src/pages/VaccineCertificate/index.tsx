@@ -11,7 +11,13 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { Label, OtpDialog, PageTitle, StyledButton } from 'components';
+import {
+  CertificateInfo,
+  Label,
+  OtpDialog,
+  PageTitle,
+  StyledButton
+} from 'components';
 import { ICertificateSearch } from 'models';
 import { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -19,7 +25,6 @@ import { styleInputMedium } from 'theme';
 import { AppLayout } from 'theme/layout';
 import { certificateData } from 'utils';
 import { certificationSchema } from 'validations';
-import CertificateInfo from './CertificateInfo';
 
 const defaultValues: ICertificateSearch = {
   fullName: '',

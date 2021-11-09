@@ -22,11 +22,7 @@ export const StyledDialogTitle = (props: IProps) => {
         width: '100%',
         padding: '12px 11px 12px 24px'
       }}>
-      <Typography
-        mr={1}
-        component="p"
-        variant="h6"
-        sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+      <Typography mr={1} component="p" variant="h6" noWrap>
         {props.title}
       </Typography>
       <IconButton onClick={props.onClose}>

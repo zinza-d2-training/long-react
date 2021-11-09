@@ -132,3 +132,39 @@ export const vaccineRegistrationSchema = yup.object().shape({
     postVaccinationReaction: yup.string()
   })
 });
+
+export const userFormSchema = yup.object().shape({
+  citizenId: yup
+    .string()
+    .required('Đây là trường bắt buộc!')
+    .matches(
+      /^\d{9}$|^\d{12}$/g,
+      'Số căn cước hoặc chứng minh thư không hợp lệ!'
+    ),
+  fullName: yup.string().required('Trường này là bắt buộc'),
+  dob: yup.string().required('Trường này là bắt buộc'),
+  gender: yup.number().required('Trường này là bắt buộc'),
+  phoneNumber: yup
+    .string()
+    .required('Trường này là bắt buộc')
+    .matches(
+      /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im,
+      'Số điện thoại không hợp lệ'
+    ),
+  provinceId: yup
+    .number()
+    .required('Trường này không được bỏ trống')
+    .test('test', 'Trường này không được bỏ trống', (value) => value !== -1),
+  districtId: yup
+    .number()
+    .required('Trường này không được bỏ trống')
+    .test('test', 'Trường này không được bỏ trống', (value) => value !== -1),
+  wardId: yup
+    .number()
+    .required('Trường này không được bỏ trống')
+    .test('test', 'Trường này không được bỏ trống', (value) => value !== -1),
+  newPassword: yup.string().min(8, 'Ít nhất 8 ký tự'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('newPassword'), null], 'Mật khẩu không khớp')
+});

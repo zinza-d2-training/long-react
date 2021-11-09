@@ -170,7 +170,11 @@ export const Header = () => {
             </Typography>
 
             {useInfo ? (
-              <Typography variant="body1" sx={{ color: '#fff' }}>
+              <Typography
+                component={Link}
+                to={RoutePaths.user.root}
+                variant="body1"
+                sx={{ color: '#fff', textDecoration: 'none' }}>
                 Hi {useInfo.username}
               </Typography>
             ) : (
