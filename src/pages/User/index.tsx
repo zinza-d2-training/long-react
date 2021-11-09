@@ -70,7 +70,7 @@ export const User = () => {
             onChange={handleChangeTab}
             aria-label="basic tabs example"
             sx={{
-              '.css-1aquho2-MuiTabs-indicator': {
+              '.MuiTabs-indicator': {
                 backgroundColor: '#000 !important'
               }
             }}>
