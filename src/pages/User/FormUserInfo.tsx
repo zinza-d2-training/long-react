@@ -8,7 +8,13 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { ErrorMessage, FilePicker, Label, StyledButton } from 'components';
+import {
+  ErrorMessage,
+  FilePicker,
+  Label,
+  StyledButton,
+  OtpDialog
+} from 'components';
 import * as _ from 'lodash';
 import { IFile, IUserInfoForm } from 'models';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -59,6 +65,28 @@ export const FormUserInfo = (props: IProps) => {
     personalInfo: false,
     password: false
   });
+  const [openOtp, setOpenOtp] = useState(false);
+
+  const handleOpenOtp = useCallback(() => {
+    setOpenOtp(true);
+  }, []);
+
+  const handleCloseOtp = useCallback(() => {
+    setOpenOtp(false);
+  }, []);
+
+  const handleConfirmPhoneNumberBlock = useCallback(() => {
+    setEditable({
+      ...editable,
+      phone: !editable.phone
+    });
+    onConfirm(watch());
+  }, [editable, onConfirm, watch]);
+
+  const handleConfirmOtp = useCallback(() => {
+    handleConfirmPhoneNumberBlock();
+    handleCloseOtp();
+  }, [handleCloseOtp, handleConfirmPhoneNumberBlock]);
 
   const handleToggleCitizenIdEditable = useCallback(() => {
     if (editable.citizenId) {
@@ -133,14 +161,6 @@ export const FormUserInfo = (props: IProps) => {
       password: !editable.password
     });
   }, [clearErrors, editable, setValue]);
-
-  const handleConfirmPhoneNumberBlock = useCallback(() => {
-    setEditable({
-      ...editable,
-      phone: !editable.phone
-    });
-    onConfirm(watch());
-  }, [editable, onConfirm, watch]);
 
   const handleConfirmCitizenIdBlock = useCallback(() => {
     setEditable({
@@ -304,7 +324,7 @@ export const FormUserInfo = (props: IProps) => {
                 </StyledButton>
                 <StyledButton
                   variant="contained"
-                  onClick={handleConfirmPhoneNumberBlock}
+                  onClick={handleOpenOtp}
                   disabled={!!formErrors.phoneNumber}>
                   Lưu
                 </StyledButton>
@@ -478,6 +498,11 @@ export const FormUserInfo = (props: IProps) => {
           )}
         </Box>
       </Box>
+      <OtpDialog
+        open={openOtp}
+        onClose={handleCloseOtp}
+        onConfirm={handleConfirmOtp}
+      />
     </FormProvider>
   );
 };
