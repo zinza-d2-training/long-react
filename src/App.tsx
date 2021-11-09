@@ -9,7 +9,7 @@ import { AuthRoute, Layout, PrivateRoute } from 'theme/layout';
 import { i18n } from 'utils';
 
 function App() {
-  const languageMode = useAppSelector(i18nSelector).languageMode;
+  const { languageMode } = useAppSelector(i18nSelector);
 
   useEffect(() => {
     i18n.changeLanguage(languageMode);
