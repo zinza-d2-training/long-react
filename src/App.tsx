@@ -1,10 +1,19 @@
 import { CssBaseline } from '@mui/material';
 import { RouteType } from 'models';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import routes from 'routes';
-import { PrivateRoute, AuthRoute, Layout } from 'theme/layout';
+import { useAppSelector } from 'store';
+import { i18nSelector } from 'store/slices/i18nSlice';
+import { AuthRoute, Layout, PrivateRoute } from 'theme/layout';
+import { i18n } from 'utils';
 
 function App() {
+  const { languageMode } = useAppSelector(i18nSelector);
+
+  useEffect(() => {
+    i18n.changeLanguage(languageMode);
+  }, [languageMode]);
   return (
     <>
       <CssBaseline />

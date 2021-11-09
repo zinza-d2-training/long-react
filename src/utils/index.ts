@@ -9,3 +9,4 @@ export * from './filterData';
 export * from './vaccine';
 export * from './vaccineRegistration';
 export * from './validate';
+export { default as i18n } from './i18n';

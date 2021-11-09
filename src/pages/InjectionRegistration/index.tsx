@@ -13,6 +13,7 @@ import { InjectionInfoTable, Label, PageTitle, StyledButton } from 'components';
 import { IInjectionRegistration, IInjectionRegistrationForm } from 'models';
 import { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { styleInputMedium } from 'theme';
 import { AppLayout } from 'theme/layout';
 import { fakeInjectionRegistration } from 'utils';
@@ -24,6 +25,7 @@ const defaultValues: IInjectionRegistrationForm = {
 };
 
 export const InjectionRegistration = () => {
+  const { t } = useTranslation();
   const { control, handleSubmit, reset } = useForm<IInjectionRegistrationForm>({
     defaultValues,
     mode: 'onTouched',
@@ -48,7 +50,7 @@ export const InjectionRegistration = () => {
 
   return (
     <AppLayout>
-      <PageTitle>Tra cứu đăng ký tiêm</PageTitle>
+      <PageTitle>{t('Tra cứu đăng ký tiêm')}</PageTitle>
       <Container maxWidth="xl">
         <Box
           component="form"
@@ -56,7 +58,7 @@ export const InjectionRegistration = () => {
           onReset={handleResetForm}>
           <Stack direction="row" spacing={2}>
             <Box sx={{ flex: 1 }}>
-              <Label required>Số CMND/CCCD/Mã định danh công dân</Label>
+              <Label required>{t('Số CMND/CCCD/Mã định danh công dân')}</Label>
               <Controller
                 control={control}
                 name="citizenId"
@@ -72,7 +74,7 @@ export const InjectionRegistration = () => {
               />
             </Box>
             <Box sx={{ flex: 1 }}>
-              <Label required>Số điện thoại</Label>
+              <Label required>{t('Số điện thoại')}</Label>
               <Controller
                 control={control}
                 name="phone"
@@ -94,22 +96,23 @@ export const InjectionRegistration = () => {
             mt={3}
             sx={{ fontStyle: 'italic' }}
             align="center">
-            <b>Lưu ý:</b> Cá nhân/Tổ chức đăng ký thành công trên hệ thống sẽ
-            được đưa vào danh sách đặt tiêm. Cơ sở y tế sẽ thông báo lịch tiêm
-            khi có vắc xin và kế hoạch tiêm được phê duyệt. Trân trọng cảm ơn!
+            <b>{t('Lưu ý')}:</b>{' '}
+            {t(
+              'Cá nhân/Tổ chức đăng ký thành công trên hệ thống sẽ được đưa vào danh sách đặt tiêm. Cơ sở y tế sẽ thông báo lịch tiêm khi có vắc xin và kế hoạch tiêm được phê duyệt. Trân trọng cảm ơn!'
+            )}
           </Typography>
           <Stack direction="row" justifyContent="center" spacing={2} mt={3}>
             <StyledButton
               variant="outlined"
               startIcon={<CachedIcon />}
               type="reset">
-              Nhập lại
+              {t('Nhập lại')}
             </StyledButton>
             <StyledButton
               variant="contained"
               startIcon={<SearchIcon />}
               type="submit">
-              Tra cứu
+              {t('Tra cứu')}
             </StyledButton>
           </Stack>
         </Box>

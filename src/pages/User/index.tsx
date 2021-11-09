@@ -4,6 +4,7 @@ import { CertificateInfo, InjectionInfoTable } from 'components';
 import { IUserInfoForm } from 'models';
 import { useEffect, useState } from 'react';
 import { DefaultValues } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Switch, useHistory, useLocation } from 'react-router-dom';
 import { RoutePaths } from 'routes';
 import { AppLayout, PrivateRoute } from 'theme/layout';
@@ -18,6 +19,7 @@ const styleTab: SxProps<Theme> = {
 };
 
 export const User = () => {
+  const {t} = useTranslation();
   const [userInfo, setUserInfo] = useState<DefaultValues<IUserInfoForm>>({
     citizenId: '123456789',
     citizenImages: [],
@@ -83,7 +85,7 @@ export const User = () => {
             <Tab
               label={
                 <Typography variant="body1" fontWeight="500">
-                  Chứng nhận tiêm chủng
+                  {t("Chứng nhận tiêm chủng")}
                 </Typography>
               }
               value={0}
@@ -92,7 +94,7 @@ export const User = () => {
             <Tab
               label={
                 <Typography variant="body1" fontWeight="500">
-                  Kết quả đăng ký
+                  {t("Kết quả đăng ký")}
                 </Typography>
               }
               value={1}
@@ -101,7 +103,7 @@ export const User = () => {
             <Tab
               label={
                 <Typography variant="body1" fontWeight="500">
-                  Tài khoản
+                  {t("Tài khoản")}
                 </Typography>
               }
               value={2}

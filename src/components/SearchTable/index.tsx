@@ -11,36 +11,9 @@ import {
   IWard
 } from 'models';
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { styleInputMedium } from 'theme';
 import { addressData, getDistrict, getProvince, getWard } from 'utils';
-
-const convertData = (input: IStatisticVaccinationByArea[]): ITableData => {
-  return {
-    heading: [
-      'STT',
-      'Tên điểm tiêm',
-      'Số nhà. tên đường',
-      'Xã/Phường',
-      'Quận/Huyện',
-      'Tỉnh/Thành Phố',
-      'Người đứng đầu cơ sở tiêm chủng',
-      'Số bàn tiêm'
-    ],
-    dataSet: input.map((record, index) => {
-      const { provinceId, districtId, wardId } = record;
-      return [
-        index + 1,
-        record.injectionSiteName,
-        record.apartmentNumber,
-        getWard(provinceId, districtId, wardId)?.label,
-        getDistrict(provinceId, districtId)?.label,
-        getProvince(provinceId)?.label,
-        record.leader,
-        record.numberOfInjectionTables
-      ];
-    })
-  };
-};
 interface IProps {
   data: IStatisticVaccinationByArea[];
   onLoadMoreData?: () => void;
@@ -76,6 +49,39 @@ const search = (
 };
 
 export const SearchTable = (props: IProps) => {
+  const { t } = useTranslation();
+
+  const convertData = useCallback(
+    (input: IStatisticVaccinationByArea[]): ITableData => {
+      return {
+        heading: [
+          t('STT'),
+          t('Tên điểm tiêm'),
+          t('Số nhà, tên đường'),
+          t('Xã/Phường'),
+          t('Quận/Huyện'),
+          t('Tỉnh/Thành Phố'),
+          t('Người đứng đầu cơ sở tiêm chủng'),
+          t('Số bàn tiêm')
+        ],
+        dataSet: input.map((record, index) => {
+          const { provinceId, districtId, wardId } = record;
+          return [
+            index + 1,
+            record.injectionSiteName,
+            record.apartmentNumber,
+            getWard(provinceId, districtId, wardId)?.label,
+            getDistrict(provinceId, districtId)?.label,
+            getProvince(provinceId)?.label,
+            record.leader,
+            record.numberOfInjectionTables
+          ];
+        })
+      };
+    },
+    [t]
+  );
+
   const { data, onLoadMoreData } = props;
   const [tableData, setTableData] = useState<ITableData>(convertData(data));
   const [provinceOptions] = useState<IProvince[]>(addressData);
@@ -137,11 +143,11 @@ export const SearchTable = (props: IProps) => {
       setHasLoadMore(true);
       setTableData(convertData(data));
     }
-  }, [data, selectedDistrict, selectedProvince, selectedWard]);
+  }, [convertData, data, selectedDistrict, selectedProvince, selectedWard]);
 
   useEffect(() => {
     setTableData(convertData(data));
-  }, [data]);
+  }, [convertData, data]);
 
   const handleChangeProvince = useCallback(
     (
@@ -187,7 +193,13 @@ export const SearchTable = (props: IProps) => {
         })
       )
     );
-  }, [data, selectedDistrict?.id, selectedProvince?.id, selectedWard?.id]);
+  }, [
+    convertData,
+    data,
+    selectedDistrict?.id,
+    selectedProvince?.id,
+    selectedWard?.id
+  ]);
 
   const handleChangeProvinceInput = useCallback((e, newValue) => {
     setInputProvince(newValue);
@@ -217,7 +229,7 @@ export const SearchTable = (props: IProps) => {
                 value: inputProvince
               }}
               sx={{ ...styleInputMedium, minWidth: '260px' }}
-              placeholder="Tỉnh/Thành phố"
+              placeholder={t('Tỉnh/Thành phố')}
             />
           )}
         />
@@ -235,7 +247,7 @@ export const SearchTable = (props: IProps) => {
                 value: inputDistrict
               }}
               sx={{ ...styleInputMedium, minWidth: '260px' }}
-              placeholder="Quận/Huyện"
+              placeholder={t('Quận/Huyện')}
             />
           )}
         />
@@ -253,7 +265,7 @@ export const SearchTable = (props: IProps) => {
                 value: inputWard
               }}
               sx={{ ...styleInputMedium, minWidth: '260px' }}
-              placeholder="Xã/Phường"
+              placeholder={t('Xã/Phường')}
             />
           )}
         />
@@ -262,7 +274,7 @@ export const SearchTable = (props: IProps) => {
           startIcon={<SearchIcon />}
           variant="contained"
           onClick={handleSearch}>
-          Tìm kiếm
+          {t('Tìm kiếm')}
         </StyledButton>
       </Stack>
       <Divider />

@@ -3,17 +3,12 @@ import { Box } from '@mui/system';
 import { PageTitle } from 'components';
 import { IMedicalHistory, IVaccineRegistration } from 'models';
 import { Step1, Step2, Step3, Step4 } from 'pages/VaccineRegistration/Steps';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AppLayout } from 'theme/layout';
 
-const steps = [
-  'Thông tin cá nhân',
-  'Tiền sử bệnh',
-  'Phiếu đồng ý tiêm',
-  'Hoàn thành'
-];
-
 export const VaccineRegistration = () => {
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
   const [personalInfo, setPersonalInfo] = useState<IVaccineRegistration | null>(
     null
@@ -40,9 +35,19 @@ export const VaccineRegistration = () => {
     },
     []
   );
+
+  const steps = useMemo(
+    () => [
+      t('Thông tin cá nhân'),
+      t('Tiền sử bệnh'),
+      t('Phiếu đồng ý tiêm'),
+      t('Hoàn thành')
+    ],
+    [t]
+  );
   return (
     <AppLayout>
-      <PageTitle>Đăng ký tiêm</PageTitle>
+      <PageTitle>{t('Đăng ký tiêm')}</PageTitle>
       <Container maxWidth="xl">
         <Stepper activeStep={currentStep} alternativeLabel>
           {steps.map((label) => (

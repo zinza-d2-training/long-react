@@ -12,8 +12,8 @@ import {
   ErrorMessage,
   FilePicker,
   Label,
-  StyledButton,
-  OtpDialog
+  OtpDialog,
+  StyledButton
 } from 'components';
 import * as _ from 'lodash';
 import { IFile, IUserInfoForm } from 'models';
@@ -25,6 +25,7 @@ import {
   Resolver,
   useForm
 } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { styleInputMedium } from 'theme';
 import { userFormSchema } from 'validations';
 import { AddressInput } from './AddressInput';
@@ -42,6 +43,8 @@ interface IProps {
 }
 
 export const FormUserInfo = (props: IProps) => {
+  const { t } = useTranslation();
+
   const { userInfo, onConfirm } = props;
   const formMethod = useForm<IUserInfoForm>({
     defaultValues: userInfo,
@@ -221,7 +224,7 @@ export const FormUserInfo = (props: IProps) => {
           }}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="body1" fontWeight="500">
-              Mã số định danh
+              {t('Mã số định danh')}
             </Typography>
             <IconButton
               onClick={handleToggleCitizenIdEditable}
@@ -232,7 +235,9 @@ export const FormUserInfo = (props: IProps) => {
           </Stack>
           <Box mt={2} px={2}>
             <Box>
-              <Label sx={{ display: 'block' }}>Số CMND/CCCD/Mã định danh</Label>
+              <Label sx={{ display: 'block' }}>
+                {t('Số CMND/CCCD/Mã định danh')}
+              </Label>
               <Controller
                 control={control}
                 name="citizenId"
@@ -240,7 +245,7 @@ export const FormUserInfo = (props: IProps) => {
                   <TextField
                     {...field}
                     error={invalid}
-                    helperText={error?.message}
+                    helperText={t(error?.message || '')}
                     sx={{ ...styleInputMedium, width: '322px' }}
                     disabled={!editable.citizenId}
                   />
@@ -268,7 +273,7 @@ export const FormUserInfo = (props: IProps) => {
                 <StyledButton
                   variant="outlined"
                   onClick={handleToggleCitizenIdEditable}>
-                  Hủy bỏ
+                  {t('Hủy bỏ')}
                 </StyledButton>
                 <StyledButton
                   variant="contained"
@@ -276,7 +281,7 @@ export const FormUserInfo = (props: IProps) => {
                   disabled={
                     !!formErrors.citizenId || !!formErrors.citizenImages
                   }>
-                  Lưu
+                  {t('Lưu')}
                 </StyledButton>
               </Stack>
             )}
@@ -289,7 +294,7 @@ export const FormUserInfo = (props: IProps) => {
           }}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="body1" fontWeight="500">
-              Số điện thoại
+              {t('Số điện thoại')}
             </Typography>
             <IconButton
               onClick={handleTogglePhoneNumberEditable}
@@ -300,7 +305,7 @@ export const FormUserInfo = (props: IProps) => {
           </Stack>
           <Box mt={2} px={2}>
             <Box>
-              <Label sx={{ display: 'block' }}>Số điện thoại</Label>
+              <Label sx={{ display: 'block' }}>{t('Số điện thoại')}</Label>
               <Controller
                 control={control}
                 name="phoneNumber"
@@ -308,7 +313,7 @@ export const FormUserInfo = (props: IProps) => {
                   <TextField
                     {...field}
                     error={invalid}
-                    helperText={error?.message}
+                    helperText={t(error?.message || '')}
                     sx={{ ...styleInputMedium, width: '322px' }}
                     disabled={!editable.phone}
                   />
@@ -320,13 +325,13 @@ export const FormUserInfo = (props: IProps) => {
                 <StyledButton
                   variant="outlined"
                   onClick={handleTogglePhoneNumberEditable}>
-                  Hủy bỏ
+                  {t('Hủy bỏ')}
                 </StyledButton>
                 <StyledButton
                   variant="contained"
                   onClick={handleOpenOtp}
                   disabled={!!formErrors.phoneNumber}>
-                  Lưu
+                  {t('Lưu')}
                 </StyledButton>
               </Stack>
             )}
@@ -339,7 +344,7 @@ export const FormUserInfo = (props: IProps) => {
           }}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="body1" fontWeight="500">
-              Thông tin cá nhân
+              {t('Thông tin cá nhân')}
             </Typography>
             <IconButton
               onClick={handleTogglePersonalInfoEditable}
@@ -351,7 +356,7 @@ export const FormUserInfo = (props: IProps) => {
           <Box px={2}>
             <Stack direction="row" spacing={2}>
               <Box>
-                <Label sx={{ display: 'block' }}>Họ và tên</Label>
+                <Label sx={{ display: 'block' }}>{t('Họ và tên')}</Label>
                 <Controller
                   control={control}
                   name="fullName"
@@ -359,7 +364,7 @@ export const FormUserInfo = (props: IProps) => {
                     <TextField
                       {...field}
                       error={invalid}
-                      helperText={error?.message}
+                      helperText={t(error?.message || '')}
                       sx={{ ...styleInputMedium, width: '322px' }}
                       disabled={!editable.personalInfo}
                     />
@@ -367,7 +372,7 @@ export const FormUserInfo = (props: IProps) => {
                 />
               </Box>
               <Box>
-                <Label sx={{ display: 'block' }}>Ngày sinh</Label>
+                <Label sx={{ display: 'block' }}>{t('Ngày sinh')}</Label>
                 <Controller
                   control={control}
                   name="dob"
@@ -377,7 +382,7 @@ export const FormUserInfo = (props: IProps) => {
                         {...field}
                         type="date"
                         error={invalid}
-                        helperText={error?.message}
+                        helperText={t(error?.message || '')}
                         sx={{ ...styleInputMedium, width: '322px' }}
                         disabled={!editable.personalInfo}
                       />
@@ -386,7 +391,7 @@ export const FormUserInfo = (props: IProps) => {
                 />
               </Box>
               <Box>
-                <Label sx={{ display: 'block' }}>Giới tính</Label>
+                <Label sx={{ display: 'block' }}>{t('Giới tính')}</Label>
                 <Controller
                   control={control}
                   name="gender"
@@ -394,12 +399,12 @@ export const FormUserInfo = (props: IProps) => {
                     <TextField
                       {...field}
                       error={invalid}
-                      helperText={error?.message}
+                      helperText={t(error?.message || '')}
                       sx={{ ...styleInputMedium, width: '322px' }}
                       disabled={!editable.personalInfo}
                       select>
-                      <MenuItem value={1}>Nam</MenuItem>
-                      <MenuItem value={0}>Nữ</MenuItem>
+                      <MenuItem value={1}>{t('Nam')}</MenuItem>
+                      <MenuItem value={0}>{t('Nữ')}</MenuItem>
                     </TextField>
                   )}
                 />
@@ -436,7 +441,7 @@ export const FormUserInfo = (props: IProps) => {
           }}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="body1" fontWeight="500">
-              Mật khẩu
+              {t('Mật khẩu')}
             </Typography>
             <IconButton
               onClick={handleTogglePasswordEditable}
@@ -446,17 +451,17 @@ export const FormUserInfo = (props: IProps) => {
             </IconButton>
           </Stack>
           <Box px={2}>
-            <Label sx={{ display: 'block' }}>Mật khẩu mới</Label>
+            <Label sx={{ display: 'block' }}>{t('Mật khẩu mới')}</Label>
             <Controller
               control={control}
               name="newPassword"
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   {...field}
-                  placeholder="Mật khẩu mới"
+                  placeholder={t('Mật khẩu mới')}
                   disabled={!editable.password}
                   error={invalid}
-                  helperText={error?.message}
+                  helperText={t(error?.message || '')}
                   sx={{ ...styleInputMedium, width: '322px' }}
                   type="password"
                 />
@@ -464,17 +469,17 @@ export const FormUserInfo = (props: IProps) => {
             />
           </Box>
           <Box mt={2} px={2}>
-            <Label sx={{ display: 'block' }}>Nhập lại mật khẩu</Label>
+            <Label sx={{ display: 'block' }}>{t('Nhập lại mật khẩu')}</Label>
             <Controller
               control={control}
               name="confirmPassword"
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   {...field}
-                  placeholder="Nhập lại mật khẩu"
+                  placeholder={t('Nhập lại mật khẩu')}
                   disabled={!editable.password}
                   error={invalid}
-                  helperText={error?.message}
+                  helperText={t(error?.message || '')}
                   sx={{ ...styleInputMedium, width: '322px' }}
                   type="password"
                 />
@@ -486,13 +491,13 @@ export const FormUserInfo = (props: IProps) => {
               <StyledButton
                 variant="outlined"
                 onClick={handleTogglePasswordEditable}>
-                Hủy bỏ
+                {t('Hủy bỏ')}
               </StyledButton>
               <StyledButton
                 variant="contained"
                 onClick={handleConfirmPasswordBlock}
                 disabled={!!errors.newPassword || !!errors.confirmPassword}>
-                Lưu
+                {t('Lưu')}
               </StyledButton>
             </Stack>
           )}

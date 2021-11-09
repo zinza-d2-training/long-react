@@ -16,10 +16,12 @@ import {
 import { SxProps } from '@mui/system';
 import { StyledButton } from 'components';
 import { useCallback, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { RoutePaths } from 'routes';
-import { useAppSelector } from 'store';
+import { useAppDispatch, useAppSelector } from 'store';
 import { authSelector } from 'store/slices/authSlice';
+import { changeLanguageMode, i18nSelector } from 'store/slices/i18nSlice';
 
 const menuItemStyle: SxProps<Theme> = {
   color: (theme) => theme.palette.text.primary,
@@ -36,7 +38,12 @@ const menuItemStyle: SxProps<Theme> = {
 export const Header = () => {
   const useInfo = useAppSelector(authSelector).userInfo;
   const [open, setOpen] = useState(false);
+
+  const languageMode = useAppSelector(i18nSelector).languageMode;
+  const dispatch = useAppDispatch();
+
   const anchorRef = useRef<HTMLButtonElement>(null);
+  const { t } = useTranslation();
 
   const handleOpenMenu = useCallback(() => {
     setOpen(true);
@@ -45,6 +52,14 @@ export const Header = () => {
   const handleCloseMenu = useCallback((event: Event | React.SyntheticEvent) => {
     setOpen(false);
   }, []);
+
+  const handleChangeToVn = useCallback(() => {
+    dispatch(changeLanguageMode('vn'));
+  }, [dispatch]);
+
+  const handleChangeToEn = useCallback(() => {
+    dispatch(changeLanguageMode('en'));
+  }, [dispatch]);
 
   return (
     <Box
@@ -76,7 +91,7 @@ export const Header = () => {
               textDecoration: 'none'
             }}>
             <Box component="img" src="images/logo_white.png" alt="" mr={2} />
-            CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
+            {t('CỔNG THÔNG TIN TIÊM CHỦNG COVID-19')}
           </Typography>
           <Stack direction="row" alignItems="center" spacing={3}>
             <Typography
@@ -85,7 +100,7 @@ export const Header = () => {
               component={Link}
               variant="body1"
               to={RoutePaths.home}>
-              Trang chủ
+              {t('Trang chủ')}
             </Typography>
             <Typography
               color="#fff"
@@ -93,7 +108,7 @@ export const Header = () => {
               component={Link}
               variant="body1"
               to={RoutePaths.vaccineRegistration}>
-              Đăng ký tiêm
+              {t('Đăng ký tiêm')}
             </Typography>
             <Box component="div" onMouseLeave={handleCloseMenu}>
               <Typography
@@ -108,7 +123,7 @@ export const Header = () => {
                 component={Button}
                 endIcon={<KeyboardArrowDownIcon />}
                 variant="body1">
-                Tra cứu
+                {t('Tra cứu')}
               </Typography>
               <Popper
                 open={open}
@@ -141,7 +156,7 @@ export const Header = () => {
                             variant="body2"
                             sx={menuItemStyle}
                             to={RoutePaths.vaccineCertificate}>
-                            Tra cứu chứng nhận tiêm
+                            {t('Tra cứu chứng nhận tiêm')}
                           </Typography>
                         </MenuItem>
                         <MenuItem sx={{ p: 0, width: '100%' }}>
@@ -151,7 +166,7 @@ export const Header = () => {
                             variant="body2"
                             sx={menuItemStyle}
                             to={RoutePaths.injectionRegistration}>
-                            Tra cứu kết quả đăng ký
+                            {t('Tra cứu kết quả đăng ký')}
                           </Typography>
                         </MenuItem>
                       </MenuList>
@@ -166,7 +181,7 @@ export const Header = () => {
               component={Link}
               variant="body1"
               to={RoutePaths.document}>
-              Tài liệu
+              {t('Tài liệu')}
             </Typography>
 
             {useInfo ? (
@@ -175,7 +190,7 @@ export const Header = () => {
                 to={RoutePaths.user.root}
                 variant="body1"
                 sx={{ color: '#fff', textDecoration: 'none' }}>
-                Hi {useInfo.username}
+                {t('Xin chào')} {useInfo.username}
               </Typography>
             ) : (
               <StyledButton
@@ -189,10 +204,38 @@ export const Header = () => {
                   variant="button"
                   component={Link}
                   to={RoutePaths.login}>
-                  Đăng nhập
+                  {t('Đăng nhập')}
                 </Typography>
               </StyledButton>
             )}
+            <Stack
+              direction="row"
+              sx={{ color: '#fff' }}
+              spacing={1}
+              justifyContent="space-between"
+              alignItems="center">
+              <Box
+                sx={{
+                  cursor: 'pointer',
+                  textDecoration: languageMode === 'vn' ? 'underline' : 'none'
+                }}
+                onClick={handleChangeToVn}>
+                VN
+              </Box>
+              <Box
+                sx={{
+                  height: '20px',
+                  border: '1px solid #fff'
+                }}></Box>
+              <Box
+                sx={{
+                  cursor: 'pointer',
+                  textDecoration: languageMode === 'en' ? 'underline' : 'none'
+                }}
+                onClick={handleChangeToEn}>
+                EN
+              </Box>
+            </Stack>
           </Stack>
         </Box>
       </Container>

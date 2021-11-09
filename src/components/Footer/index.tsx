@@ -1,7 +1,9 @@
 import { Box, Container, Stack, Typography } from '@mui/material';
 import { StyledButton } from 'components';
+import { useTranslation } from 'react-i18next';
 
 export const Footer = () => {
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -14,11 +16,12 @@ export const Footer = () => {
         <Stack direction="row" justifyContent="space-between">
           <Box>
             <Typography variant="body2">
-              © Bản quyền thuộc TRUNG TÂM CÔNG NGHỆ PHÒNG, CHỐNG DỊCH COVID-19
-              QUỐC GIA
+              {t(
+                '© Bản quyền thuộc TRUNG TÂM CÔNG NGHỆ PHÒNG, CHỐNG DỊCH COVID-19 QUỐC GIA'
+              )}
             </Typography>
             <Typography variant="body2" mt="4px">
-              Phát triển bởi{' '}
+              {t('Phát triển bởi')}{' '}
               <Box component="span" sx={{ color: '#f00' }}>
                 Viettel
               </Box>
@@ -27,14 +30,15 @@ export const Footer = () => {
           </Box>
           <Box>
             <Typography variant="body2" align="right">
-              Tải sổ sức khỏe điện tử để đăng ký tiêm và nhận giấy chứng nhận
-              tiêm
+              {t(
+                'Tải sổ sức khỏe điện tử để đăng ký tiêm và nhận giấy chứng nhận tiêm'
+              )}
             </Typography>
             <Stack direction="row" spacing={2} mt={2}>
               <StyledButton
                 variant="outlined"
                 sx={{ color: '#fff', borderColor: '#fff' }}>
-                App tiêm di động (Cho HCM)
+                {t('App tiêm di động (Cho HCM)')}
               </StyledButton>
               <StyledButton
                 variant="outlined"

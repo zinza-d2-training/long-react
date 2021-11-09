@@ -12,94 +12,103 @@ import {
   Typography
 } from '@mui/material';
 import { PageTitle } from 'components';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AppLayout } from 'theme/layout';
 
-const documents = [
-  {
-    id: 'document_id-sdfsdf',
-    label: 'Giới thiệu nền tảng quản lý tiêm chủng vắc xin phòng Covid-19',
-    linkDocument:
-      'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
-  },
-  {
-    id: 'document_id-sdfsdfa',
-    label:
-      'HD Chuẩn hóa dữ iệu và import danh sách đối tượng tiêm chủng Covid-19, danh sách nhập hồi cứu',
-    linkDocument:
-      'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
-  },
-  {
-    id: 'document_id-asdasd',
-    label: 'HD cài đặt và sử dụng ứng dụng SSKĐT dành cho người dân',
-    linkDocument:
-      'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
-  },
-  {
-    id: 'document_id-qweqwe',
-    label:
-      'HD phê duyệt và phân bố yêu cầu đăng ký tiêm chủng vắc xin phòng Covid-19',
-    linkDocument:
-      'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
-  },
-  {
-    id: 'document_id-ghjgh',
-    label: 'HD đăng ký cơ sở tiêm chủng Covid-19',
-    linkDocument:
-      'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
-  },
-  {
-    id: 'document_id-fdbdfb',
-    label: 'HD đăng ký tiêm chủng Covid-19',
-    linkDocument:
-      'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
-  },
-  {
-    id: 'document_id-werer',
-    label: 'HD đăng ký tiêm chủng Covid-19 dành cho cơ quan, tổ chức',
-    linkDocument:
-      'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
-  },
-  {
-    id: 'document_id-axsxz',
-    label: 'HD đăng ký tiêm chủng Covid-19 dành cho người dân',
-    linkDocument:
-      'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
-  },
-  {
-    id: 'document_id-dfgdfg',
-    label: 'HDSD ứng dụng SSKĐT trong quá trình tiêm chủng Covid-19',
-    linkDocument:
-      'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
-  },
-  {
-    id: 'document_id-mbnmb',
-    label: 'Quy trình ứng dụng nền tảng quản lý điều hành tiêm chủng Covid-19',
-    linkDocument:
-      'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
-  }
-];
-
 export const Document = () => {
+  const { t } = useTranslation();
+  const documents = useMemo(
+    () => [
+      {
+        id: 'document_id-sdfsdf',
+        label: t(
+          'Giới thiệu nền tảng quản lý tiêm chủng vắc xin phòng Covid-1'
+        ),
+        linkDocument:
+          'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
+      },
+      {
+        id: 'document_id-sdfsdfa',
+        label: t(
+          'HD Chuẩn hóa dữ iệu và import danh sách đối tượng tiêm chủng Covid-19, danh sách nhập hồi cứu'
+        ),
+        linkDocument:
+          'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
+      },
+      {
+        id: 'document_id-asdasd',
+        label: t('HD cài đặt và sử dụng ứng dụng SSKĐT dành cho người dân'),
+        linkDocument:
+          'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
+      },
+      {
+        id: 'document_id-qweqwe',
+        label: t('HD đăng ký tiêm chủng Covid-19 dành cho cơ quan, tổ chức'),
+        linkDocument:
+          'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
+      },
+      {
+        id: 'document_id-ghjgh',
+        label: t('HD đăng ký cơ sở tiêm chủng Covid-19'),
+        linkDocument:
+          'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
+      },
+      {
+        id: 'document_id-fdbdfb',
+        label: t('HD đăng ký tiêm chủng Covid-19'),
+        linkDocument:
+          'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
+      },
+      {
+        id: 'document_id-werer',
+        label: t('HD đăng ký tiêm chủng Covid-19 dành cho cơ quan, tổ chức'),
+        linkDocument:
+          'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
+      },
+      {
+        id: 'document_id-axsxz',
+        label: t('HD đăng ký tiêm chủng Covid-19 dành cho người dân'),
+        linkDocument:
+          'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
+      },
+      {
+        id: 'document_id-dfgdfg',
+        label: t('HDSD ứng dụng SSKĐT trong quá trình tiêm chủng Covid-19'),
+        linkDocument:
+          'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
+      },
+      {
+        id: 'document_id-mbnmb',
+        label: t(
+          'Quy trình ứng dụng nền tảng quản lý điều hành tiêm chủng Covid-19'
+        ),
+        linkDocument:
+          'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
+      }
+    ],
+    [t]
+  );
   return (
     <AppLayout>
-      <PageTitle>Tài liệu</PageTitle>
+      <PageTitle>{t('Tài liệu')}</PageTitle>
       <Container maxWidth="xl">
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: colors.grey[100] }}>
               <TableCell sx={{ py: 1 }} align="center">
                 <Typography variant="body1" fontWeight="500">
-                  STT
+                  {t('STT')}
                 </Typography>
               </TableCell>
               <TableCell sx={{ py: 1 }}>
                 <Typography variant="body1" fontWeight="500">
-                  Tên tài liệu
+                  {t('Tên tài liệu')}
                 </Typography>
               </TableCell>
               <TableCell sx={{ py: 1 }} align="center">
                 <Typography variant="body1" fontWeight="500">
-                  Thao tác
+                  {t('Thao tác')}
                 </Typography>
               </TableCell>
             </TableRow>
@@ -123,7 +132,7 @@ export const Document = () => {
                     href={document.linkDocument}
                     target="_blank"
                     startIcon={<FileDownloadOutlinedIcon />}>
-                    Download
+                    {t('Tải xuống')}
                   </Button>
                 </TableCell>
               </TableRow>
