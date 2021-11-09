@@ -2,7 +2,7 @@ import { Box, Container, Tab, Tabs, Theme, Typography } from '@mui/material';
 import { SxProps } from '@mui/system';
 import { CertificateInfo, InjectionInfoTable } from 'components';
 import { IUserInfoForm } from 'models';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DefaultValues } from 'react-hook-form';
 import { Switch, useHistory, useLocation } from 'react-router-dom';
 import { RoutePaths } from 'routes';
@@ -32,18 +32,21 @@ export const User = () => {
     confirmPassword: ''
   });
   const location = useLocation();
-  const [currentTab, setCurrentTab] = useState(() => {
-    const pathname = location.pathname;
-    if (pathname === `${RoutePaths.user.certificate}`) {
-      return 0;
-    } else if (pathname === RoutePaths.user.injectionRegistration) {
-      return 1;
-    } else {
-      return 2;
-    }
-  });
+  const [currentTab, setCurrentTab] = useState(0);
 
   const history = useHistory();
+
+  useEffect(() => {
+    const pathname = location.pathname;
+    if (pathname === `${RoutePaths.user.certificate}`) {
+      setCurrentTab(0);
+    } else if (pathname === RoutePaths.user.injectionRegistration) {
+      setCurrentTab(1);
+    } else {
+      setCurrentTab(2);
+    }
+  }, [location.pathname]);
+
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     if (newValue === 0) {
       history.push(RoutePaths.user.root);
