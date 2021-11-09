@@ -14,11 +14,10 @@ import {
 } from '@mui/material';
 import { StyledButton } from 'components';
 import { Answer, IMedicalHistory } from 'models';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { styleInputMedium } from 'theme';
 import { medicalHistoryTemplate } from 'utils';
-
-const tags = ['Tiền sử', 'Triệu chứng', 'Có', 'Không', 'Không rõ'];
 
 interface IProps {
   onNextStep: () => void;
@@ -27,6 +26,8 @@ interface IProps {
 }
 
 export const Step2 = (props: IProps) => {
+  const { t } = useTranslation();
+
   const [medicalHistoryReport, setMedicalHistoryReport] = useState<
     IMedicalHistory[]
   >(medicalHistoryTemplate);
@@ -38,6 +39,11 @@ export const Step2 = (props: IProps) => {
       return invalid;
     });
   }, [medicalHistoryReport]);
+
+  const tags = useMemo(
+    () => [t('Tiền sử'), t('Triệu chứng'), t('Có'), t('Không'), t('Không rõ')],
+    [t]
+  );
 
   const handleChangeDiseaseSymptoms = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,13 +106,13 @@ export const Step2 = (props: IProps) => {
               sx={{ backgroundColor: 'rgba(238, 238, 238, 0.4)' }}>
               <TableCell sx={{ maxWidth: '300px', py: 1 }}>
                 <Typography variant="body2">
-                  {item.id}. {item.question}
+                  {item.id}. {t(item.question)}
                 </Typography>
               </TableCell>
               <TableCell align="center" sx={{ maxWidth: '450px', py: 1 }}>
                 {item.diseaseSymptoms !== undefined && (
                   <TextField
-                    placeholder="Nếu có, ghi rõ loại tác nhân dị ứng"
+                    placeholder={t('Nếu có, ghi rõ loại tác nhân dị ứng')}
                     sx={{
                       ...styleInputMedium,
                       width: '372px',
@@ -151,14 +157,14 @@ export const Step2 = (props: IProps) => {
           variant="outlined"
           onClick={props.onBackStep}
           startIcon={<ArrowBackIcon />}>
-          Quay lại
+          {t('Quay lại')}
         </StyledButton>
         <StyledButton
           disabled={disabledButton}
           variant="contained"
           endIcon={<ArrowForwardIcon />}
           onClick={handleNextStep}>
-          Tiếp tục
+          {t('Tiếp tục')}
         </StyledButton>
       </Stack>
     </Box>

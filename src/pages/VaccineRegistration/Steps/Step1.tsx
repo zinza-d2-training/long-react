@@ -16,6 +16,7 @@ import { IDistrict, IProvince, IVaccineRegistration, IWard } from 'models';
 import { ICountry } from 'models/country';
 import { useCallback, useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { styleInputMedium } from 'theme';
 import { addressData, countriesData, vaccineData } from 'utils';
 import { vaccineRegistrationSchema } from 'validations';
@@ -59,6 +60,7 @@ interface IProps {
 }
 
 export const Step1 = (props: IProps) => {
+  const { t } = useTranslation();
   const { onNextStep, onChangePersonalInfo } = props;
   const { control, handleSubmit, setValue, setFocus, watch, clearErrors } =
     useForm<IVaccineRegistration>({
@@ -211,7 +213,7 @@ export const Step1 = (props: IProps) => {
       <Grid container spacing={2}>
         <Grid item xs={3}>
           <Label sx={{ display: 'block', mb: 1 }} required>
-            Đăng ký mũi tiêm thứ
+            {t('Đăng ký mũi tiêm thứ')}
           </Label>
           <Controller
             control={control}
@@ -220,28 +222,28 @@ export const Step1 = (props: IProps) => {
               <TextField
                 {...field}
                 error={invalid}
-                helperText={error?.message}
-                placeholder="Đăng ký mũi tiêm thứ"
+                helperText={t(error?.message || '')}
+                placeholder={t('Đăng ký mũi tiêm thứ')}
                 sx={styleInputMedium}
                 fullWidth
                 select>
                 <MenuItem value={0} disabled sx={{ display: 'none' }}>
-                  Đăng ký mũi tiêm thứ
+                  {t('Đăng ký mũi tiêm thứ')}
                 </MenuItem>
-                <MenuItem value={1}>Mũi thứ 1</MenuItem>
-                <MenuItem value={2}>Mũi thứ 2</MenuItem>
+                <MenuItem value={1}>{t('Mũi thứ 1')}</MenuItem>
+                <MenuItem value={2}>{t('Mũi thứ 2')}</MenuItem>
               </TextField>
             )}
           />
         </Grid>
       </Grid>
       <Typography variant="body1" my={2} fontWeight="500">
-        1. Thông tin người đăng ký tiêm
+        1. {t('Thông tin người đăng ký tiêm')}
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={3}>
           <Label sx={{ display: 'block', mb: 1 }} required>
-            Họ và tên
+            {t('Họ và tên')}
           </Label>
           <Controller
             control={control}
@@ -250,8 +252,8 @@ export const Step1 = (props: IProps) => {
               <TextField
                 {...field}
                 error={invalid}
-                helperText={error?.message}
-                placeholder="Họ và tên"
+                helperText={t(error?.message || '')}
+                placeholder={t('Họ và tên')}
                 sx={styleInputMedium}
                 fullWidth
               />
@@ -260,7 +262,7 @@ export const Step1 = (props: IProps) => {
         </Grid>
         <Grid item xs={3}>
           <Label sx={{ display: 'block', mb: 1 }} required>
-            Ngày sinh
+            {t('Ngày sinh')}
           </Label>
           <Controller
             control={control}
@@ -269,8 +271,8 @@ export const Step1 = (props: IProps) => {
               <TextField
                 {...field}
                 error={invalid}
-                helperText={error?.message}
-                placeholder="Ngày sinh"
+                helperText={t(error?.message || '')}
+                placeholder={t('Ngày sinh')}
                 sx={styleInputMedium}
                 type="date"
                 fullWidth
@@ -280,7 +282,7 @@ export const Step1 = (props: IProps) => {
         </Grid>
         <Grid item xs={3}>
           <Label sx={{ display: 'block', mb: 1 }} required>
-            Giới tính
+            {t('Giới tính')}
           </Label>
           <Controller
             control={control}
@@ -289,24 +291,23 @@ export const Step1 = (props: IProps) => {
               <TextField
                 {...field}
                 error={invalid}
-                helperText={error?.message}
-                placeholder="Giới tính"
+                helperText={t(error?.message || '')}
                 defaultValue={-1}
                 sx={styleInputMedium}
                 fullWidth
                 select>
                 <MenuItem value={-1} disabled sx={{ display: 'none' }}>
-                  Giới tính
+                  {t('Giới tính')}
                 </MenuItem>
-                <MenuItem value={1}>Nam</MenuItem>
-                <MenuItem value={0}>Nữ</MenuItem>
+                <MenuItem value={1}>{t('Nam')}</MenuItem>
+                <MenuItem value={0}>{t('Nữ')}</MenuItem>
               </TextField>
             )}
           />
         </Grid>
         <Grid item xs={3}>
           <Label sx={{ display: 'block', mb: 1 }} required>
-            Số điện thoại
+            {t('Số điện thoại')}
           </Label>
           <Controller
             control={control}
@@ -315,8 +316,8 @@ export const Step1 = (props: IProps) => {
               <TextField
                 {...field}
                 error={invalid}
-                helperText={error?.message}
-                placeholder="Số điện thoại"
+                helperText={t(error?.message || '')}
+                placeholder={t('Số điện thoại')}
                 sx={styleInputMedium}
                 fullWidth
               />
@@ -332,7 +333,7 @@ export const Step1 = (props: IProps) => {
               <TextField
                 {...field}
                 error={invalid}
-                helperText={error?.message}
+                helperText={t(error?.message || '')}
                 placeholder="Email"
                 sx={styleInputMedium}
                 fullWidth
@@ -342,7 +343,7 @@ export const Step1 = (props: IProps) => {
         </Grid>
         <Grid item xs={3}>
           <Label sx={{ display: 'block', mb: 1 }} required>
-            Số CMND/CCCD/Mã định danh công dân
+            {t('Số CMND/CCCD/Mã định danh công dân')}
           </Label>
           <Controller
             control={control}
@@ -351,8 +352,8 @@ export const Step1 = (props: IProps) => {
               <TextField
                 {...field}
                 error={invalid}
-                helperText={error?.message}
-                placeholder="Số CMND/CCCD/Mã định danh công dân"
+                helperText={t(error?.message || '')}
+                placeholder={t('Số CMND/CCCD/Mã định danh công dân')}
                 sx={styleInputMedium}
                 fullWidth
               />
@@ -360,14 +361,14 @@ export const Step1 = (props: IProps) => {
           />
         </Grid>
         <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }}>Số thẻ BHYT</Label>
+          <Label sx={{ display: 'block', mb: 1 }}>{t('Số thẻ BHYT')}</Label>
           <Controller
             control={control}
             name="registrantInfo.healthInsuranceCardNumber"
             render={({ field }) => (
               <TextField
                 {...field}
-                placeholder="Số thẻ BHYT"
+                placeholder={t('Số thẻ BHYT')}
                 sx={styleInputMedium}
                 fullWidth
               />
@@ -376,14 +377,14 @@ export const Step1 = (props: IProps) => {
         </Grid>
         <Grid item xs={3}></Grid>
         <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }}>Nghề nghiệp</Label>
+          <Label sx={{ display: 'block', mb: 1 }}>{t('Nghề nghiệp')}</Label>
           <Controller
             control={control}
             name="registrantInfo.job"
             render={({ field }) => (
               <TextField
                 {...field}
-                placeholder="Nghề nghiệp"
+                placeholder={t('Nghề nghiệp')}
                 sx={styleInputMedium}
                 fullWidth
               />
@@ -391,14 +392,14 @@ export const Step1 = (props: IProps) => {
           />
         </Grid>
         <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }}>Đơn vị công tác</Label>
+          <Label sx={{ display: 'block', mb: 1 }}>{t('Đơn vị công tác')}</Label>
           <Controller
             control={control}
             name="registrantInfo.workUnit"
             render={({ field }) => (
               <TextField
                 {...field}
-                placeholder="Đơn vị công tác"
+                placeholder={t('Đơn vị công tác')}
                 sx={styleInputMedium}
                 fullWidth
               />
@@ -406,14 +407,16 @@ export const Step1 = (props: IProps) => {
           />
         </Grid>
         <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }}>Địa chỉ hiện tại</Label>
+          <Label sx={{ display: 'block', mb: 1 }}>
+            {t('Địa chỉ hiện tại')}
+          </Label>
           <Controller
             control={control}
             name="registrantInfo.healthInsuranceCardNumber"
             render={({ field }) => (
               <TextField
                 {...field}
-                placeholder="Địa chỉ hiện tại"
+                placeholder={t('Địa chỉ hiện tại')}
                 sx={styleInputMedium}
                 fullWidth
               />
@@ -423,7 +426,7 @@ export const Step1 = (props: IProps) => {
         <Grid item xs={3}></Grid>
         <Grid item xs={3}>
           <Label sx={{ display: 'block', mb: 1 }} required>
-            Tỉnh/Thành phố
+            {t('Tỉnh/Thành phố')}
           </Label>
           <Controller
             control={control}
@@ -447,8 +450,8 @@ export const Step1 = (props: IProps) => {
                         value: inputProvince
                       }}
                       error={invalid}
-                      helperText={error?.message}
-                      placeholder="Tỉnh/Thành phố"
+                      helperText={t(error?.message || '')}
+                      placeholder={t('Tỉnh/Thành phố')}
                       sx={{
                         ...styleInputMedium,
                         '.MuiInputBase-root .MuiAutocomplete-input': {
@@ -466,7 +469,7 @@ export const Step1 = (props: IProps) => {
         </Grid>
         <Grid item xs={3}>
           <Label sx={{ display: 'block', mb: 1 }} required>
-            Quận/Huyện
+            {t('Quận/Huyện')}
           </Label>
           <Controller
             control={control}
@@ -491,8 +494,8 @@ export const Step1 = (props: IProps) => {
                         value: inputDistrict
                       }}
                       error={invalid}
-                      helperText={error?.message}
-                      placeholder="Quận/Huyện"
+                      helperText={t(error?.message || '')}
+                      placeholder={t('Quận/Huyện')}
                       sx={{
                         ...styleInputMedium,
                         '.MuiInputBase-root .MuiAutocomplete-input': {
@@ -510,7 +513,7 @@ export const Step1 = (props: IProps) => {
         </Grid>
         <Grid item xs={3}>
           <Label sx={{ display: 'block', mb: 1 }} required>
-            Xã/Phường
+            {t('Xã/Phường')}
           </Label>
           <Controller
             control={control}
@@ -535,8 +538,8 @@ export const Step1 = (props: IProps) => {
                         value: inputWard
                       }}
                       error={invalid}
-                      helperText={error?.message}
-                      placeholder="Xã/Phường"
+                      helperText={t(error?.message || '')}
+                      placeholder={t('Xã/Phường')}
                       sx={{
                         ...styleInputMedium,
                         '.MuiInputBase-root .MuiAutocomplete-input': {
@@ -554,14 +557,14 @@ export const Step1 = (props: IProps) => {
         </Grid>
         <Grid item xs={3}></Grid>
         <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }}>Dân tộc</Label>
+          <Label sx={{ display: 'block', mb: 1 }}>{t('Dân tộc')}</Label>
           <Controller
             control={control}
             name="registrantInfo.ethnic"
             render={({ field }) => (
               <TextField
                 {...field}
-                placeholder="Dân tộc"
+                placeholder={t('Dân tộc')}
                 sx={styleInputMedium}
                 fullWidth
               />
@@ -569,7 +572,7 @@ export const Step1 = (props: IProps) => {
           />
         </Grid>
         <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }}>Quốc tịch</Label>
+          <Label sx={{ display: 'block', mb: 1 }}>{t('Quốc tịch')}</Label>
           <Controller
             control={control}
             name="registrantInfo.nationality"
@@ -583,7 +586,7 @@ export const Step1 = (props: IProps) => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    placeholder="Quốc tịch"
+                    placeholder={t('Quốc tịch')}
                     sx={{
                       ...styleInputMedium,
                       '.MuiInputBase-root .MuiAutocomplete-input': {
@@ -601,7 +604,7 @@ export const Step1 = (props: IProps) => {
         </Grid>
         <Grid item xs={3}>
           <Label sx={{ display: 'block', mb: 1 }} required>
-            Nhóm ưu tiên
+            {t('Nhóm ưu tiên')}
           </Label>
           <Controller
             control={control}
@@ -610,18 +613,18 @@ export const Step1 = (props: IProps) => {
               <TextField
                 {...field}
                 error={invalid}
-                helperText={error?.message}
-                placeholder="Nhóm ưu tiên"
+                helperText={t(error?.message || '')}
+                placeholder={t('Nhóm ưu tiên')}
                 sx={styleInputMedium}
                 defaultValue={-1}
                 fullWidth
                 select>
                 <MenuItem value={-1} disabled sx={{ display: 'none' }}>
-                  Nhóm ưu tiên
+                  {t('Nhóm ưu tiên')}
                 </MenuItem>
-                <MenuItem value={1}>Nhóm 1</MenuItem>
-                <MenuItem value={2}>Nhóm 2</MenuItem>
-                <MenuItem value={3}>Nhóm 3</MenuItem>
+                <MenuItem value={1}>{t('Nhóm')} 1</MenuItem>
+                <MenuItem value={2}>{t('Nhóm')} 2</MenuItem>
+                <MenuItem value={3}>{t('Nhóm')} 3</MenuItem>
               </TextField>
             )}
           />
@@ -629,18 +632,20 @@ export const Step1 = (props: IProps) => {
         <Grid item xs={3}></Grid>
       </Grid>
       <Typography variant="body1" my={2} fontWeight="500">
-        2. Thông tin đăng ký tiêm chủng
+        2. {t('Thông tin đăng ký tiêm chủng')}
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }}>Ngày muốn được tiêm</Label>
+          <Label sx={{ display: 'block', mb: 1 }}>
+            {t('Ngày muốn được tiêm')}
+          </Label>
           <Controller
             control={control}
             name="vaccinationRegistrationInfo.injectionDate"
             render={({ field }) => (
               <TextField
                 {...field}
-                placeholder="Ngày muốn được tiêm"
+                placeholder={t('Ngày muốn được tiêm')}
                 sx={styleInputMedium}
                 fullWidth
                 type="date"
@@ -649,24 +654,26 @@ export const Step1 = (props: IProps) => {
           />
         </Grid>
         <Grid item xs={3}>
-          <Label sx={{ display: 'block', mb: 1 }}>Buổi tiêm mong muốn</Label>
+          <Label sx={{ display: 'block', mb: 1 }}>
+            {t('Buổi tiêm mong muốn')}
+          </Label>
           <Controller
             control={control}
             name="vaccinationRegistrationInfo.injectionTime"
             render={({ field }) => (
               <TextField
                 {...field}
-                placeholder="Buổi tiêm mong muốn"
+                placeholder={t('Buổi tiêm mong muốn')}
                 sx={styleInputMedium}
                 fullWidth
                 defaultValue={-1}
                 select>
                 <MenuItem value={-1} disabled sx={{ display: 'none' }}>
-                  Chọn buổi tiêm mong muốn
+                  {t('Buổi tiêm mong muốn')}
                 </MenuItem>
-                <MenuItem value={1}>Buổi sáng</MenuItem>
-                <MenuItem value={2}>Buổi chiều</MenuItem>
-                <MenuItem value={3}>Buổi tối</MenuItem>
+                <MenuItem value={1}>{t('Buổi sáng')}</MenuItem>
+                <MenuItem value={2}>{t('Buổi chiều')}</MenuItem>
+                <MenuItem value={3}>{t('Cả ngày')}</MenuItem>
               </TextField>
             )}
           />
@@ -675,12 +682,12 @@ export const Step1 = (props: IProps) => {
       {injectionTime === 2 && (
         <>
           <Typography variant="body1" my={2} fontWeight="500">
-            3. Lịch sử tiêm mũi thứ 1
+            3. {t('Lịch sử tiêm mũi thứ 1')}
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={3}>
               <Label sx={{ display: 'block', mb: 1 }} required>
-                Tên Vaccine
+                {t('Tên Vaccine')}
               </Label>
               <Controller
                 control={control}
@@ -689,14 +696,14 @@ export const Step1 = (props: IProps) => {
                   <TextField
                     {...field}
                     error={invalid}
-                    helperText={error?.message}
-                    placeholder="Tên Vaccine"
+                    helperText={t(error?.message || '')}
+                    placeholder={t('Tên Vaccine')}
                     sx={styleInputMedium}
                     fullWidth
                     type="date"
                     select>
                     <MenuItem value={-1} disabled sx={{ display: 'none' }}>
-                      Chọn tên vaccine
+                      {t('Tên vaccine')}
                     </MenuItem>
                     {vaccineData.map(({ id, label }) => (
                       <MenuItem key={id} value={id}>
@@ -709,7 +716,7 @@ export const Step1 = (props: IProps) => {
             </Grid>
             <Grid item xs={3}>
               <Label sx={{ display: 'block', mb: 1 }} required>
-                Ngày tiêm
+                {t('Ngày tiêm')}
               </Label>
               <Controller
                 control={control}
@@ -718,8 +725,8 @@ export const Step1 = (props: IProps) => {
                   <TextField
                     {...field}
                     error={invalid}
-                    helperText={error?.message}
-                    placeholder="Ngày tiêm"
+                    helperText={t(error?.message || '')}
+                    placeholder={t('Ngày tiêm')}
                     sx={styleInputMedium}
                     fullWidth
                     type="date"
@@ -728,14 +735,14 @@ export const Step1 = (props: IProps) => {
               />
             </Grid>
             <Grid item xs={3}>
-              <Label sx={{ display: 'block', mb: 1 }}>Số lô</Label>
+              <Label sx={{ display: 'block', mb: 1 }}>{t('Số lô')}</Label>
               <Controller
                 control={control}
                 name="historyOfFirstInjection.shipmentNumber"
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    placeholder="Số lô"
+                    placeholder={t('Số lô')}
                     sx={styleInputMedium}
                     fullWidth
                   />
@@ -743,14 +750,16 @@ export const Step1 = (props: IProps) => {
               />
             </Grid>
             <Grid item xs={3}>
-              <Label sx={{ display: 'block', mb: 1 }}>Địa điểm tiêm</Label>
+              <Label sx={{ display: 'block', mb: 1 }}>
+                {t('Địa điểm tiêm')}
+              </Label>
               <Controller
                 control={control}
                 name="historyOfFirstInjection.vaccinePlace"
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    placeholder="Địa điểm tiêm"
+                    placeholder={t('Địa điểm tiêm')}
                     sx={styleInputMedium}
                     fullWidth
                   />
@@ -759,7 +768,7 @@ export const Step1 = (props: IProps) => {
             </Grid>
             <Grid item xs={12}>
               <Label sx={{ display: 'block', mb: 1 }}>
-                Phản ứng sau tiêm chủng
+                {t('Phản ứng sau tiêm chủng')}
               </Label>
               <Controller
                 control={control}
@@ -767,7 +776,7 @@ export const Step1 = (props: IProps) => {
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    placeholder="Phản ứng sau tiêm chủng"
+                    placeholder={t('Phản ứng sau tiêm chủng')}
                     fullWidth
                     multiline
                     maxRows={5}
@@ -780,26 +789,31 @@ export const Step1 = (props: IProps) => {
       )}
       <Box mt={2} sx={{ color: colors.red[700] }}>
         <Typography variant="body1" fontWeight="bold">
-          Lưu ý:
+          {t('Lưu ý')}:
         </Typography>
         <Box component="ul">
           <Typography variant="body1" component="li">
-            Việc đăng ký thông tin hoàn toàn bảo mật và phục vụ cho chiến dịch
-            tiêm chủng Vắc xin COVID - 19
+            {t(
+              'Việc đăng ký thông tin hoàn toàn bảo mật và phục vụ cho chiến dịch tiêm chủng Vắc xin COVID - 19'
+            )}
           </Typography>
           <Typography variant="body1" component="li">
-            Xin vui lòng kiểm tra kỹ các thông tin bắt buộc(VD: Họ và tên, Ngày
-            tháng năm sinh, Số điện thoại, Số CMND/CCCD/Mã định danh công dân/HC
-            ...)
+            {' '}
+            {t(
+              'Xin vui lòng kiểm tra kỹ các thông tin bắt buộc(VD: Họ và tên, Ngày tháng năm sinh, Số điện thoại, Số CMND/CCCD/Mã định danh công dân/HC ...)'
+            )}
           </Typography>
           <Typography variant="body1" component="li">
-            Bằng việc nhấn nút "Xác nhận", bạn hoàn toàn hiểu và đồng ý chịu
-            trách nhiệm với các thông tin đã cung cấp
+            {' '}
+            {t(
+              'Bằng việc nhấn nút "Xác nhận", bạn hoàn toàn hiểu và đồng ý chịu trách nhiệm với các thông tin đã cung cấp'
+            )}
           </Typography>
           <Typography variant="body1" component="li">
-            Cá nhân/Tổ chức đăng ký thành công trên hệ thống sẽ được đưa vào
-            danh sách đặt tiêm. Cơ sở y tế sẽ thông báo lịch tiêm khi có vắc xin
-            và kế hoạch tiêm được phê duyệt. Trân trọng cảm ơn!
+            {' '}
+            {t(
+              'Cá nhân/Tổ chức đăng ký thành công trên hệ thống sẽ được đưa vào danh sách đặt tiêm. Cơ sở y tế sẽ thông báo lịch tiêm khi có vắc xin và kế hoạch tiêm được phê duyệt. Trân trọng cảm ơn!'
+            )}
           </Typography>
         </Box>
       </Box>
@@ -808,7 +822,7 @@ export const Step1 = (props: IProps) => {
           type="submit"
           variant="contained"
           endIcon={<ArrowForwardIcon />}>
-          Tiếp tục
+          {t('Tiếp tục')}
         </StyledButton>
       </Stack>
     </Box>

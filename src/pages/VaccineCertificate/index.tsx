@@ -21,6 +21,7 @@ import {
 import { ICertificateSearch } from 'models';
 import { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { styleInputMedium } from 'theme';
 import { AppLayout } from 'theme/layout';
 import { certificateData } from 'utils';
@@ -36,6 +37,7 @@ const defaultValues: ICertificateSearch = {
 };
 
 export const VaccineCertificate = () => {
+  const { t } = useTranslation();
   const [searched, setSearched] = useState<boolean>(false);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { control, handleSubmit, reset } = useForm<ICertificateSearch>({
@@ -67,7 +69,7 @@ export const VaccineCertificate = () => {
   const handleResetForm = useCallback(() => reset(), [reset]);
   return (
     <AppLayout>
-      <PageTitle>Tra cứu chứng nhận tiêm</PageTitle>
+      <PageTitle>{t('Tra cứu chứng nhận tiêm')}</PageTitle>
       <Box mb="86px">
         <Container maxWidth="xl">
           <Box
@@ -77,7 +79,7 @@ export const VaccineCertificate = () => {
             <Stack direction="row" spacing={2}>
               <Box sx={{ flex: 1 }}>
                 <Label required htmlFor="fullName">
-                  Họ và tên
+                  {t('Họ và tên')}
                 </Label>
                 <Controller
                   control={control}
@@ -89,7 +91,7 @@ export const VaccineCertificate = () => {
                       error={invalid}
                       helperText={invalid && error?.message}
                       fullWidth
-                      placeholder="Họ và tên"
+                      placeholder={t('Họ và tên')}
                       id="fullName"
                     />
                   )}
@@ -97,7 +99,7 @@ export const VaccineCertificate = () => {
               </Box>
               <Box sx={{ flex: 1 }}>
                 <Label required htmlFor="dob">
-                  Ngày sinh
+                  {t('Ngày sinh')}
                 </Label>
                 <Controller
                   control={control}
@@ -109,7 +111,7 @@ export const VaccineCertificate = () => {
                       error={invalid}
                       helperText={invalid && error?.message}
                       fullWidth
-                      placeholder="Ngày/Tháng/Năm"
+                      placeholder={t('Ngày/Tháng/Năm')}
                       type="date"
                       id="dob"
                     />
@@ -118,7 +120,7 @@ export const VaccineCertificate = () => {
               </Box>
               <Box sx={{ flex: 1 }}>
                 <Label required htmlFor="gender">
-                  Giới tính
+                  {t('Giới tính')}
                 </Label>
                 <Controller
                   control={control}
@@ -133,15 +135,15 @@ export const VaccineCertificate = () => {
                       placeholder="Giới tính"
                       id="gender"
                       select>
-                      <MenuItem value={1}>Nam</MenuItem>
-                      <MenuItem value={0}>Nữ</MenuItem>
+                      <MenuItem value={1}>{t('Nam')}</MenuItem>
+                      <MenuItem value={0}>{t('Nữ')}</MenuItem>
                     </TextField>
                   )}
                 />
               </Box>
               <Box sx={{ flex: 1 }}>
                 <Label required htmlFor="phone">
-                  Số điện thoại
+                  {t('Số điện thoại')}
                 </Label>
                 <Controller
                   control={control}
@@ -153,14 +155,14 @@ export const VaccineCertificate = () => {
                       error={invalid}
                       helperText={invalid && error?.message}
                       fullWidth
-                      placeholder="Số điện thoại"
+                      placeholder={t('Số điện thoại')}
                       id="phone"
                     />
                   )}
                 />
               </Box>
               <Box sx={{ flex: 1 }}>
-                <Label htmlFor="citizenId">Số CMND/CCCD</Label>
+                <Label htmlFor="citizenId">{t('Số CMND/CCCD')}</Label>
                 <Controller
                   control={control}
                   name="citizenId"
@@ -171,14 +173,16 @@ export const VaccineCertificate = () => {
                       error={invalid}
                       helperText={invalid && error?.message}
                       fullWidth
-                      placeholder="Số CMND/CCCD"
+                      placeholder={t('Số CMND/CCCD')}
                       id="citizenId"
                     />
                   )}
                 />
               </Box>
               <Box sx={{ flex: 1 }}>
-                <Label htmlFor="healthInsuranceCardNumber">Số thẻ BHYT</Label>
+                <Label htmlFor="healthInsuranceCardNumber">
+                  {t('Số thẻ BHYT')}
+                </Label>
                 <Controller
                   control={control}
                   name="healthInsuranceCardNumber"
@@ -189,7 +193,7 @@ export const VaccineCertificate = () => {
                       error={invalid}
                       helperText={invalid && error?.message}
                       fullWidth
-                      placeholder="Số thẻ BHYT"
+                      placeholder={t('Số thẻ BHYT')}
                       id="healthInsuranceCardNumber"
                     />
                   )}
@@ -201,10 +205,10 @@ export const VaccineCertificate = () => {
               variant="body1"
               sx={{ fontStyle: 'italic', color: colors.red[600] }}
               mt={3}>
-              <Box component="b">Ghi chú</Box>: Nếu bạn đã tiêm nhưng chưa được
-              ghi nhận, hãy liên hệ với cơ sở tiêm và đề nghị cập nhật thông tin
-              lên Nền tảng tiêm chủng để có thể nhận được Chứng nhận tiêm hoặc
-              phản ánh thông tin mũi tiêm{' '}
+              <Box component="b">{t('Ghi chú')}</Box>:{' '}
+              {t(
+                'Nếu bạn đã tiêm nhưng chưa được ghi nhận, hãy liên hệ với cơ sở tiêm và đề nghị cập nhật thông tin lên Nền tảng tiêm chủng để có thể nhận được Chứng nhận tiêm hoặc phản ánh thông tin mũi tiêm'
+              )}{' '}
               <Link
                 sx={{
                   color: colors.red[600],
@@ -212,7 +216,7 @@ export const VaccineCertificate = () => {
                   fontWeight: 'bold',
                   textDecorationColor: colors.red[600]
                 }}>
-                tại đây
+                {t('tại đây')}
               </Link>
               .
             </Typography>
@@ -221,13 +225,13 @@ export const VaccineCertificate = () => {
                 variant="outlined"
                 startIcon={<CachedIcon />}
                 type="reset">
-                Nhập lại
+                {t('Nhập lại')}
               </StyledButton>
               <StyledButton
                 variant="contained"
                 startIcon={<SearchIcon />}
                 type="submit">
-                Tra cứu
+                {t('Tra cứu')}
               </StyledButton>
             </Stack>
           </Box>
