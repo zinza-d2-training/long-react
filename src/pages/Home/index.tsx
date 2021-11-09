@@ -242,6 +242,166 @@ export const Home = () => {
             </Box>
           </Container>
         </Box>
+        <Container maxWidth="xl">
+          <Box p={4} sx={boxStyle}>
+            <Typography variant="h6">{t('Dữ liệu tiêm theo ngày')}</Typography>
+            <Line
+              data={{
+                labels: injectedByDay.map(
+                  ({ day }) => `${day.getDate()}/${day.getMonth() + 1}`
+                ),
+                datasets: [
+                  {
+                    label: t('Đã tiêm'),
+                    data: injectedByDay.map(({ amount }) => amount),
+                    fill: false,
+                    backgroundColor: colors.indigo[700],
+                    borderColor: colors.indigo[700]
+                  }
+                ]
+              }}
+              options={{
+                scales: {
+                  y: {
+                    beginAtZero: false
+                  }
+                }
+              }}
+              height={100}
+            />
+          </Box>
+          <Box sx={{ display: 'flex', mt: 5 }}>
+            <Stack
+              sx={{
+                ...boxStyle,
+                flex: 1,
+                px: 2,
+                py: 3
+              }}
+              direction="column"
+              alignItems="center">
+              <Typography variant="h6" width="100%" align="left">
+                {t('10 Địa phương có tỷ lệ tiêm cao nhất')}
+              </Typography>
+              <Typography variant="body2" width="100%" align="left">
+                {t(
+                  '(Tính theo số mũi tiêm/ số vắc xin phân bổ theo quyết định)'
+                )}
+              </Typography>
+              <Box sx={{ px: 3, width: '100%' }}>
+                <Bar
+                  options={{
+                    indexAxis: 'y',
+                    elements: {
+                      bar: {
+                        borderWidth: 0
+                      }
+                    },
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        display: false
+                      },
+                      title: {
+                        display: false
+                      }
+                    }
+                  }}
+                  data={highestInjectionRateData}
+                  height={310}
+                />
+              </Box>
+              <Typography variant="body2" mt="4px" align="center">
+                <Box component="b">{t('Ghi chú')}</Box>:{' '}
+                {t(
+                  'Số mũi tiêm thực tế có thể nhiều hơn số liều vắc xin phân bổ'
+                )}
+              </Typography>
+            </Stack>
+            <Box sx={{ width: '24px' }} />
+            <Stack
+              sx={{
+                ...boxStyle,
+                flex: 1,
+                px: 2,
+                py: 3
+              }}
+              direction="column"
+              alignItems="center">
+              <Typography variant="h6" width="100%" align="left">
+                {t('10 Địa phương có tỷ lệ tiêm thấp nhất')}
+              </Typography>
+              <Typography variant="body2" width="100%" align="left">
+                {t(
+                  '(Tính theo số mũi tiêm/ số vắc xin phân bổ theo quyết định)'
+                )}
+              </Typography>
+              <Box sx={{ px: 3, width: '100%' }}>
+                <Bar
+                  options={{
+                    indexAxis: 'y',
+                    // Elements options apply to all of the options unless overridden in a dataset
+                    // In this case, we are setting the border of each horizontal bar to be 2px wide
+                    elements: {
+                      bar: {
+                        borderWidth: 0
+                      }
+                    },
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        display: false
+                      },
+                      title: {
+                        display: false
+                      }
+                    }
+                  }}
+                  data={lowestInjectionRateData}
+                  height={310}
+                />
+              </Box>
+              <Typography variant="body2" mt="4px" align="center">
+                <Box component="b">{t('Ghi chú')}</Box>:{' '}
+                {t(
+                  'Tỷ lệ tiêm tại một số tỉnh có thể thấp do chưa nhận đủ vắc xin theo quyết định phân bổ'
+                )}
+              </Typography>
+            </Stack>
+          </Box>
+          <Box sx={boxStyle} mt={10} px={2}>
+            <Typography variant="h6" p={2}>
+              {t('Số liệu vắc xin theo địa phương')}
+            </Typography>
+            <Divider />
+            <StatisticTable
+              data={statisticVaccinationByLocalData}
+              options={statisticTableOptions}
+            />
+            <Stack direction="row" justifyContent="center" py={3}>
+              <Box
+                component={Button}
+                sx={{
+                  color: colors.indigo[700],
+                  textTransform: 'unset',
+                  fontSize: '18px',
+                  fontWeight: '400'
+                }}
+                onClick={handleLoadMoreVaccinationByLocal}>
+                {t('Xem thêm')}
+              </Box>
+            </Stack>
+          </Box>
+          <Box sx={boxStyle} mt={4}>
+            <Typography variant="h6" p={2}>
+              {t('Tra cứu điểm tiêm theo địa bàn')}
+            </Typography>
+            <SearchTable
+              data={statisticVaccinationByArea}
+              onLoadMoreData={handleLoadMoreVaccinationByArea}
+            />
+          </Box>
+        </Container>
       </Box>
     </AppLayout>
   );
