@@ -11,13 +11,14 @@ import {
 } from '@mui/material';
 import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { CSSProperties } from 'react';
+import { createElement, CSSProperties } from 'react';
+import SvgIcon from '@mui/material/SvgIcon/SvgIcon';
 
 export interface AppSubMenuItem {
   title: string;
   description?: string;
+  icon: typeof SvgIcon;
   iconColor: {
     primary: CSSProperties['color'];
     secondary: CSSProperties['color'];
@@ -82,7 +83,9 @@ export const AppSubMenu = ({ children, items, ...props }: AppSubMenuProps) => {
                         backgroundColor: '#f8f8f8',
                         transition: 'background-color 200ms ease'
                       }}>
-                      <PeopleAltIcon sx={{ fill: 'currentColor' }} />
+                      {createElement(item.icon, {
+                        sx: { fill: 'currentColor' }
+                      })}
                     </Box>
                     <Stack direction="column">
                       <Typography variant="body1">{item.title}</Typography>

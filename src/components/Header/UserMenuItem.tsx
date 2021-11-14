@@ -8,6 +8,8 @@ import { useAppSelector } from '../../store';
 import { authSelector } from '../../store/slices/authSlice';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export const UserMenuItem = () => {
   const { t } = useTranslation();
@@ -19,6 +21,7 @@ export const UserMenuItem = () => {
     return [
       {
         title: t('Trang cá nhân'),
+        icon: PersonIcon,
         iconColor: {
           primary: colors.purple[500],
           secondary: colors.purple[50]
@@ -27,6 +30,7 @@ export const UserMenuItem = () => {
       },
       {
         title: t('Đăng xuất'),
+        icon: LogoutIcon,
         iconColor: {
           primary: colors.blue[500],
           secondary: colors.blue[50]
