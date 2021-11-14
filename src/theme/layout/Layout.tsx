@@ -29,7 +29,7 @@ export const AppLayout: FC = (props) => {
           display: 'flex',
           flexDirection: 'column',
           pt: '80px',
-          pb: 3
+          pb: 4
         }}>
         {props.children}
       </Box>

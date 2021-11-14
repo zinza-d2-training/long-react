@@ -15,11 +15,18 @@ const styleTab: SxProps<Theme> = {
   textTransform: 'unset',
   color: '#000 !important',
   px: 1,
-  height: '64px'
+  height: '64px',
+  '& .MuiTypography-root': {
+    fontWeight: 500,
+    color: '#6E6D7A'
+  },
+  '&.Mui-selected .MuiTypography-root': {
+    color: (theme) => theme.palette.text.primary
+  }
 };
 
 export const User = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [userInfo, setUserInfo] = useState<DefaultValues<IUserInfoForm>>({
     citizenId: '123456789',
     citizenImages: [],
@@ -85,7 +92,7 @@ export const User = () => {
             <Tab
               label={
                 <Typography variant="body1" fontWeight="500">
-                  {t("Chứng nhận tiêm chủng")}
+                  {t('Chứng nhận tiêm chủng')}
                 </Typography>
               }
               value={0}
@@ -94,7 +101,7 @@ export const User = () => {
             <Tab
               label={
                 <Typography variant="body1" fontWeight="500">
-                  {t("Kết quả đăng ký")}
+                  {t('Kết quả đăng ký')}
                 </Typography>
               }
               value={1}
@@ -103,7 +110,7 @@ export const User = () => {
             <Tab
               label={
                 <Typography variant="body1" fontWeight="500">
-                  {t("Tài khoản")}
+                  {t('Tài khoản')}
                 </Typography>
               }
               value={2}
