@@ -270,7 +270,7 @@ export const Home = () => {
               height={100}
             />
           </Box>
-          <Box sx={{ display: 'flex', mt: 5 }}>
+          <Box sx={{ display: 'flex', mt: 4 }}>
             <Stack
               sx={{
                 ...boxStyle,
@@ -369,7 +369,7 @@ export const Home = () => {
               </Typography>
             </Stack>
           </Box>
-          <Box sx={boxStyle} mt={10} px={2}>
+          <Box sx={boxStyle} mt={4} px={2}>
             <Typography variant="h6" p={2}>
               {t('Số liệu vắc xin theo địa phương')}
             </Typography>
